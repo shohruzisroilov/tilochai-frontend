@@ -3,7 +3,15 @@ import { useMatch } from '../hooks/useMatch';
 import { useSocket } from '../hooks/useSocket';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
-import { Users, RotateCcw, Megaphone, MessageSquare, KeyRound } from 'lucide-react';
+import { Users, RotateCcw, Megaphone, MessageSquare, KeyRound, Sparkles } from 'lucide-react';
+
+const SPEAKING_TIPS = [
+  "💡 Icebreaker: Ask your partner where they are from and what they do!",
+  "💡 Tip: Don't worry about grammar mistakes — fluency and confidence come first.",
+  "💡 Icebreaker: 'What's the best movie or series you've watched recently?'",
+  "💡 Tip: Speak in full sentences and ask 'Why?' or 'What about you?' to keep it going.",
+  "💡 Icebreaker: 'If you could travel anywhere tomorrow, where would you go?'",
+];
 
 function fmtElapsed(s: number): string {
   return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
@@ -19,6 +27,14 @@ export default function Matching() {
   const t = useT();
   const started = useRef(false);
   const [elapsed, setElapsed] = useState(0);
+  const [tipIndex, setTipIndex] = useState(0);
+
+  useEffect(() => {
+    const tipInterval = setInterval(() => {
+      setTipIndex((prev) => (prev + 1) % SPEAKING_TIPS.length);
+    }, 4500);
+    return () => clearInterval(tipInterval);
+  }, []);
 
   const roomCode = screenParams?.roomCode ? String(screenParams.roomCode).toUpperCase() : null;
   const isPrivateRoom = Boolean(roomCode);
@@ -166,6 +182,11 @@ export default function Matching() {
           </p>
         </div>
 
+        <div className="mt__tip-card">
+          <Sparkles size={14} className="text-accent flex-shrink-0" />
+          <span>{SPEAKING_TIPS[tipIndex]}</span>
+        </div>
+
         <button className="btn-quiet mt__cancel" onClick={handleCancel}>{t('common.cancel')}</button>
       </div>
 
@@ -294,6 +315,14 @@ const Styles = React.memo(function Styles() {
       .mt__hint {
         font-size: var(--text-xs); color: var(--text-secondary);
         line-height: 1.5; max-width: 300px;
+      }
+      .mt__tip-card {
+        display: flex; align-items: center; gap: 8px;
+        background: var(--surface-2); border: 1px solid var(--border);
+        border-radius: var(--radius-md); padding: 10px 14px;
+        font-size: 12px; color: var(--text-secondary); line-height: 1.45;
+        max-width: 330px; text-align: left;
+        animation: fadeIn 0.3s ease;
       }
       .mt__cancel {
         border: 1px solid var(--border); padding: 0 var(--space-5);
