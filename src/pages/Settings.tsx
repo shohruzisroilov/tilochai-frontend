@@ -5,7 +5,7 @@ import { updateMe, updateNotifications } from '../api/endpoints';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
 import { selectionHaptic, tapHaptic } from '../utils/haptics';
-import { ArrowLeft, ChevronRight, Gauge, User, Bell, Check, Loader2, Mic } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Gauge, User, Bell, Check, Loader2, Mic, Globe } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { notifyHaptic } from '../utils/haptics';
@@ -18,8 +18,21 @@ const GENDERS = [
   { v: 'skip', key: 'gender.notSay' },
 ];
 
+const TARGET_LANGS = [
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'ru', name: 'Russian (Русский)', flag: '🇷🇺' },
+  { code: 'uz', name: "Uzbek (O'zbekcha)", flag: '🇺🇿' },
+];
+
+const NATIVE_LANGS = [
+  { code: 'uz', name: "Uzbek (O'zbekcha)", flag: '🇺🇿' },
+  { code: 'ru', name: 'Russian (Русский)', flag: '🇷🇺' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+];
+
 const TITLES: Record<string, string> = {
   menu: 'settings.title',
+  language: 'Languages & Practice',
   level: 'settings.levelTitle',
   gender: 'settings.genderTitle',
   notifications: 'settings.notifTitle',
@@ -33,12 +46,14 @@ export default function Settings() {
   useTelegramBackButton(() => back());
 
   const initialSection = (screenParams?.section as any) || 'menu';
-  const [section, setSection] = useState<'menu' | 'level' | 'gender' | 'notifications' | 'mic'>(initialSection);
+  const [section, setSection] = useState<'menu' | 'level' | 'gender' | 'notifications' | 'mic' | 'language'>(initialSection);
   const [micStatus, setMicStatus] = useState<'idle' | 'testing' | 'ok' | 'fail'>('idle');
   const [micVolume, setMicVolume] = useState(0);
 
   const level = user?.level || 1;
   const gender = user?.gender || null;
+  const learningLang = user?.learningLang || 'en';
+  const nativeLang = user?.nativeLang || 'uz';
   const reminders = user?.remindersEnabled !== false;
 
   // Mutation for updating profile details
@@ -56,6 +71,20 @@ export default function Settings() {
       if (data?.user) setUser(data.user);
     },
   });
+
+  function pickLearningLang(code: string) {
+    if (!user || user.learningLang === code) return;
+    selectionHaptic();
+    setUser({ ...user, learningLang: code });
+    updateProfileMutation.mutate({ learningLang: code });
+  }
+
+  function pickNativeLang(code: string) {
+    if (!user || user.nativeLang === code) return;
+    selectionHaptic();
+    setUser({ ...user, nativeLang: code });
+    updateProfileMutation.mutate({ nativeLang: code });
+  }
 
   function pickLevel(v: number) {
     if (!user || v === level) return;
@@ -131,6 +160,26 @@ export default function Settings() {
         {/* Main Menu */}
         {section === 'menu' && (
           <div className="space-y-3">
+            <Card
+              as="button"
+              type="button"
+              className="w-full text-left p-4 cursor-pointer hover:bg-[var(--surface-2)] transition-all active:scale-[0.99] border-[var(--border)]"
+              onClick={() => { selectionHaptic(); setSection('language'); }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-[var(--primary-subtle)] text-[var(--primary)]">
+                  <Globe className="h-5 w-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-bold">Languages &amp; Target</div>
+                  <div className="text-xs text-[var(--text-secondary)] truncate">
+                    Learning: {learningLang === 'ru' ? 'Russian 🇷🇺' : learningLang === 'uz' ? 'Uzbek 🇺🇿' : 'English 🇬🇧'}
+                  </div>
+                </div>
+                <ChevronRight className="h-4 w-4 text-[var(--text-secondary)]" />
+              </div>
+            </Card>
+
             <Card
               as="button"
               type="button"
@@ -235,6 +284,85 @@ export default function Settings() {
                 <ChevronRight className="h-4 w-4 text-[var(--text-secondary)]" />
               </div>
             </Card>
+          </div>
+        )}
+
+        {/* Language Section */}
+        {section === 'language' && (
+          <div className="space-y-5">
+            <div>
+              <h2 className="text-sm font-bold text-[var(--text-primary)] mb-1 px-1">Language You Want to Practice</h2>
+              <p className="text-xs text-[var(--text-secondary)] px-1 mb-3">Choose the language you are learning to find compatible speaking partners.</p>
+              <div className="space-y-2">
+                {TARGET_LANGS.map((lang) => {
+                  const selected = learningLang === lang.code;
+                  return (
+                    <Card
+                      as="button"
+                      type="button"
+                      key={lang.code}
+                      onClick={() => pickLearningLang(lang.code)}
+                      className={`w-full text-left p-3.5 cursor-pointer transition-all active:scale-[0.98] border rounded-2xl flex items-center justify-between ${
+                        selected
+                          ? 'border-[var(--primary)] bg-[var(--primary-subtle)] shadow-sm ring-1 ring-[var(--primary)]'
+                          : 'border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{lang.flag}</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">{lang.name}</span>
+                      </div>
+                      <div
+                        className={`h-5 w-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                          selected
+                            ? 'bg-[var(--primary)] border-[var(--primary)] text-[#FFFFFF]'
+                            : 'border-[var(--border-strong)]'
+                        }`}
+                      >
+                        {selected && <Check className="h-3 w-3" strokeWidth={3} />}
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-[var(--border)]">
+              <h2 className="text-sm font-bold text-[var(--text-primary)] mb-1 px-1">Your Native Language</h2>
+              <p className="text-xs text-[var(--text-secondary)] px-1 mb-3">Helps language exchange partners who want to learn your native tongue.</p>
+              <div className="space-y-2">
+                {NATIVE_LANGS.map((lang) => {
+                  const selected = nativeLang === lang.code;
+                  return (
+                    <Card
+                      as="button"
+                      type="button"
+                      key={lang.code}
+                      onClick={() => pickNativeLang(lang.code)}
+                      className={`w-full text-left p-3.5 cursor-pointer transition-all active:scale-[0.98] border rounded-2xl flex items-center justify-between ${
+                        selected
+                          ? 'border-[var(--primary)] bg-[var(--primary-subtle)] shadow-sm ring-1 ring-[var(--primary)]'
+                          : 'border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{lang.flag}</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">{lang.name}</span>
+                      </div>
+                      <div
+                        className={`h-5 w-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                          selected
+                            ? 'bg-[var(--primary)] border-[var(--primary)] text-[#FFFFFF]'
+                            : 'border-[var(--border-strong)]'
+                        }`}
+                      >
+                        {selected && <Check className="h-3 w-3" strokeWidth={3} />}
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
 
