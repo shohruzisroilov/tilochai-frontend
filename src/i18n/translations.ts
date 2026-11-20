@@ -183,8 +183,8 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
 
     // settings
     'settings.title': 'Settings',
-    'settings.levelTitle': 'Your level',
-    'settings.levelSub': 'Choose the level that fits you best',
+    'settings.levelTitle': 'English Level',
+    'settings.levelSub': 'Choose your English level to match with compatible speaking partners',
     'settings.genderTitle': 'Gender',
     'settings.genderSub': 'Girls can choose to talk only with girls. We use your answer for nothing else.',
     'settings.genderNotSet': 'Not set',
