@@ -106,6 +106,7 @@ export default function Profile() {
 
   const isPremium = !!user?.isPremium;
   const premiumUntil = formatDate(user?.premiumUntil);
+  const availableMinutes = user?.availableMinutes ?? Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
 
   const level = user?.level || 1;
   const avgRatingNum = Number(stats.avg_rating || 0).toFixed(1);
@@ -220,10 +221,24 @@ export default function Profile() {
               <span>{t(`level.${level}`)} • {t(`levelName.${level}`)}</span>
               <ChevronRight size={11} className="opacity-70" />
             </button>
-            <span className="profile__status-badge">
-              <Crown size={12} className="profile__crown-icon" />
-              <span>Free &amp; Unlimited</span>
-            </span>
+            {isPremium ? (
+              <span className="profile__status-badge profile__status-badge--premium">
+                <Crown size={12} className="profile__crown-icon" />
+                <span>Premium</span>
+              </span>
+            ) : (
+              <button
+                type="button"
+                className="profile__status-badge profile__status-badge--free"
+                onClick={() => {
+                  tapHaptic('light');
+                  navigate('invite', { from: 'profile' });
+                }}
+              >
+                <Clock size={12} className="profile__clock-icon" />
+                <span>{availableMinutes}m Available</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -505,13 +520,23 @@ export default function Profile() {
 
         .profile__status-badge {
           padding: 5px 12px; border-radius: 9999px;
-          background: var(--success-bg);
-          border: 1px solid rgba(16, 185, 129, 0.32);
-          color: var(--success);
+          background: rgba(0, 178, 254, 0.08);
+          border: 1px solid rgba(0, 178, 254, 0.28);
+          color: #00B2FE;
           font-size: 12px; font-weight: 600;
           display: inline-flex; align-items: center; gap: 6px;
+          cursor: pointer;
+          transition: transform 0.15s ease, opacity 0.15s ease;
         }
-        .profile__crown-icon { color: var(--success); }
+        .profile__status-badge:active { transform: scale(0.96); opacity: 0.85; }
+        .profile__status-badge--premium {
+          background: rgba(245, 158, 11, 0.12);
+          border-color: rgba(245, 158, 11, 0.4);
+          color: #F59E0B;
+          cursor: default;
+        }
+        .profile__clock-icon { color: #00B2FE; }
+        .profile__crown-icon { color: #F59E0B; }
 
         .profile__stats-grid {
           display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 4px;

@@ -736,7 +736,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'ai.endWpmLabel': 'Words / min',
 
     'nav.mock': 'Exams',
-    'profile.inviteSub': 'Get free Premium days for each friend',
+    'profile.inviteSub': 'Get +10 bonus minutes for each friend',
     'profile.settingsSub': 'Level, gender and notifications',
     'vocab.newWord': 'New word',
     'vocab.save': 'Save',
