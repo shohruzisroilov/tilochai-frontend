@@ -102,7 +102,7 @@ export default function Invite() {
               </div>
               <div className="w-px h-8 bg-[var(--border)]" />
               <div className="flex flex-col items-center gap-0.5">
-                <span className="text-2xl font-black text-[#34D399] font-mono">{loaded ? count : '—'}</span>
+                <span className="text-2xl font-black text-[#34D399] font-mono">{loaded ? `+${invite?.bonusMinutes ?? count * 10}m` : '—'}</span>
                 <span className="text-xs text-[var(--text-secondary)] font-semibold">{t('im.daysEarned')}</span>
               </div>
             </Card>

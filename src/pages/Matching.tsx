@@ -3,7 +3,7 @@ import { useMatch } from '../hooks/useMatch';
 import { useSocket } from '../hooks/useSocket';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
-import { Users, RotateCcw, Megaphone, MessageSquare, KeyRound, Sparkles } from 'lucide-react';
+import { Users, RotateCcw, Megaphone, MessageSquare, KeyRound, Sparkles, Gift } from 'lucide-react';
 
 const SPEAKING_TIPS = [
   "💡 Icebreaker: Ask your partner where they are from and what they do!",
@@ -82,6 +82,40 @@ export default function Matching() {
   }, [matchingStatus]);
 
   const isTimeout = matchingStatus === 'timeout';
+  const isLimitReached = matchingStatus === 'limit_reached' || (user?.availableMinutes !== undefined && user.availableMinutes <= 0);
+
+  if (isLimitReached) {
+    return (
+      <div className="mt">
+        <div className="mt__body scale-in">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#00B2FE] text-white flex items-center justify-center shadow-lg shadow-purple-900/40">
+            <Gift size={32} />
+          </div>
+
+          <div className="mt__copy">
+            <h2 className="mt__title">15 Minutes Used Today!</h2>
+            <p className="mt__desc">
+              Your free 15 minutes of speaking time for today has ended.
+              Invite friends and get <strong className="text-[var(--text-primary)]">+10 bonus minutes</strong> for each friend who joins!
+            </p>
+          </div>
+
+          <button
+            className="btn-primary flex items-center justify-center gap-2 w-full"
+            onClick={() => navigate('invite', { from: 'matching' })}
+          >
+            <Gift size={18} />
+            <span>Invite Friends (+10m)</span>
+          </button>
+
+          <button className="btn-quiet" onClick={() => navigate('home')}>
+            {t('common.goBack')}
+          </button>
+        </div>
+        <Styles />
+      </div>
+    );
+  }
 
   if (isTimeout) {
     return (

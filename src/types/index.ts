@@ -24,6 +24,8 @@ export interface User {
   daily_free_minutes?: number;
   dailyMinutes?: number;
   dailyLimit?: number;
+  bonusMinutes?: number;
+  availableMinutes?: number;
   primeTimeHour?: number;
   streak_count?: number;
   streakCount?: number;

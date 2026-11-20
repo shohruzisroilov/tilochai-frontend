@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from './Avatar';
 import { useT } from '../i18n';
-import { Flame, ChevronDown } from 'lucide-react';
+import { Flame, ChevronDown, Clock } from 'lucide-react';
 import { User } from '../types';
 import useAppStore from '../store/useAppStore';
 import { tapHaptic } from '../utils/haptics';
@@ -22,6 +22,7 @@ export default function HomeHeader({
 
   const level = user?.level || 1;
   const shown = Math.max(streak, doneToday ? 1 : 0);
+  const availableMinutes = user?.availableMinutes ?? Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
 
   return (
     <>
@@ -54,6 +55,16 @@ export default function HomeHeader({
         </button>
 
         <div className="hh__actions">
+          <button
+            type="button"
+            className={`hh__time-pill ${availableMinutes <= 3 ? 'hh__time-pill--low' : ''}`}
+            onClick={() => { tapHaptic('light'); navigate('invite', { from: 'home' }); }}
+            aria-label="Available minutes today"
+          >
+            <Clock size={13} className={availableMinutes <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
+            <span className="hh__time-val">{availableMinutes}m</span>
+          </button>
+
           {shown > 0 && (
             <div className={`hh__streak ${doneToday ? 'hh__streak--active' : ''}`}>
               <Flame size={15} strokeWidth={2.5} className="hh__flame-icon" />
@@ -108,6 +119,20 @@ export default function HomeHeader({
         
         .hh__actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         
+        .hh__time-pill {
+          display: inline-flex; align-items: center; gap: 4px;
+          padding: 5px 10px; border-radius: var(--radius-full);
+          background: var(--surface); border: 1px solid var(--border);
+          color: var(--text-primary); cursor: pointer;
+          transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+        .hh__time-pill:active { transform: scale(0.94); border-color: var(--primary); }
+        .hh__time-pill--low {
+          border-color: rgba(245, 158, 11, 0.4);
+          background: rgba(245, 158, 11, 0.1);
+        }
+        .hh__time-val { font-family: monospace; font-size: 11px; font-weight: 800; color: var(--text-primary); }
+
         .hh__streak {
           display: flex; align-items: center; gap: 5px;
           padding: 5px 12px; border-radius: var(--radius-full);

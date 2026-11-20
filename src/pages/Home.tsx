@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getMe } from '../api/endpoints';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
@@ -12,6 +12,8 @@ import {
   Flame,
   History,
   ArrowRight,
+  Clock,
+  Gift,
 } from 'lucide-react';
 
 import HomeHeader from '../components/HomeHeader';
@@ -40,6 +42,8 @@ export default function Home() {
 
   const isFemale = user?.gender === 'female';
   const womenOnly = isFemale && partnerPref === 'female';
+  const [limitModalOpen, setLimitModalOpen] = useState(false);
+  const availableMins = user?.availableMinutes ?? Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
 
   useEffect(() => {
     getMe()
@@ -90,14 +94,17 @@ export default function Home() {
             <div className="hero__top-row">
               <span className="hero__tag">
                 <span className="hero__live-dot" />
-                <span>Live voice • 1-on-1</span>
+                <span>15m free daily • 1-on-1</span>
               </span>
-              {waitingCount > 0 && (
-                <span className="hero__online-pill">
-                  <Users size={11} />
-                  <span>{waitingCount} online</span>
-                </span>
-              )}
+              <button
+                type="button"
+                className="hero__online-pill"
+                onClick={() => { tapHaptic('light'); navigate('invite', { from: 'home' }); }}
+                aria-label="Available minutes"
+              >
+                <Clock size={11} className={availableMins <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
+                <span>{availableMins}m left today</span>
+              </button>
             </div>
 
             <div className="hero__content-row">
@@ -123,7 +130,11 @@ export default function Home() {
               className="hero__main-btn"
               onClick={() => {
                 tapHaptic('heavy');
-                navigate('matching');
+                if (availableMins <= 0) {
+                  setLimitModalOpen(true);
+                } else {
+                  navigate('matching');
+                }
               }}
             >
               <div className="hero__mic-icon">
@@ -222,6 +233,48 @@ export default function Home() {
 
         <div className="home__foot" />
       </div>
+
+      {/* ── DAILY LIMIT REACHED MODAL ── */}
+      {limitModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in">
+          <div className="w-full max-w-sm rounded-3xl bg-[var(--surface)] border border-[var(--border)] p-6 flex flex-col items-center text-center space-y-4 shadow-2xl animate-in zoom-in-95">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#00B2FE] text-white flex items-center justify-center shadow-lg shadow-purple-900/40">
+              <Gift className="h-8 w-8" />
+            </div>
+
+            <div className="space-y-1.5">
+              <h2 className="text-xl font-extrabold text-[var(--text-primary)]">
+                Today's 15 mins used!
+              </h2>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                Want to keep talking? Invite your friends and get <strong className="text-[var(--text-primary)]">+10 extra minutes</strong> immediately for each friend who joins!
+              </p>
+            </div>
+
+            <div className="w-full space-y-2 pt-2">
+              <button
+                type="button"
+                className="w-full h-12 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-900/30 active:scale-[0.98] transition-transform"
+                onClick={() => {
+                  setLimitModalOpen(false);
+                  navigate('invite', { from: 'home' });
+                }}
+              >
+                <Gift size={18} />
+                <span>Invite Friends (+10m)</span>
+              </button>
+
+              <button
+                type="button"
+                className="w-full py-2.5 text-xs text-[var(--text-secondary)] font-semibold active:opacity-70"
+                onClick={() => setLimitModalOpen(false)}
+              >
+                Maybe tomorrow
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         /* ── Page Shell ── */

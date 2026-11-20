@@ -55,8 +55,8 @@ export default function Premium() {
               <Mic size={20} />
             </span>
             <div className="free-feat-text">
-              <h3>Unlimited Voice Talks</h3>
-              <p>Talk with real people every day. No time limits.</p>
+              <h3>Daily 15 Minutes Free</h3>
+              <p>Practice speaking with real partners for 15 minutes every single day.</p>
             </div>
             <CheckCircle2 size={18} className="free-check" />
           </div>
@@ -66,8 +66,8 @@ export default function Premium() {
               <Users size={20} />
             </span>
             <div className="free-feat-text">
-              <h3>Partner &amp; Teacher Board</h3>
-              <p>Find study partners, teachers or students. Post a note for free.</p>
+              <h3>+10 Mins per Friend</h3>
+              <p>Invite friends and get +10 bonus minutes for every friend who joins.</p>
             </div>
             <CheckCircle2 size={18} className="free-check" />
           </div>
@@ -78,7 +78,7 @@ export default function Premium() {
             </span>
             <div className="free-feat-text">
               <h3>Zero Payments</h3>
-              <p>No subscriptions or bank cards required. Just open and talk.</p>
+              <p>No cards or paid subscriptions needed. Just open, talk and invite friends.</p>
             </div>
             <CheckCircle2 size={18} className="free-check" />
           </div>

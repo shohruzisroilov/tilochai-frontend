@@ -499,13 +499,13 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
 
     // invite modal
     'im.title': 'Invite Friends',
-    'im.subtitle': '1 free day for every friend who joins.',
+    'im.subtitle': '+10 minutes for every friend who joins. Daily limit is 15 minutes.',
     'im.invited': 'Invited',
-    'im.daysEarned': 'Free days',
-    'im.share': 'Invite a friend',
+    'im.daysEarned': 'Bonus Minutes',
+    'im.share': 'Invite a friend (+10m)',
     'im.copy': 'Copy',
     'im.copied': 'Copied',
-    'im.shareText': 'Join me on Tiloch AI — speak English with real people, free every day.',
+    'im.shareText': 'Practice English with real people for free on Tiloch! Use my link to get free speaking time: ',
     'im.error': 'Could not load your invite link. Please try again.',
     'im.contestTitle': 'Weekly Contest',
     'im.contestEmpty': 'No invites yet — be first!',

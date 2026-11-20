@@ -130,6 +130,10 @@ function attachListeners(sock: Socket) {
     useAppStore.getState().setMatchingStatus('limit_reached');
   });
 
+  sock.on('daily_limit_reached', () => {
+    useAppStore.getState().setMatchingStatus('limit_reached');
+  });
+
   sock.off('connect');
   sock.off('disconnect');
   sock.on('connect', () => {
