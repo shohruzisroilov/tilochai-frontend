@@ -52,8 +52,8 @@ export default function Settings() {
 
   const level = user?.level || 1;
   const gender = user?.gender || null;
-  const learningLang = user?.learningLang || 'en';
-  const nativeLang = user?.nativeLang || 'uz';
+  const learningLang = user?.learningLang || user?.learning_lang || 'en';
+  const nativeLang = user?.nativeLang || user?.native_lang || 'uz';
   const reminders = user?.remindersEnabled !== false;
 
   // Mutation for updating profile details
@@ -73,16 +73,16 @@ export default function Settings() {
   });
 
   function pickLearningLang(code: string) {
-    if (!user || user.learningLang === code) return;
+    if (!user || (user.learningLang === code || user.learning_lang === code)) return;
     selectionHaptic();
-    setUser({ ...user, learningLang: code });
+    setUser({ ...user, learningLang: code, learning_lang: code });
     updateProfileMutation.mutate({ learningLang: code });
   }
 
   function pickNativeLang(code: string) {
-    if (!user || user.nativeLang === code) return;
+    if (!user || (user.nativeLang === code || user.native_lang === code)) return;
     selectionHaptic();
-    setUser({ ...user, nativeLang: code });
+    setUser({ ...user, nativeLang: code, native_lang: code });
     updateProfileMutation.mutate({ nativeLang: code });
   }
 

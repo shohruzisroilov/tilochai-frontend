@@ -10,7 +10,9 @@ export interface User {
   display_name?: string;
   displayName?: string;
   native_lang?: string;
+  nativeLang?: string;
   learning_lang?: string;
+  learningLang?: string;
   level?: number;
   gender?: string | null;
   gender_preference?: string;
