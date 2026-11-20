@@ -191,7 +191,7 @@ const Styles = React.memo(function Styles() {
       .mt__mode-badge {
         display: inline-flex; align-items: center; gap: 6px;
         padding: 5px 14px; border-radius: var(--radius-full);
-        background: var(--primary-subtle); border: 1px solid rgba(40, 120, 240, 0.25);
+        background: var(--primary-subtle); border: 1px solid rgba(53, 12, 168, 0.25);
         color: var(--primary); font-size: 11px; font-weight: var(--weight-bold);
         text-transform: uppercase; letter-spacing: 0.05em;
       }
@@ -229,7 +229,7 @@ const Styles = React.memo(function Styles() {
         width: 92px; height: 92px; border-radius: 50%;
         background: var(--grad-primary); color: #FFFFFF;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        box-shadow: 0 0 35px rgba(40, 120, 240, 0.35), 0 8px 24px rgba(40, 120, 240, 0.2);
+        box-shadow: 0 0 35px rgba(53, 12, 168, 0.35), 0 8px 24px rgba(53, 12, 168, 0.2);
       }
       .mt__core-level {
         font-family: var(--font-display);

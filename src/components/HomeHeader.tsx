@@ -98,7 +98,7 @@ export default function HomeHeader({
           color: var(--primary); background: var(--primary-subtle);
           padding: 2px 7px; border-radius: var(--radius-full);
           letter-spacing: 0.02em; flex-shrink: 0;
-          border: 1px solid rgba(40, 120, 240, 0.25);
+          border: 1px solid rgba(53, 12, 168, 0.25);
           transition: transform 0.15s ease;
         }
         .hh__info:active .hh__level-pill {

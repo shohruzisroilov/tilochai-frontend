@@ -227,7 +227,7 @@ export default function Home() {
           border-radius: var(--radius-lg);
           padding: 18px 16px;
           display: flex; flex-direction: column;
-          box-shadow: 0 8px 24px -4px rgba(40, 120, 240, 0.32), var(--shadow-sm);
+          box-shadow: 0 8px 24px -4px rgba(53, 12, 168, 0.32), var(--shadow-sm);
           transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
           -webkit-tap-highlight-color: transparent;
         }
@@ -312,7 +312,7 @@ export default function Home() {
         .hero__main-btn {
           display: flex; align-items: center; justify-content: center; gap: 10px;
           min-height: 52px; width: 100%;
-          background: #FFFFFF; color: var(--primary, #2878F0);
+          background: #FFFFFF; color: var(--primary);
           border-radius: var(--radius-md); border: none;
           font-size: 15px; font-weight: var(--weight-heavy);
           letter-spacing: -0.01em;
@@ -336,7 +336,7 @@ export default function Home() {
         .hero__mic-pulse {
           position: absolute; inset: -3px;
           border-radius: 50%;
-          border: 1.5px solid rgba(40, 120, 240, 0.35);
+          border: 1.5px solid rgba(53, 12, 168, 0.35);
           animation: micRingPulse 2s ease-out infinite;
         }
         @keyframes micRingPulse {
@@ -345,7 +345,7 @@ export default function Home() {
         }
         .hero__mic-icon {
           display: flex; align-items: center; justify-content: center;
-          color: var(--primary, #2878F0);
+          color: var(--primary);
         }
 
         /* ── Progress Card (Section 7.B) ── */
@@ -386,7 +386,7 @@ export default function Home() {
           background: var(--soft-green, #E6F8F0); color: var(--success, #21B887);
         }
         .home__progress-badge.todo {
-          background: var(--primary-subtle, #EAF2FF); color: var(--primary, #2878F0);
+          background: var(--primary-subtle); color: var(--primary);
         }
 
         .home__section { display: flex; flex-direction: column; gap: var(--space-2); flex-shrink: 0; }

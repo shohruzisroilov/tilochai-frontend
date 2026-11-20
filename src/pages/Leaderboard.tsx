@@ -180,7 +180,7 @@ export default function Leaderboard() {
         }
         .lb-scope-btn.on {
           color: #FFFFFF; background: var(--primary);
-          box-shadow: 0 2px 8px rgba(40, 120, 240, 0.25);
+          box-shadow: 0 2px 8px rgba(53, 12, 168, 0.25);
         }
         .lb-scope-btn:active:not(.on) { background: var(--surface-3); color: var(--text-primary); }
 

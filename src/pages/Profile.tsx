@@ -419,9 +419,9 @@ export default function Profile() {
           position: relative;
           padding: 3px;
           border-radius: 50%;
-          background: linear-gradient(135deg, var(--primary), #38bdf8);
+          background: linear-gradient(135deg, var(--primary), var(--accent-cyan, #00B2FE));
           margin-bottom: 2px;
-          box-shadow: 0 4px 14px rgba(40, 120, 240, 0.25);
+          box-shadow: 0 4px 14px rgba(53, 12, 168, 0.25);
         }
         .profile__name { font-size: 19px; font-weight: var(--weight-heavy); letter-spacing: -0.4px; text-align: center; color: var(--text-primary); }
         .profile__username { font-size: 12px; color: var(--text-secondary); margin-top: -3px; }
@@ -432,7 +432,7 @@ export default function Profile() {
         .profile__level-badge {
           display: inline-flex; align-items: center; gap: 4px;
           padding: 4px 10px; border-radius: var(--radius-full);
-          background: var(--primary-subtle); border: 1px solid rgba(40, 120, 240, 0.25);
+          background: var(--primary-subtle); border: 1px solid rgba(53, 12, 168, 0.25);
           color: var(--primary); font-size: 11px; font-weight: var(--weight-bold);
           cursor: pointer; transition: transform 0.15s ease;
         }

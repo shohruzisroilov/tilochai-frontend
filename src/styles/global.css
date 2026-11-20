@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Suhbatdosh — Premium Design System & Design Tokens
+   Tiloch AI — Brand Color System & Design Tokens
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap');
@@ -11,59 +11,65 @@
 :root {
   color-scheme: light;
 
-  /* ─── Color Palette (Design Direction: Friendly, Modern & Clean) ─────────── */
-  --bg:               #F7F9FC;   /* Main background */
+  /* ─── Color Palette (Tiloch AI: Royal Indigo & Electric Cyan) ─────────── */
+  --bg:               #F7F8FC;   /* Main background with subtle cool tint */
   --surface:          #FFFFFF;   /* Clean white surface */
   --bg-secondary:     #FFFFFF;   /* Card surface */
-  --surface-2:        #F0F3F8;   /* Muted background / inset panels */
-  --surface-3:        #E6EBF2;   /* Hover / active highlights */
-  --surface-inset:    #F0F3F8;
-  --surface-hover:    #EAF2FF;
+  --surface-2:        #F0F2FA;   /* Muted background / inset panels */
+  --surface-3:        #E5E9F5;   /* Hover / active highlights */
+  --surface-inset:    #F0F2FA;
+  --surface-hover:    #EFEBFC;
 
-  /* Primary Blue */
-  --primary:          #2878F0;
-  --primary-hover:    #1F66D0;
-  --primary-active:   #1A55B0;
-  --primary-subtle:   #EAF2FF;   /* Soft blue background */
+  /* Primary Royal Indigo (Exact Brand Hex: #350CA8) */
+  --primary:          #350CA8;
+  --primary-hover:    #2C0A8C;
+  --primary-active:   #240774;
+  --primary-subtle:   #EFEBFC;   /* Soft violet-indigo background */
   --primary-contrast: #FFFFFF;
 
-  --btn-bg:           #2878F0;
-  --btn-bg-hover:     #1F66D0;
+  --btn-bg:           #350CA8;
+  --btn-bg-hover:     #2C0A8C;
   --btn-text:         #FFFFFF;
-  --link-color:       #2878F0;
+  --link-color:       #350CA8;
+
+  /* Speech Bubble Electric Cyan Accent (Exact Brand Hex: #00B2FE) */
+  --accent-cyan:      #00B2FE;
+  --accent-cyan-hover:#009EE0;
+  --accent-cyan-bg:   #E6F7FF;
 
   /* Soft Backgrounds & Accents */
-  --soft-blue:        #EAF2FF;
+  --soft-blue:        #EFEBFC;
+  --soft-cyan:        #E6F7FF;
   --soft-green:       #E6F8F0;
   --soft-yellow:      #FFF5DE;
 
   /* Typography Colors */
-  --text-primary:     #182338;
-  --text-secondary:   #6B778C;
-  --text-tertiary:    #9AA5B8;
+  --text-primary:     #121624;
+  --text-secondary:   #616C82;
+  --text-tertiary:    #919BB0;
 
   /* Status & Accents */
-  --success:          #21B887;
+  --success:          #10B981;
   --success-bg:       #E6F8F0;
 
-  --accent:           #FFC857;
-  --accent-bg:        #FFF5DE;
+  --accent:           #00B2FE;
+  --accent-bg:        #E6F7FF;
   --rating:           #FFC857;
   --rating-bg:        #FFF5DE;
 
   --warning:          #F59E0B;
   --warning-bg:       #FFF5DE;
 
-  --danger:           #FF453A;
-  --danger-bg:        #FFEBEA;
-  --error:            #FF453A;
-  --error-bg:         #FFEBEA;
+  --danger:           #EF4444;
+  --danger-bg:        #FEE2E2;
+  --error:            #EF4444;
+  --error-bg:         #FEE2E2;
 
-  --info:             #2878F0;
-  --info-bg:          #EAF2FF;
+  --info:             #00B2FE;
+  --info-bg:          #E6F7FF;
 
-  --border:           #E6EBF2;
-  --border-strong:    #D5DDE8;
+  --border:           #E5E8F3;
+  --border-strong:    #D3D8EB;
 
   /* Translucent chrome */
   --chrome-bg:        rgba(255, 255, 255, 0.92);
@@ -71,9 +77,9 @@
   --glass-bg:         rgba(255, 255, 255, 0.80);
 
   /* Gradients */
-  --grad-primary:     linear-gradient(135deg, #2878F0 0%, #1F66D0 100%);
-  --grad-hero:        linear-gradient(135deg, #2878F0 0%, #1F66D0 60%, #1754B8 100%);
-  --grad-ai:          linear-gradient(135deg, #2878F0 0%, #00B4D8 100%);
+  --grad-primary:     linear-gradient(135deg, #350CA8 0%, #00B2FE 100%);
+  --grad-hero:        linear-gradient(135deg, #240774 0%, #350CA8 55%, #00B2FE 100%);
+  --grad-ai:          linear-gradient(135deg, #350CA8 0%, #00B2FE 100%);
   --grad-streak:      linear-gradient(135deg, #FFC857 0%, #FF9F0A 100%);
   --grad-gold:        linear-gradient(135deg, #FFD700 0%, #FFC857 100%);
   --grad-silver:      linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%);
@@ -119,10 +125,10 @@
   --radius-full: 9999px;
 
   /* ─── Elevation & Shadows ──────────────────────────────────────────────── */
-  --shadow-sm: 0 1px 3px rgba(24, 35, 56, 0.05), 0 1px 2px rgba(24, 35, 56, 0.03);
-  --shadow-md: 0 4px 16px -2px rgba(24, 35, 56, 0.08), 0 2px 6px -1px rgba(24, 35, 56, 0.04);
-  --shadow-lg: 0 12px 32px -4px rgba(24, 35, 56, 0.12);
-  --shadow-glow: 0 0 25px rgba(40, 120, 240, 0.25);
+  --shadow-sm: 0 1px 3px rgba(18, 22, 36, 0.05), 0 1px 2px rgba(18, 22, 36, 0.03);
+  --shadow-md: 0 4px 16px -2px rgba(18, 22, 36, 0.08), 0 2px 6px -1px rgba(18, 22, 36, 0.04);
+  --shadow-lg: 0 12px 32px -4px rgba(18, 22, 36, 0.12);
+  --shadow-glow: 0 0 25px rgba(53, 12, 168, 0.28);
 
   /* ─── Transitions & Motion ─────────────────────────────────────────────── */
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
@@ -140,66 +146,71 @@
 .dark {
   color-scheme: dark;
 
-  --bg:               #0B0F19;
-  --surface:          #131B2A;
-  --bg-secondary:     #131B2A;
-  --surface-2:        #1A2438;
-  --surface-3:        #222F48;
-  --surface-inset:    #1A2438;
-  --surface-hover:    #222F48;
+  --bg:               #0A0716;   /* Deep indigo black */
+  --surface:          #130E26;   /* Rich dark indigo card */
+  --bg-secondary:     #130E26;
+  --surface-2:        #1B1536;
+  --surface-3:        #251E48;
+  --surface-inset:    #1B1536;
+  --surface-hover:    #251E48;
 
-  --primary:          #2878F0;
-  --primary-hover:    #3E8BFF;
-  --primary-active:   #1F66D0;
-  --primary-subtle:   rgba(40, 120, 240, 0.16);
+  --primary:          #5E35E8;   /* Luminous brand violet for dark theme contrast */
+  --primary-hover:    #714BEF;
+  --primary-active:   #4D23DB;
+  --primary-subtle:   rgba(94, 53, 232, 0.18);
   --primary-contrast: #FFFFFF;
 
-  --btn-bg:           #2878F0;
-  --btn-bg-hover:     #3E8BFF;
+  --btn-bg:           #5E35E8;
+  --btn-bg-hover:     #714BEF;
   --btn-text:         #FFFFFF;
-  --link-color:       #2878F0;
+  --link-color:       #00B2FE;
 
-  --soft-blue:        rgba(40, 120, 240, 0.16);
-  --soft-green:       rgba(33, 184, 135, 0.16);
+  --accent-cyan:      #00B2FE;
+  --accent-cyan-hover:#33C1FF;
+  --accent-cyan-bg:   rgba(0, 178, 254, 0.16);
+
+  --soft-blue:        rgba(94, 53, 232, 0.18);
+  --soft-cyan:        rgba(0, 178, 254, 0.16);
+  --soft-green:       rgba(16, 185, 129, 0.16);
   --soft-yellow:      rgba(255, 200, 87, 0.16);
 
-  --text-primary:     #F8FAFC;
-  --text-secondary:   #94A3B8;
-  --text-tertiary:    #64748B;
+  --text-primary:     #F7F8FC;
+  --text-secondary:   #9C97B8;
+  --text-tertiary:    #6C668A;
 
-  --success:          #21B887;
-  --success-bg:       rgba(33, 184, 135, 0.16);
+  --success:          #10B981;
+  --success-bg:       rgba(16, 185, 129, 0.16);
 
-  --accent:           #FFC857;
-  --accent-bg:        rgba(255, 200, 87, 0.16);
+  --accent:           #00B2FE;   /* Speech bubble cyan */
+  --accent-bg:        rgba(0, 178, 254, 0.16);
   --rating:           #FFC857;
   --rating-bg:        rgba(255, 200, 87, 0.16);
 
   --warning:          #F59E0B;
   --warning-bg:       rgba(245, 158, 11, 0.16);
 
-  --danger:           #FF453A;
-  --danger-bg:        rgba(255, 69, 58, 0.16);
-  --error:            #FF453A;
-  --error-bg:         rgba(255, 69, 58, 0.16);
+  --danger:           #EF4444;
+  --danger-bg:        rgba(239, 68, 68, 0.16);
+  --error:            #EF4444;
+  --error-bg:         rgba(239, 68, 68, 0.16);
 
-  --info:             #2878F0;
-  --info-bg:          rgba(40, 120, 240, 0.16);
+  --info:             #00B2FE;
+  --info-bg:          rgba(0, 178, 254, 0.16);
 
   --border:           rgba(255, 255, 255, 0.08);
   --border-strong:    rgba(255, 255, 255, 0.16);
 
-  --chrome-bg:        rgba(11, 15, 25, 0.92);
-  --chrome-bg-soft:   rgba(11, 15, 25, 0.85);
-  --glass-bg:         rgba(19, 27, 42, 0.75);
+  --chrome-bg:        rgba(10, 7, 22, 0.92);
+  --chrome-bg-soft:   rgba(10, 7, 22, 0.85);
+  --glass-bg:         rgba(19, 14, 38, 0.78);
 
-  --grad-primary:     linear-gradient(135deg, #2878F0 0%, #1F66D0 100%);
-  --grad-hero:        linear-gradient(135deg, #2878F0 0%, #1F66D0 60%, #1754B8 100%);
+  --grad-primary:     linear-gradient(135deg, #5E35E8 0%, #00B2FE 100%);
+  --grad-hero:        linear-gradient(135deg, #350CA8 0%, #5E35E8 55%, #00B2FE 100%);
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 25px rgba(40, 120, 240, 0.3);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 25px rgba(94, 53, 232, 0.35);
 }
 
 /* Reset & Base Styles */
@@ -320,11 +331,11 @@ h1, h2, h3 {
   border-radius: var(--radius-md);
   font-size: var(--text-base); font-weight: var(--weight-bold);
   letter-spacing: -0.01em;
-  box-shadow: 0 4px 14px rgba(40, 120, 240, 0.28);
+  box-shadow: 0 4px 14px rgba(53, 12, 168, 0.28);
   transition: transform var(--t), opacity var(--t), box-shadow var(--t);
   user-select: none;
 }
-.btn-primary:active { transform: scale(0.975); opacity: 0.94; box-shadow: 0 2px 8px rgba(40, 120, 240, 0.15); }
+.btn-primary:active { transform: scale(0.975); opacity: 0.94; box-shadow: 0 2px 8px rgba(53, 12, 168, 0.15); }
 .btn-primary:disabled { opacity: 0.45; pointer-events: none; box-shadow: none; }
 
 .btn-secondary {

@@ -54,6 +54,7 @@ export default {
         accent: {
           DEFAULT: 'var(--accent)',
           soft: 'var(--accent-bg)',
+          cyan: 'var(--accent-cyan)',
         },
         success: {
           DEFAULT: 'var(--success)',

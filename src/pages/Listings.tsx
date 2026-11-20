@@ -1046,7 +1046,7 @@ export default function Listings(_props: ListingsProps) {
           padding: 8px 16px; border-radius: var(--radius-md);
           background: var(--grad-primary);
           color: #FFFFFF; border: none; font-size: 13px; font-weight: var(--weight-bold);
-          box-shadow: 0 4px 14px rgba(40, 120, 240, 0.25); cursor: pointer;
+          box-shadow: 0 4px 14px rgba(53, 12, 168, 0.25); cursor: pointer;
           transition: transform 0.15s var(--ease-out);
         }
         .listings-page__add-btn:active { transform: scale(0.96); }
@@ -1068,7 +1068,7 @@ export default function Listings(_props: ListingsProps) {
         }
         .listings-tab.active {
           background: var(--primary); color: #FFFFFF; border-color: var(--primary);
-          font-weight: var(--weight-bold); box-shadow: 0 2px 8px rgba(40, 120, 240, 0.25);
+          font-weight: var(--weight-bold); box-shadow: 0 2px 8px rgba(53, 12, 168, 0.25);
         }
 
         /* Search + filters */
@@ -1181,7 +1181,7 @@ export default function Listings(_props: ListingsProps) {
           display: inline-flex; align-items: center; gap: 4px;
           padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700;
         }
-        .listing-tag--partner { background: var(--primary-subtle); color: var(--primary); border: 1px solid rgba(40, 120, 240, 0.25); }
+        .listing-tag--partner { background: var(--primary-subtle); color: var(--primary); border: 1px solid rgba(53, 12, 168, 0.25); }
         .listing-tag--teacher { background: rgba(168, 85, 247, 0.12); color: #8B5CF6; border: 1px solid rgba(139, 92, 246, 0.25); }
         .listing-tag--student { background: var(--soft-green); color: var(--success); border: 1px solid rgba(33, 184, 135, 0.25); }
 
@@ -1218,7 +1218,7 @@ export default function Listings(_props: ListingsProps) {
           padding: 10px; border-radius: var(--radius-md);
           background: var(--grad-primary);
           color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer;
-          box-shadow: 0 4px 14px rgba(40, 120, 240, 0.25); transition: transform 0.15s var(--ease-out);
+          box-shadow: 0 4px 14px rgba(53, 12, 168, 0.25); transition: transform 0.15s var(--ease-out);
         }
         .btn-contact:active { transform: scale(0.98); }
 
@@ -1294,7 +1294,7 @@ export default function Listings(_props: ListingsProps) {
 
         .modal-notice {
           padding: 10px 12px; border-radius: var(--radius-sm); background: var(--primary-subtle);
-          border: 1px solid rgba(40, 120, 240, 0.25); color: var(--primary); font-size: 11px; line-height: 1.4;
+          border: 1px solid rgba(53, 12, 168, 0.25); color: var(--primary); font-size: 11px; line-height: 1.4;
           display: flex; align-items: flex-start; gap: 8px;
         }
         .modal-notice__icon { flex-shrink: 0; margin-top: 2px; }
@@ -1307,7 +1307,7 @@ export default function Listings(_props: ListingsProps) {
         .btn-submit {
           flex: 2; padding: 12px; border-radius: var(--radius-md); border: none;
           background: var(--grad-primary); color: #fff; font-size: 13px; font-weight: 800; cursor: pointer;
-          box-shadow: 0 4px 14px rgba(40, 120, 240, 0.25);
+          box-shadow: 0 4px 14px rgba(53, 12, 168, 0.25);
         }
 
         .listing-card__desc.clamped {

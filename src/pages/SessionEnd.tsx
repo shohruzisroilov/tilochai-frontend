@@ -199,9 +199,9 @@ export default function SessionEnd() {
           width: 68px; height: 68px; border-radius: var(--radius-full);
           display: flex; align-items: center; justify-content: center;
           background: var(--primary-subtle);
-          border: 1px solid rgba(40, 120, 240, 0.25);
+          border: 1px solid rgba(53, 12, 168, 0.25);
           color: var(--primary);
-          box-shadow: 0 4px 16px rgba(40, 120, 240, 0.2);
+          box-shadow: 0 4px 16px rgba(53, 12, 168, 0.2);
         }
         .end-head h2 {
           font-family: var(--font-display);
