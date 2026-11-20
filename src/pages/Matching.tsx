@@ -32,7 +32,7 @@ export default function Matching() {
   useEffect(() => {
     const tipInterval = setInterval(() => {
       setTipIndex((prev) => (prev + 1) % SPEAKING_TIPS.length);
-    }, 4500);
+    }, 6000);
     return () => clearInterval(tipInterval);
   }, []);
 
@@ -321,7 +321,7 @@ const Styles = React.memo(function Styles() {
         background: var(--surface-2); border: 1px solid var(--border);
         border-radius: var(--radius-md); padding: 10px 14px;
         font-size: 12px; color: var(--text-secondary); line-height: 1.45;
-        max-width: 330px; text-align: left;
+        max-width: 330px; min-height: 48px; text-align: left;
         animation: fadeIn 0.3s ease;
       }
       .mt__cancel {

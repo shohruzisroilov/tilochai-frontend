@@ -25,6 +25,8 @@ export interface User {
   primeTimeHour?: number;
   streak_count?: number;
   streakCount?: number;
+  longest_streak?: number;
+  longestStreak?: number;
   hasPracticedToday?: boolean;
   total_talk_seconds?: number;
   remindersEnabled?: boolean;

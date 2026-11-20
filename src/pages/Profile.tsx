@@ -113,6 +113,7 @@ export default function Profile() {
   const uniquePartners = stats.unique_partners || 0;
   const totalMinutes = stats.total_minutes || 0;
   const streakCount = stats?.streakCount || user?.streakCount || 0;
+  const longestStreak = stats?.longestStreak || stats?.longest_streak || streakCount;
 
   if (viewMode === 'ratings') {
     return (
@@ -252,7 +253,9 @@ export default function Profile() {
               <Flame size={15} />
             </span>
             <span className="profile__stat-value">{streakCount}</span>
-            <span className="profile__stat-label">Day Streak</span>
+            <span className="profile__stat-label">
+              {longestStreak > streakCount ? `Streak (Best: ${longestStreak})` : 'Day Streak'}
+            </span>
           </div>
         </div>
 

@@ -60,6 +60,8 @@ export interface AppState {
     rating_count?: number;
     streakCount?: number;
     streak_count?: number;
+    longestStreak?: number;
+    longest_streak?: number;
     hasPracticedToday?: boolean;
     has_practiced_today?: boolean;
   };
