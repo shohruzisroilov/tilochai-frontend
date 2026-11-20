@@ -625,7 +625,7 @@ export default function Listings(_props: ListingsProps) {
             <div className="listings-page__header-icon">
               <Users size={19} />
             </div>
-            <div>
+            <div className="flex-1 min-w-0 flex flex-col justify-center py-0.5">
               <h1 className="listings-page__title">{t('listings.title')}</h1>
               <p className="listings-page__sub">{t('listings.subtitle')}</p>
             </div>
@@ -999,7 +999,7 @@ export default function Listings(_props: ListingsProps) {
 
         /* Header */
         .listings-page__header {
-          padding: var(--space-3) var(--space-4) 8px;
+          padding: calc(var(--space-3) + env(safe-area-inset-top, 0px)) var(--space-4) 12px;
           background: var(--chrome-bg);
           border-bottom: 1px solid var(--border);
           backdrop-filter: blur(20px);
@@ -1009,48 +1009,31 @@ export default function Listings(_props: ListingsProps) {
         .listings-page__header-top {
           display: flex; align-items: center; justify-content: space-between; gap: 8px;
         }
-        /* Mine — the author's own board, with the count still awaiting a moderator. */
-        .listings-page__mine-btn {
-          position: relative; flex-shrink: 0;
-          width: 38px; height: 38px; border-radius: 12px;
-          border: 1px solid var(--border); background: var(--surface-2);
-          color: var(--text-secondary);
-          display: flex; align-items: center; justify-content: center;
-          transition: all 0.18s var(--ease-out);
-        }
-        .listings-page__mine-btn.active {
-          background: var(--btn-bg-soft); color: var(--btn-bg); border-color: var(--btn-bg);
-        }
-        .listings-page__mine-dot {
-          position: absolute; top: -5px; right: -5px;
-          min-width: 17px; height: 17px; padding: 0 4px;
-          border-radius: 9px; background: var(--warning); color: #0B1220;
-          font-size: 10px; font-weight: 900; line-height: 17px; text-align: center;
-          border: 2px solid var(--chrome-bg);
-        }
         .listings-page__header-title-wrap {
           flex: 1; min-width: 0;
           display: flex; align-items: center; gap: 12px;
         }
         .listings-page__header-icon {
-          width: 38px; height: 38px; border-radius: 12px;
+          width: 40px; height: 40px; border-radius: 12px;
           display: flex; align-items: center; justify-content: center;
           background: linear-gradient(135deg, #4C1D95 0%, #2E1065 100%);
           border: 1px solid rgba(139, 92, 246, 0.35);
           color: #FFFFFF; flex-shrink: 0;
         }
         .listings-page__title {
-          font-size: 18px; font-weight: 800; color: #FFFFFF;
-          letter-spacing: -0.02em; margin: 0;
+          font-size: 18px; font-weight: 800; color: var(--text-primary);
+          letter-spacing: -0.02em; margin: 0; line-height: 1.2;
         }
         .listings-page__sub {
-          font-size: 11px; color: #94A3B8; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+          font-size: 12px; color: var(--text-secondary); margin: 3px 0 0;
+          line-height: 1.4; padding-bottom: 2px;
+          white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .listings-page__mine-btn {
           width: 38px; height: 38px; border-radius: 12px;
           border: 1px solid var(--border); background: var(--surface);
           color: var(--text-secondary); display: flex; align-items: center; justify-content: center;
-          position: relative; cursor: pointer; transition: all 0.2s var(--ease-out);
+          position: relative; cursor: pointer; transition: all 0.2s var(--ease-out); flex-shrink: 0;
         }
         .listings-page__mine-btn.active {
           background: rgba(124, 58, 237, 0.2); color: var(--primary); border-color: var(--primary);
@@ -1068,8 +1051,9 @@ export default function Listings(_props: ListingsProps) {
           background: linear-gradient(135deg, #7C3AED 0%, #2563EB 100%);
           color: #FFFFFF; border: none; font-size: 13px; font-weight: 700;
           box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4); cursor: pointer;
-          transition: transform 0.15s var(--ease-out);
+          transition: transform 0.15s var(--ease-out); flex-shrink: 0;
         }
+        .listings-page__add-btn:active { transform: scale(0.96); }
         .listings-page__add-btn:active { transform: scale(0.96); }
 
         /* Tabs */
