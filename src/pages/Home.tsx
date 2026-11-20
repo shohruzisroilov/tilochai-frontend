@@ -225,7 +225,7 @@ export default function Home() {
 
       <style>{`
         /* ── Page Shell ── */
-        .home { display: flex; flex-direction: column; height: 100%; overflow: hidden; background: #070512; }
+        .home { display: flex; flex-direction: column; height: 100%; overflow: hidden; background: var(--bg); }
         .home__scroll {
           flex: 1; overflow-y: auto;
           padding: 12px 16px calc(90px + env(safe-area-inset-bottom, 0px));
@@ -347,7 +347,7 @@ export default function Home() {
           border-radius: var(--radius-full); border: none;
           font-size: 15px; font-weight: 800;
           letter-spacing: -0.01em;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
           cursor: pointer;
           transition: transform 0.15s var(--ease-out);
         }
@@ -361,14 +361,14 @@ export default function Home() {
         .home__progress-card {
           display: flex; align-items: center; justify-content: space-between;
           padding: 14px 16px;
-          background: #140E2D;
-          border: 1px solid rgba(139, 92, 246, 0.22);
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 18px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          box-shadow: var(--shadow-sm);
           width: 100%; text-align: left; cursor: pointer;
           transition: transform 0.15s var(--ease-out);
         }
-        .home__progress-card:active { transform: scale(0.99); background: #1B133B; }
+        .home__progress-card:active { transform: scale(0.99); background: var(--surface-2); }
         .home__progress-left {
           display: flex; align-items: center; gap: 12px; min-width: 0;
         }
@@ -383,10 +383,10 @@ export default function Home() {
           display: flex; flex-direction: column; gap: 1px; min-width: 0;
         }
         .home__progress-title {
-          font-size: 14px; font-weight: 700; color: #FFFFFF;
+          font-size: 14px; font-weight: 700; color: var(--text-primary);
         }
         .home__progress-sub {
-          font-size: 12px; color: #94A3B8;
+          font-size: 12px; color: var(--text-secondary);
           overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
         .home__progress-badge {
@@ -401,27 +401,27 @@ export default function Home() {
           color: #10B981;
         }
         .home__progress-badge.todo {
-          background: rgba(124, 58, 237, 0.22);
-          border: 1px solid rgba(139, 92, 246, 0.35);
-          color: #C4B5FD;
+          background: var(--primary-subtle);
+          border: 1px solid var(--border-strong);
+          color: var(--primary);
         }
 
         /* ── Listings Board Card ── */
         .home__board-card {
           display: flex; align-items: center; gap: 12px;
           padding: 14px 16px;
-          background: #140E2D;
-          border: 1px solid rgba(139, 92, 246, 0.22);
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 18px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          box-shadow: var(--shadow-sm);
           width: 100%; text-align: left; cursor: pointer;
           transition: transform 0.15s var(--ease-out);
         }
-        .home__board-card:active { transform: scale(0.99); background: #1B133B; }
+        .home__board-card:active { transform: scale(0.99); background: var(--surface-2); }
         .home__board-icon {
           width: 38px; height: 38px; border-radius: 12px;
           display: flex; align-items: center; justify-content: center;
-          background: linear-gradient(135deg, #4C1D95 0%, #2E1065 100%);
+          background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
           border: 1px solid rgba(139, 92, 246, 0.35);
           color: #FFFFFF; flex-shrink: 0;
         }
@@ -429,21 +429,21 @@ export default function Home() {
           flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;
         }
         .home__board-title {
-          font-size: 14px; font-weight: 700; color: #FFFFFF;
+          font-size: 14px; font-weight: 700; color: var(--text-primary);
         }
         .home__board-sub {
-          font-size: 12px; color: #94A3B8;
+          font-size: 12px; color: var(--text-secondary);
           overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
-        .home__board-arrow { color: #64748B; flex-shrink: 0; }
+        .home__board-arrow { color: var(--text-tertiary); flex-shrink: 0; }
 
         /* ── Recent Practice Section ── */
         .home__section { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
         .home__section-head { display: flex; align-items: center; justify-content: space-between; }
-        .home__section-title { font-size: 14px; font-weight: 700; color: #FFFFFF; }
+        .home__section-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
         .home__see-all-btn {
           display: inline-flex; align-items: center; gap: 4px;
-          font-size: 12px; font-weight: 600; color: #38BDF8;
+          font-size: 12px; font-weight: 600; color: var(--primary);
           cursor: pointer;
         }
         .home__sessions { display: flex; flex-direction: column; gap: 8px; }
@@ -452,22 +452,22 @@ export default function Home() {
         .row {
           display: flex; align-items: center; gap: 12px;
           padding: 12px 14px;
-          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.22);
+          background: var(--surface); border: 1px solid var(--border);
           border-radius: 16px; width: 100%; text-align: left;
         }
         .row--on { border-color: rgba(124, 58, 237, 0.6); }
         .row__ico {
           width: 32px; height: 32px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          background: rgba(124, 58, 237, 0.18); color: #C4B5FD;
+          background: var(--primary-subtle); color: var(--primary);
         }
         .row__ico--primary { background: rgba(16, 185, 129, 0.20); color: #10B981; }
         .row__text { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-        .row__title { font-size: 13px; font-weight: 700; color: #FFFFFF; }
-        .row__sub { font-size: 11px; color: #94A3B8; }
+        .row__title { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+        .row__sub { font-size: 11px; color: var(--text-secondary); }
         .switch {
           flex-shrink: 0; width: 40px; height: 24px; border-radius: var(--radius-full);
-          background: #1F173D; border: 1px solid rgba(139, 92, 246, 0.25);
+          background: var(--surface-2); border: 1px solid var(--border);
           position: relative; transition: all var(--t);
         }
         .switch::after {
@@ -483,17 +483,16 @@ export default function Home() {
         .home__empty {
           display: flex; flex-direction: column; align-items: center; gap: 6px;
           padding: 28px 20px; text-align: center;
-          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.18);
-          border-radius: 18px;
+          background: var(--surface); border: 1px solid var(--border);
+          border-radius: 18px; box-shadow: var(--shadow-sm);
         }
         .home__empty-ico {
           width: 44px; height: 44px; border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          background: rgba(124, 58, 237, 0.18); color: #C4B5FD;
+          background: var(--primary-subtle); color: var(--primary);
           margin-bottom: 4px;
         }
-        .home__empty-title { font-size: 14px; font-weight: 700; color: #FFFFFF; }
-        .home__empty-sub { font-size: 12px; color: #94A3B8; max-width: 260px; }
+        .home__empty-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+        .home__empty-sub { font-size: 12px; color: var(--text-secondary); max-width: 260px; }
         .home__foot { padding-bottom: 8px; }
       `}</style>
     </div>

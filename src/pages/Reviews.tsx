@@ -83,25 +83,25 @@ export default function Reviews() {
   const stats = reviewsData?.stats || null;
 
   return (
-    <div className="flex flex-col h-full bg-[#070512] text-white overflow-hidden">
+    <div className="flex flex-col h-full bg-[var(--bg)] text-[var(--text-primary)] overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 pt-[calc(12px+env(safe-area-inset-top,0px))] border-b border-[rgba(139,92,246,0.18)] shrink-0 bg-[#080614]/85 backdrop-blur-md z-10">
-        <Button variant="ghost" size="icon" className="rounded-full text-white active:bg-[#1D153E]" onClick={() => navigate(screenParams?.from || 'profile')}>
+      <div className="flex items-center justify-between p-4 pt-[calc(12px+env(safe-area-inset-top,0px))] border-b border-[var(--border)] shrink-0 bg-[var(--chrome-bg)] backdrop-blur-md z-10">
+        <Button variant="ghost" size="icon" className="rounded-full text-[var(--text-primary)] active:bg-[var(--surface-2)]" onClick={() => navigate(screenParams?.from || 'profile')}>
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h1 className="text-base font-bold text-white">{t('rm.title')}</h1>
+        <h1 className="text-base font-bold text-[var(--text-primary)]">{t('rm.title')}</h1>
         <div className="w-10" />
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-[calc(40px+env(safe-area-inset-bottom,0px))]">
         {/* Stats summary */}
         {stats && stats.total > 0 && (
-          <Card className="bg-[#140E2D] border-[rgba(139,92,246,0.20)] rounded-2xl shadow-md">
+          <Card className="bg-[var(--surface)] border-[var(--border)] rounded-2xl shadow-md">
             <CardContent className="p-4 flex items-center gap-4">
               <div className="flex flex-col items-center gap-1 min-w-[64px]">
-                <span className="text-3xl font-extrabold text-white">{stats.avg_rating}</span>
+                <span className="text-3xl font-extrabold text-[var(--text-primary)]">{stats.avg_rating}</span>
                 <Stars value={Math.round(Number(stats.avg_rating))} readonly size={15} />
-                <span className="text-[11px] text-[#94A3B8] font-semibold">{stats.total} {t('rm.reviews')}</span>
+                <span className="text-[11px] text-[var(--text-secondary)] font-semibold">{stats.total} {t('rm.reviews')}</span>
               </div>
               <div className="flex-1 space-y-1.5">
                 {[5, 4, 3, 2, 1].map((n) => (
@@ -122,22 +122,22 @@ export default function Reviews() {
           {reviewsLoading ? (
             [0, 1, 2, 3].map((i) => <SkeletonRow key={i} avatar={32} />)
           ) : reviews.length === 0 ? (
-            <div className="text-center text-xs text-[#94A3B8] py-14">
+            <div className="text-center text-xs text-[var(--text-secondary)] py-14">
               {t('rm.noReviews')}
             </div>
           ) : (
             reviews.map((r: any) => (
-              <Card key={r.id} className="p-4 space-y-2 bg-[#140E2D] border-[rgba(139,92,246,0.20)] rounded-2xl shadow-sm">
+              <Card key={r.id} className="p-4 space-y-2 bg-[var(--surface)] border-[var(--border)] rounded-2xl shadow-sm">
                 <div className="flex items-center gap-3">
                   <Avatar name={r.display_name} size={36} />
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold truncate text-white">{r.display_name || t('common.anonymous')}</div>
-                    <div className="text-[10px] text-[#94A3B8] font-medium">{timeAgo(r.created_at, t)}</div>
+                    <div className="text-xs font-bold truncate text-[var(--text-primary)]">{r.display_name || t('common.anonymous')}</div>
+                    <div className="text-[10px] text-[var(--text-secondary)] font-medium">{timeAgo(r.created_at, t)}</div>
                   </div>
                   <Stars value={r.rating} readonly size={13} />
                 </div>
                 {r.comment && (
-                  <p className="text-xs text-[#E2E8F0] leading-relaxed pl-12 italic">
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed pl-12 italic">
                     "{r.comment}"
                   </p>
                 )}

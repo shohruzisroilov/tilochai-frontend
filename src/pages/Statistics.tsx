@@ -167,12 +167,12 @@ export default function Statistics() {
       </div>
 
       <style>{`
-        .stx-page { display: flex; flex-direction: column; height: 100%; background: #070512; }
+        .stx-page { display: flex; flex-direction: column; height: 100%; background: var(--bg); }
         .stx-topbar {
           display: flex; align-items: center; justify-content: space-between;
           padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px;
-          border-bottom: 1px solid rgba(139, 92, 246, 0.18);
-          background: rgba(8, 6, 20, 0.85);
+          border-bottom: 1px solid var(--border);
+          background: var(--chrome-bg);
           backdrop-filter: blur(12px);
           flex-shrink: 0;
           z-index: 10;
@@ -180,12 +180,12 @@ export default function Statistics() {
         .stx-back {
           width: 38px; height: 38px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          background: #140E2D; color: #FFFFFF;
-          border: 1px solid rgba(139, 92, 246, 0.25);
+          background: var(--surface); color: var(--text-primary);
+          border: 1px solid var(--border);
           transition: transform 0.15s, background 0.15s;
         }
-        .stx-back:active { transform: scale(0.94); background: #1D153E; }
-        .stx-topbar-title { font-size: 16px; font-weight: 800; color: #FFFFFF; }
+        .stx-back:active { transform: scale(0.94); background: var(--surface-2); }
+        .stx-topbar-title { font-size: 16px; font-weight: 800; color: var(--text-primary); }
 
         .stx-scroll {
           flex: 1; overflow-y: auto;
@@ -195,25 +195,25 @@ export default function Statistics() {
         }
 
         .stx-card {
-          background: #140E2D;
-          border: 1px solid rgba(139, 92, 246, 0.20);
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 20px;
           padding: 18px;
           display: flex; flex-direction: column; gap: 16px;
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
         }
         .stx-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-        .stx-card-title { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; color: #FFFFFF; }
-        .stx-card-sub { font-size: 12px; color: #94A3B8; margin-top: 3px; }
+        .stx-card-title { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; color: var(--text-primary); }
+        .stx-card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
 
         .stx-seg {
           display: flex; gap: 4px; padding: 4px;
-          background: #191138; border: 1px solid rgba(139, 92, 246, 0.20);
+          background: var(--surface-2); border: 1px solid var(--border);
           border-radius: 9999px;
         }
         .stx-seg-btn {
           flex: 1; padding: 8px 0; border-radius: 9999px;
-          font-size: 12px; font-weight: 700; color: #94A3B8;
+          font-size: 12px; font-weight: 700; color: var(--text-secondary);
           transition: background 0.18s, color 0.18s;
           border: none; background: transparent; cursor: pointer;
         }
@@ -225,13 +225,13 @@ export default function Statistics() {
 
         .stx-summary {
           display: flex; align-items: center; justify-content: center; gap: 12px;
-          font-size: 14px; font-weight: 800; color: #FFFFFF;
+          font-size: 14px; font-weight: 800; color: var(--text-primary);
           padding: 10px 16px;
-          background: rgba(124, 58, 237, 0.15);
-          border: 1px solid rgba(139, 92, 246, 0.25);
+          background: rgba(124, 58, 237, 0.12);
+          border: 1px solid var(--border);
           border-radius: 12px;
         }
-        .stx-summary-sep { color: #A78BFA; font-weight: 600; }
+        .stx-summary-sep { color: var(--primary); font-weight: 600; }
 
         .stx-chart {
           display: flex; align-items: flex-end; justify-content: space-between;
@@ -248,7 +248,7 @@ export default function Statistics() {
         }
         .stx-bar {
           width: 70%; max-width: 22px; min-height: 0;
-          background: rgba(148, 163, 184, 0.18);
+          background: rgba(148, 163, 184, 0.25);
           border-radius: 6px 6px 3px 3px;
           transition: height 0.45s ease-out;
         }
@@ -260,14 +260,14 @@ export default function Statistics() {
         .stx-bar--skel { height: 40%; opacity: 0.3; }
         .stx-chart--skel { opacity: 0.4; }
         .stx-bar-day {
-          font-size: 11px; color: #64748B; font-weight: 600;
+          font-size: 11px; color: var(--text-secondary); font-weight: 600;
           text-transform: capitalize; white-space: nowrap;
         }
         .stx-chart--dense .stx-bar-day { font-size: 10px; }
-        .stx-bar-day--today { color: #C4B5FD; font-weight: 800; }
+        .stx-bar-day--today { color: var(--primary); font-weight: 800; }
 
         .stx-empty {
-          text-align: center; color: #94A3B8;
+          text-align: center; color: var(--text-secondary);
           font-size: 13px; padding: 32px 0;
         }
       `}</style>

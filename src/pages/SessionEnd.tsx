@@ -187,7 +187,7 @@ export default function SessionEnd() {
       <style>{`
         .end-screen {
           display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-          padding: 32px 16px 40px; flex: 1; background: #070512;
+          padding: 32px 16px 40px; flex: 1; background: var(--bg);
           overflow-y: auto; overflow-x: hidden; width: 100%; position: relative;
         }
         .end-body {
@@ -200,38 +200,38 @@ export default function SessionEnd() {
           display: flex; align-items: center; justify-content: center;
           background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(0, 178, 254, 0.35));
           border: 1.5px solid rgba(139, 92, 246, 0.4);
-          color: #C4B5FD;
+          color: var(--primary);
           box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
         }
         .end-head h2 {
-          font-size: 22px; font-weight: 800; letter-spacing: -0.4px; color: #FFFFFF;
+          font-size: 22px; font-weight: 800; letter-spacing: -0.4px; color: var(--text-primary);
         }
-        .end-head p  { font-size: 13px; color: #94A3B8; margin-top: 4px; line-height: 1.4; }
+        .end-head p  { font-size: 13px; color: var(--text-secondary); margin-top: 4px; line-height: 1.4; }
 
         .end-card {
-          width: 100%; background: #140E2D;
-          border: 1px solid rgba(139, 92, 246, 0.20); border-radius: 20px;
+          width: 100%; background: var(--surface);
+          border: 1px solid var(--border); border-radius: 20px;
           padding: 6px 0; display: flex; flex-direction: column;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
         .end-row {
           display: flex; justify-content: space-between; align-items: center;
           padding: 12px 18px;
-          font-size: 13px; color: #94A3B8;
-          border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+          font-size: 13px; color: var(--text-secondary);
+          border-bottom: 1px solid var(--border);
         }
         .end-row:last-child { border-bottom: none; }
-        .end-row-val { font-weight: 700; color: #FFFFFF; }
+        .end-row-val { font-weight: 700; color: var(--text-primary); }
 
         .end-rate { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
-        .end-rate-title { font-size: 15px; font-weight: 700; color: #FFFFFF; }
-        .end-rate-label { font-size: 13px; color: #A78BFA; min-height: 20px; font-weight: 600; }
+        .end-rate-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+        .end-rate-label { font-size: 13px; color: var(--primary); min-height: 20px; font-weight: 600; }
 
         .stars { display: flex; gap: 6px; }
         .star {
           width: 48px; height: 48px;
           display: flex; align-items: center; justify-content: center;
-          color: rgba(148, 163, 184, 0.25);
+          color: rgba(148, 163, 184, 0.35);
           transition: transform 0.15s, color 0.15s;
           background: transparent; border: none; cursor: pointer;
         }
@@ -239,11 +239,11 @@ export default function SessionEnd() {
         .star:active { transform: scale(0.88); }
 
         .end-skip {
-          font-size: 13px; color: #64748B;
+          font-size: 13px; color: var(--text-tertiary);
           padding: 8px; font-weight: 600; transition: color 0.15s;
           background: transparent; border: none; cursor: pointer;
         }
-        .end-skip:active { color: #94A3B8; }
+        .end-skip:active { color: var(--text-secondary); }
 
         .end-thanks { font-size: 15px; font-weight: 700; color: #34D399; }
         .end-actions { display: flex; flex-direction: column; gap: 8px; width: 100%; }
@@ -254,8 +254,8 @@ export default function SessionEnd() {
           min-height: 48px; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
         }
         .end-actions .btn-secondary {
-          background: #140E2D; color: #FFFFFF;
-          border: 1px solid rgba(139, 92, 246, 0.20); border-radius: 14px;
+          background: var(--surface); color: var(--text-primary);
+          border: 1px solid var(--border); border-radius: 14px;
           min-height: 48px;
         }
 
@@ -269,27 +269,27 @@ export default function SessionEnd() {
           display: flex; flex-direction: column; align-items: center; gap: 3px;
           padding: 12px 6px;
           border-radius: 16px;
-          border: 1px solid rgba(139, 92, 246, 0.20);
-          background: #140E2D;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+          border: 1px solid var(--border);
+          background: var(--surface);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         .end-ai-stat__value {
           font-size: 18px; font-weight: 800;
-          color: #FFFFFF; line-height: 1;
+          color: var(--text-primary); line-height: 1;
         }
         .end-ai-stat__label {
           font-size: 9px; font-weight: 700;
           text-transform: uppercase; letter-spacing: 0.06em;
-          color: #94A3B8; text-align: center;
+          color: var(--text-secondary); text-align: center;
         }
 
         .end-report {
           display: flex; align-items: center; justify-content: center; gap: 6px;
-          font-size: 12px; color: #64748B;
+          font-size: 12px; color: var(--text-tertiary);
           padding: 8px; font-weight: 600; margin-top: 4px;
           background: transparent; border: none; cursor: pointer;
         }
-        .end-report:active { color: #94A3B8; }
+        .end-report:active { color: var(--text-secondary); }
         .end-report-done {
           display: flex; align-items: center; justify-content: center; gap: 6px;
           font-size: 12px; color: #34D399;

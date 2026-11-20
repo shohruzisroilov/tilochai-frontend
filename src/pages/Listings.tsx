@@ -1048,19 +1048,19 @@ export default function Listings(_props: ListingsProps) {
         }
         .listings-page__mine-btn {
           width: 38px; height: 38px; border-radius: 12px;
-          border: 1px solid rgba(139, 92, 246, 0.25); background: #150F2C;
-          color: #94A3B8; display: flex; align-items: center; justify-content: center;
+          border: 1px solid var(--border); background: var(--surface);
+          color: var(--text-secondary); display: flex; align-items: center; justify-content: center;
           position: relative; cursor: pointer; transition: all 0.2s var(--ease-out);
         }
         .listings-page__mine-btn.active {
-          background: rgba(124, 58, 237, 0.3); color: #C4B5FD; border-color: #7C3AED;
+          background: rgba(124, 58, 237, 0.2); color: var(--primary); border-color: var(--primary);
         }
         .listings-page__mine-dot {
           position: absolute; top: -3px; right: -3px;
           min-width: 16px; height: 16px; border-radius: 99px;
-          background: #7C3AED; color: #FFFFFF;
+          background: var(--primary); color: #FFFFFF;
           font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center;
-          padding: 0 4px; border: 2px solid #070512;
+          padding: 0 4px; border: 2px solid var(--bg);
         }
         .listings-page__add-btn {
           display: flex; align-items: center; gap: 6px;
@@ -1149,9 +1149,9 @@ export default function Listings(_props: ListingsProps) {
         /* Empty State */
         .listings-empty {
           display: flex; flex-direction: column; align-items: center; text-align: center;
-          padding: 36px 20px; gap: 12px; background: #110B26;
-          border: 1px solid rgba(139, 92, 246, 0.22); border-radius: 22px; margin-top: 12px;
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+          padding: 36px 20px; gap: 12px; background: var(--surface);
+          border: 1px solid var(--border); border-radius: 22px; margin-top: 12px;
+          box-shadow: var(--shadow-sm);
         }
         .listings-empty__art {
           position: relative; width: 100px; height: 90px;
@@ -1161,7 +1161,7 @@ export default function Listings(_props: ListingsProps) {
         .listings-empty__sheet {
           width: 58px; height: 72px; border-radius: 12px;
           background: linear-gradient(135deg, #EEF2FF 0%, #C7D2FE 100%);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.15);
           position: relative; display: flex; flex-direction: column;
           align-items: center; padding-top: 10px; gap: 5px;
         }
@@ -1173,7 +1173,7 @@ export default function Listings(_props: ListingsProps) {
           width: 26px; height: 26px; border-radius: 50%;
           background: #4F46E5; color: #FFFFFF; font-size: 16px; font-weight: 800;
           display: flex; align-items: center; justify-content: center;
-          border: 2px solid #110B26; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.5);
+          border: 2px solid var(--surface); box-shadow: 0 2px 8px rgba(79, 70, 229, 0.5);
         }
         .listings-empty__badge-plane {
           position: absolute; top: -4px; right: -4px; font-size: 22px;
@@ -1183,8 +1183,8 @@ export default function Listings(_props: ListingsProps) {
           0%, 100% { transform: translate(0, 0); }
           50% { transform: translate(3px, -4px); }
         }
-        .listings-empty h3 { font-size: 17px; font-weight: 800; color: #FFFFFF; margin: 0; }
-        .listings-empty p { font-size: 13px; color: #94A3B8; max-width: 260px; margin: 0; line-height: 1.45; }
+        .listings-empty h3 { font-size: 17px; font-weight: 800; color: var(--text-primary); margin: 0; }
+        .listings-empty p { font-size: 13px; color: var(--text-secondary); max-width: 260px; margin: 0; line-height: 1.45; }
         .listings-empty__cta-btn {
           display: flex; align-items: center; justify-content: center; gap: 8px;
           padding: 12px 24px; min-height: 48px; width: 100%; max-width: 280px;
@@ -1199,14 +1199,8 @@ export default function Listings(_props: ListingsProps) {
 
         /* Card */
         .listing-card {
-          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.2);
+          background: var(--surface); border: 1px solid var(--border);
           border-radius: 20px; padding: 16px;
-          display: flex; flex-direction: column; gap: 10px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-          transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
-        }
-        .listing-card:hover { border-color: rgba(139, 92, 246, 0.4); }
-          border-radius: var(--radius-lg); padding: 14px 16px;
           display: flex; flex-direction: column; gap: 10px;
           box-shadow: var(--shadow-sm);
           transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);

@@ -64,19 +64,19 @@ export default function Invite() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-[#070512] text-white overflow-hidden">
+    <div className="flex flex-col h-full bg-[var(--bg)] text-[var(--text-primary)] overflow-hidden">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-3 pt-[calc(10px+env(safe-area-inset-top,0px))] pb-2 border-b border-[rgba(139,92,246,0.18)] bg-[#080614]/80 backdrop-blur-md shrink-0">
+      <div className="flex items-center justify-between px-3 pt-[calc(10px+env(safe-area-inset-top,0px))] pb-2 border-b border-[var(--border)] bg-[var(--chrome-bg)] backdrop-blur-md shrink-0">
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full text-white active:bg-[#1D153E]"
+          className="rounded-full text-[var(--text-primary)] active:bg-[var(--surface-2)]"
           onClick={() => { tapHaptic('light'); navigate(screenParams?.from || 'profile'); }}
           aria-label={t('common.goBack')}
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <span className="text-base font-bold text-white">{t('im.title')}</span>
+        <span className="text-base font-bold text-[var(--text-primary)]">{t('im.title')}</span>
         <div className="w-10" />
       </div>
 
@@ -86,8 +86,8 @@ export default function Invite() {
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#00B2FE] text-white flex items-center justify-center shadow-lg shadow-purple-900/40">
             <Gift className="h-8 w-8" />
           </div>
-          <h1 className="text-xl font-extrabold tracking-tight text-white">{t('im.title')}</h1>
-          <p className="text-xs text-[#94A3B8] max-w-[280px] leading-relaxed">{t('im.subtitle')}</p>
+          <h1 className="text-xl font-extrabold tracking-tight text-[var(--text-primary)]">{t('im.title')}</h1>
+          <p className="text-xs text-[var(--text-secondary)] max-w-[280px] leading-relaxed">{t('im.subtitle')}</p>
         </div>
 
         {error && !loaded ? (
@@ -95,15 +95,15 @@ export default function Invite() {
         ) : (
           <>
             {/* Stats */}
-            <Card className="p-4 flex items-center justify-around text-center bg-[#140E2D] border-[rgba(139,92,246,0.20)] rounded-2xl shadow-md">
+            <Card className="p-4 flex items-center justify-around text-center bg-[var(--surface)] border-[var(--border)] rounded-2xl shadow-md">
               <div className="flex flex-col items-center gap-0.5">
-                <span className="text-2xl font-black text-white font-mono">{loaded ? count : '—'}</span>
-                <span className="text-xs text-[#94A3B8] font-semibold">{t('im.invited')}</span>
+                <span className="text-2xl font-black text-[var(--text-primary)] font-mono">{loaded ? count : '—'}</span>
+                <span className="text-xs text-[var(--text-secondary)] font-semibold">{t('im.invited')}</span>
               </div>
-              <div className="w-px h-8 bg-[rgba(139,92,246,0.20)]" />
+              <div className="w-px h-8 bg-[var(--border)]" />
               <div className="flex flex-col items-center gap-0.5">
                 <span className="text-2xl font-black text-[#34D399] font-mono">{loaded ? count : '—'}</span>
-                <span className="text-xs text-[#94A3B8] font-semibold">{t('im.daysEarned')}</span>
+                <span className="text-xs text-[var(--text-secondary)] font-semibold">{t('im.daysEarned')}</span>
               </div>
             </Card>
 
@@ -111,9 +111,9 @@ export default function Invite() {
             {loaded && link && (
               <Card
                 onClick={handleCopy}
-                className="p-3.5 border-dashed border-[rgba(139,92,246,0.45)] bg-[#140E2D] flex items-center justify-between gap-2 cursor-pointer hover:bg-[#191138] transition-colors rounded-2xl shadow-sm"
+                className="p-3.5 border-dashed border-[rgba(139,92,246,0.45)] bg-[var(--surface)] flex items-center justify-between gap-2 cursor-pointer hover:bg-[var(--surface-2)] transition-colors rounded-2xl shadow-sm"
               >
-                <span className="text-xs text-[#C4B5FD] truncate flex-1 font-mono">{link}</span>
+                <span className="text-xs text-[var(--primary)] truncate flex-1 font-mono">{link}</span>
                 <Button size="sm" type="button" className="h-8 text-xs font-bold gap-1 shrink-0 bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white">
                   {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                   <span>{copied ? t('im.copied') : t('im.copy')}</span>
@@ -122,13 +122,13 @@ export default function Invite() {
             )}
 
             {/* Weekly Contest */}
-            <Card className="p-4 space-y-3 bg-[#140E2D] border-[rgba(139,92,246,0.20)] rounded-2xl shadow-md">
+            <Card className="p-4 space-y-3 bg-[var(--surface)] border-[var(--border)] rounded-2xl shadow-md">
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 text-sm font-bold text-white">
+                <div className="flex items-center gap-2 text-sm font-bold text-[var(--text-primary)]">
                   <Trophy className="h-4 w-4 text-amber-400" />
                   <span>{t('im.contestTitle')}</span>
                 </div>
-                <span className="text-[11px] text-[#94A3B8] font-medium">{t('im.contestResets')}</span>
+                <span className="text-[11px] text-[var(--text-secondary)] font-medium">{t('im.contestResets')}</span>
               </div>
 
               <div className="space-y-2">
@@ -136,25 +136,25 @@ export default function Invite() {
                   weeklyTop.map((u: any, i: number) => (
                     <div
                       key={u.id}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-[#191138] border border-[rgba(139,92,246,0.15)]"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-[var(--surface-2)] border border-[var(--border)]"
                     >
                       <div className="w-6 flex items-center justify-center">{renderRankBadge(i)}</div>
-                      <span className="flex-1 text-xs font-semibold truncate text-white">{u.name}</span>
-                      <span className="text-xs font-bold text-[#C4B5FD] font-mono">
+                      <span className="flex-1 text-xs font-semibold truncate text-[var(--text-primary)]">{u.name}</span>
+                      <span className="text-xs font-bold text-[var(--primary)] font-mono">
                         {u.count} {u.count === 1 ? t('im.contestFriend') : t('im.contestFriends')}
                       </span>
                     </div>
                   ))
                 ) : (
-                  <p className="text-xs text-[#94A3B8] italic text-center py-2">
+                  <p className="text-xs text-[var(--text-secondary)] italic text-center py-2">
                     {t('im.contestEmpty')}
                   </p>
                 )}
               </div>
 
-              <div className="flex items-center justify-between text-xs text-[#94A3B8] pt-2 border-t border-[rgba(139,92,246,0.15)]">
+              <div className="flex items-center justify-between text-xs text-[var(--text-secondary)] pt-2 border-t border-[var(--border)]">
                 <span>{t('im.contestYou')}</span>
-                <strong className="text-white font-bold">
+                <strong className="text-[var(--text-primary)] font-bold">
                   {weeklyCount > 0
                     ? `${weeklyCount} ${weeklyCount === 1 ? t('im.contestFriend') : t('im.contestFriends')} (${t('im.contestRank').replace('{rank}', String(weeklyRank))})`
                     : t('im.contestNone')}
@@ -166,7 +166,7 @@ export default function Invite() {
       </div>
 
       {/* CTA */}
-      <div className="p-4 pb-8 border-t border-[rgba(139,92,246,0.18)] bg-[#080614]/90 backdrop-blur-md shrink-0">
+      <div className="p-4 pb-8 border-t border-[var(--border)] bg-[var(--chrome-bg)] backdrop-blur-md shrink-0">
         <Button onClick={handleShare} disabled={!loaded || !link} className="w-full h-12 bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-900/30" size="lg">
           <Send className="h-4 w-4 mr-2" />
           <span>{t('im.share')}</span>

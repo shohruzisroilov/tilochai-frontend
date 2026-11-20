@@ -71,13 +71,13 @@ export default function BottomNav({ active }: BottomNavProps) {
       <style>{`
         .bottom-nav {
           position: relative; z-index: 100;
-          border-top: 1px solid rgba(139, 92, 246, 0.18);
-          background: rgba(8, 6, 20, 0.94);
+          border-top: 1px solid var(--border);
+          background: var(--chrome-bg);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           padding-bottom: env(safe-area-inset-bottom, 0px);
           flex-shrink: 0;
-          box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45);
+          box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
         }
         .bottom-nav__inner {
           display: flex; align-items: center; justify-content: space-around;
@@ -86,12 +86,12 @@ export default function BottomNav({ active }: BottomNavProps) {
         .bottom-nav__item {
           flex: 1; height: 100%;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
-          gap: 3px; color: #71717A;
+          gap: 3px; color: var(--text-tertiary);
           position: relative;
           transition: color 0.18s var(--ease-out), transform 0.12s var(--ease-out);
         }
         .bottom-nav__item:active { transform: scale(0.92); }
-        .bottom-nav__item.active { color: #C4B5FD; font-weight: 700; }
+        .bottom-nav__item.active { color: var(--primary); font-weight: 700; }
 
         .bottom-nav__icon-wrap {
           position: relative;

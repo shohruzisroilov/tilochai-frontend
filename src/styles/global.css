@@ -147,6 +147,88 @@
   color-scheme: dark;
 }
 
+.light {
+  color-scheme: light;
+  --bg:               #F8FAFC;   /* Crisp clean slate-white */
+  --surface:          #FFFFFF;   /* Pure white cards */
+  --bg-secondary:     #FFFFFF;
+  --surface-2:        #F1F5F9;   /* Inset panels / chips */
+  --surface-3:        #E2E8F0;   /* Elevated interactive states */
+  --surface-inset:    #F8FAFC;
+  --surface-hover:    #F1F5F9;
+
+  /* Primary Violet & Purple Accents */
+  --primary:          #7C3AED;
+  --primary-hover:    #6D28D9;
+  --primary-active:   #5B21B6;
+  --primary-subtle:   rgba(124, 58, 237, 0.10);
+  --primary-contrast: #FFFFFF;
+
+  --btn-bg:           #7C3AED;
+  --btn-bg-hover:     #6D28D9;
+  --btn-text:         #FFFFFF;
+  --link-color:       #2563EB;
+
+  /* Electric Cyan / Blue Accent */
+  --accent-cyan:      #0284C7;
+  --accent-cyan-hover:#0369A1;
+  --accent-cyan-bg:   rgba(2, 132, 199, 0.10);
+
+  /* Soft Backgrounds & Accents */
+  --soft-blue:        rgba(124, 58, 237, 0.08);
+  --soft-cyan:        rgba(2, 132, 199, 0.08);
+  --soft-green:       rgba(16, 185, 129, 0.12);
+  --soft-yellow:      rgba(245, 158, 11, 0.12);
+
+  /* Typography Colors */
+  --text-primary:     #0F172A;   /* Deep slate-black */
+  --text-secondary:   #64748B;   /* Slate */
+  --text-tertiary:    #94A3B8;
+
+  /* Status & Accents */
+  --success:          #059669;   /* Emerald green */
+  --success-bg:       rgba(16, 185, 129, 0.12);
+
+  --accent:           #0284C7;
+  --accent-bg:        rgba(2, 132, 199, 0.10);
+  --rating:           #D97706;
+  --rating-bg:        rgba(217, 119, 6, 0.12);
+
+  --warning:          #D97706;
+  --warning-bg:       rgba(217, 119, 6, 0.12);
+
+  --danger:           #DC2626;
+  --danger-bg:        rgba(220, 38, 38, 0.12);
+  --error:            #DC2626;
+  --error-bg:         rgba(220, 38, 38, 0.12);
+
+  --info:             #0284C7;
+  --info-bg:          rgba(2, 132, 199, 0.10);
+
+  --border:           rgba(139, 92, 246, 0.16);
+  --border-strong:    rgba(139, 92, 246, 0.32);
+
+  /* Translucent Chrome & Glassmorphism */
+  --chrome-bg:        rgba(255, 255, 255, 0.90);
+  --chrome-bg-soft:   rgba(255, 255, 255, 0.80);
+  --glass-bg:         rgba(255, 255, 255, 0.92);
+
+  /* Gradients */
+  --grad-primary:     linear-gradient(135deg, #7C3AED 0%, #0284C7 100%);
+  --grad-hero:        linear-gradient(135deg, #6D28D9 0%, #4338CA 50%, #0369A1 100%);
+  --grad-btn:         linear-gradient(90deg, #7C3AED 0%, #2563EB 100%);
+  --grad-streak:      linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  --grad-gold:        linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  --grad-silver:      linear-gradient(135deg, #64748B 0%, #475569 100%);
+  --grad-bronze:      linear-gradient(135deg, #D97706 0%, #B45309 100%);
+
+  /* Elevation & Shadows */
+  --shadow-sm:        0 2px 8px rgba(124, 58, 237, 0.06);
+  --shadow-md:        0 8px 24px rgba(124, 58, 237, 0.10);
+  --shadow-lg:        0 16px 36px rgba(124, 58, 237, 0.14);
+  --shadow-glow:      0 0 20px rgba(124, 58, 237, 0.18);
+}
+
 /* Reset & Base Styles */
 *, *::before, *::after {
   box-sizing: border-box;

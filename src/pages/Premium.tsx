@@ -100,13 +100,13 @@ export default function Premium() {
       <style>{`
         .free-page {
           display: flex; flex-direction: column; height: 100%;
-          background: #070512; color: #FFFFFF;
+          background: var(--bg); color: var(--text-primary);
         }
         .free-topbar {
           display: flex; align-items: center; justify-content: space-between;
           padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
-          border-bottom: 1px solid rgba(139, 92, 246, 0.18);
-          background: rgba(8, 6, 20, 0.85);
+          border-bottom: 1px solid var(--border);
+          background: var(--chrome-bg);
           backdrop-filter: blur(20px);
           flex-shrink: 0;
           z-index: 10;
@@ -114,12 +114,12 @@ export default function Premium() {
         .free-back {
           width: 38px; height: 38px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          color: #FFFFFF; background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.25);
+          color: var(--text-primary); background: var(--surface); border: 1px solid var(--border);
           cursor: pointer; transition: transform 0.15s;
         }
         .free-back:active { transform: scale(0.94); }
         .free-topbar-title {
-          font-size: 16px; font-weight: 800; color: #FFFFFF;
+          font-size: 16px; font-weight: 800; color: var(--text-primary);
         }
         .free-scroll {
           flex: 1; overflow-y: auto; padding: 20px 16px calc(40px + env(safe-area-inset-bottom, 0px));
@@ -128,22 +128,22 @@ export default function Premium() {
         .free-hero {
           text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px;
           padding: 28px 18px; border-radius: 24px;
-          background: linear-gradient(180deg, rgba(124, 58, 237, 0.25) 0%, rgba(20, 14, 45, 0.6) 100%);
-          border: 1px solid rgba(139, 92, 246, 0.3);
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+          background: var(--surface);
+          border: 1px solid var(--border);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
         .free-hero__badge {
           display: inline-flex; align-items: center; gap: 6px;
           padding: 5px 12px; border-radius: 9999px;
-          background: rgba(16, 185, 129, 0.18); color: #34D399;
+          background: rgba(16, 185, 129, 0.15); color: #10B981;
           border: 1px solid rgba(16, 185, 129, 0.3);
           font-size: 12px; font-weight: 700;
         }
         .free-hero h2 {
-          font-size: 24px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.25; color: #FFFFFF;
+          font-size: 24px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.25; color: var(--text-primary);
         }
         .free-hero p {
-          font-size: 13px; color: #94A3B8; line-height: 1.5;
+          font-size: 13px; color: var(--text-secondary); line-height: 1.5;
         }
         .free-features {
           display: flex; flex-direction: column; gap: 12px;
@@ -151,22 +151,22 @@ export default function Premium() {
         .free-feat-item {
           display: flex; align-items: center; gap: 14px;
           padding: 16px; border-radius: 20px;
-          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.20);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          background: var(--surface); border: 1px solid var(--border);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
         .free-feat-ico {
           width: 44px; height: 44px; border-radius: 12px;
-          background: rgba(124, 58, 237, 0.25); color: #C4B5FD;
+          background: rgba(124, 58, 237, 0.15); color: var(--primary);
           display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
         .free-feat-text { flex: 1; min-width: 0; }
         .free-feat-text h3 {
-          font-size: 15px; font-weight: 700; margin: 0 0 2px 0; color: #FFFFFF;
+          font-size: 15px; font-weight: 700; margin: 0 0 2px 0; color: var(--text-primary);
         }
         .free-feat-text p {
-          font-size: 12px; color: #94A3B8; margin: 0; line-height: 1.4;
+          font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.4;
         }
-        .free-check { color: #34D399; flex-shrink: 0; }
+        .free-check { color: #10B981; flex-shrink: 0; }
         .free-cta-btn {
           width: 100%; height: 52px; font-size: 15px; font-weight: 700;
           display: flex; align-items: center; justify-content: center; gap: 8px;

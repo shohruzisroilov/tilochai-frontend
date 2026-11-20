@@ -44,8 +44,28 @@ export function useAuth() {
   useEffect(() => {
     const applyTheme = () => {
       const root = document.documentElement;
-      root.classList.add('dark');
-      root.classList.remove('light');
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlTheme = urlParams.get('theme');
+      const tgScheme = window.Telegram?.WebApp?.colorScheme;
+
+      const isLight = urlTheme === 'light' || (!urlTheme && tgScheme === 'light');
+
+      const tg = window.Telegram?.WebApp as any;
+      if (isLight) {
+        root.classList.add('light');
+        root.classList.remove('dark');
+        try {
+          tg?.setHeaderColor?.('#F8FAFC');
+          tg?.setBackgroundColor?.('#F8FAFC');
+        } catch {}
+      } else {
+        root.classList.add('dark');
+        root.classList.remove('light');
+        try {
+          tg?.setHeaderColor?.('#070512');
+          tg?.setBackgroundColor?.('#070512');
+        } catch {}
+      }
     };
 
     applyTheme();

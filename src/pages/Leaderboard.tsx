@@ -170,7 +170,7 @@ export default function Leaderboard() {
       <style>{`
         .lb {
           display: flex; flex-direction: column;
-          height: 100%; overflow: hidden; background: #070512;
+          height: 100%; overflow: hidden; background: var(--bg);
         }
 
         /* ── Header Banner ── */
@@ -190,8 +190,8 @@ export default function Leaderboard() {
           box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
           flex-shrink: 0;
         }
-        .lb-title { font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; }
-        .lb-sub { font-size: 12px; color: #94A3B8; margin-top: 1px; }
+        .lb-title { font-size: 22px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
+        .lb-sub { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
 
         .lb-head__podium {
           display: flex; flex-direction: column; align-items: center;
@@ -223,9 +223,9 @@ export default function Leaderboard() {
           flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
           padding: 8px 12px;
           font-size: 12px; font-weight: 700;
-          color: #94A3B8;
-          background: #140E2D;
-          border: 1px solid rgba(139, 92, 246, 0.2);
+          color: var(--text-secondary);
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: var(--radius-full);
           transition: all 0.18s var(--ease-out);
         }
@@ -235,7 +235,7 @@ export default function Leaderboard() {
           border-color: rgba(139, 92, 246, 0.5);
           box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
         }
-        .lb-scope-btn:active:not(.on) { background: #1B1238; color: #FFFFFF; }
+        .lb-scope-btn:active:not(.on) { background: var(--surface-2); color: var(--text-primary); }
 
         /* ── Category Tabs ── */
         .lb-tabs {
@@ -246,17 +246,17 @@ export default function Leaderboard() {
           flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
           padding: 9px 14px;
           font-size: 12px; font-weight: 700;
-          color: #94A3B8;
-          background: #140E2D;
-          border: 1px solid rgba(139, 92, 246, 0.2);
+          color: var(--text-secondary);
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: var(--radius-full);
           transition: all var(--t);
           cursor: pointer;
         }
         .lb-tab.on {
-          background: #1C123D;
-          border-color: rgba(139, 92, 246, 0.45);
-          color: #FFFFFF;
+          background: var(--primary-subtle);
+          border-color: var(--primary);
+          color: var(--text-primary);
           box-shadow: 0 2px 14px rgba(124, 58, 237, 0.25);
         }
 
@@ -272,21 +272,21 @@ export default function Leaderboard() {
         .lb-row {
           display: flex; align-items: center; gap: 12px;
           padding: 12px 14px;
-          background: #120B26;
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 18px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          box-shadow: var(--shadow-sm);
           transition: transform 0.15s ease, border-color 0.15s ease;
         }
         .lb-row:active { transform: scale(0.99); }
         .lb-row.me {
-          border-color: rgba(99, 102, 241, 0.65) !important;
-          background: #160F33 !important;
+          border-color: var(--primary) !important;
+          background: var(--surface-2) !important;
         }
 
         .lb-row--rank-1 {
           border-color: rgba(139, 92, 246, 0.5);
-          background: #150E2F;
+          background: var(--surface);
           box-shadow: 0 4px 20px rgba(124, 58, 237, 0.25);
         }
 

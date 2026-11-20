@@ -75,14 +75,14 @@ export default function SessionRow({ session: s }: SessionRowProps) {
         .session-row {
           display: flex; align-items: center; gap: 12px;
           padding: 12px 14px;
-          background: #140E2D;
+          background: var(--surface);
           border-radius: 16px;
-          border: 1px solid rgba(139, 92, 246, 0.18);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          border: 1px solid var(--border);
+          box-shadow: var(--shadow-sm);
           transition: background var(--t), transform var(--t);
           cursor: default;
         }
-        .session-row:active { background: #1B123B; transform: scale(0.99); }
+        .session-row:active { background: var(--surface-2); transform: scale(0.99); }
         .session-row__play-badge {
           width: 36px; height: 36px; flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
@@ -94,12 +94,12 @@ export default function SessionRow({ session: s }: SessionRowProps) {
           flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;
         }
         .session-row__name {
-          font-weight: 700; font-size: 14px; color: #FFFFFF;
+          font-weight: 700; font-size: 14px; color: var(--text-primary);
           overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
         .session-row__meta {
           display: flex; align-items: center; gap: 4px;
-          font-size: 12px; color: #94A3B8;
+          font-size: 12px; color: var(--text-secondary);
         }
         .session-row__right {
           display: flex; align-items: center; gap: 4px; flex-shrink: 0;
