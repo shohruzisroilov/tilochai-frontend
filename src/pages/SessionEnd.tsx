@@ -187,102 +187,113 @@ export default function SessionEnd() {
       <style>{`
         .end-screen {
           display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-          padding: var(--space-6) var(--space-4); flex: 1; background: var(--bg);
+          padding: 32px 16px 40px; flex: 1; background: #070512;
           overflow-y: auto; overflow-x: hidden; width: 100%; position: relative;
         }
         .end-body {
           width: 100%; max-width: 340px;
           display: flex; flex-direction: column; align-items: center;
-          gap: var(--space-4); text-align: center;
+          gap: 16px; text-align: center;
         }
         .end-ico {
-          width: 68px; height: 68px; border-radius: var(--radius-full);
+          width: 72px; height: 72px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          background: var(--primary-subtle);
-          border: 1px solid rgba(53, 12, 168, 0.25);
-          color: var(--primary);
-          box-shadow: 0 4px 16px rgba(53, 12, 168, 0.2);
+          background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(0, 178, 254, 0.35));
+          border: 1.5px solid rgba(139, 92, 246, 0.4);
+          color: #C4B5FD;
+          box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
         }
         .end-head h2 {
-          font-family: var(--font-display);
-          font-size: var(--text-lg); font-weight: var(--weight-heavy); letter-spacing: -0.02em;
+          font-size: 22px; font-weight: 800; letter-spacing: -0.4px; color: #FFFFFF;
         }
-        .end-head p  { font-size: var(--text-base); color: var(--text-secondary); margin-top: var(--space-1); }
+        .end-head p  { font-size: 13px; color: #94A3B8; margin-top: 4px; line-height: 1.4; }
 
         .end-card {
-          width: 100%; background: var(--bg-secondary);
-          border: 1px solid var(--border); border-radius: var(--radius-lg);
-          padding: var(--space-1) 0; display: flex; flex-direction: column;
-          box-shadow: var(--shadow-sm);
+          width: 100%; background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.20); border-radius: 20px;
+          padding: 6px 0; display: flex; flex-direction: column;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         .end-row {
           display: flex; justify-content: space-between; align-items: center;
-          padding: var(--space-3) var(--space-4);
-          font-size: var(--text-base); color: var(--text-secondary);
-          border-bottom: 1px solid var(--border);
+          padding: 12px 18px;
+          font-size: 13px; color: #94A3B8;
+          border-bottom: 1px solid rgba(139, 92, 246, 0.12);
         }
         .end-row:last-child { border-bottom: none; }
-        .end-row-val { font-weight: var(--weight-bold); color: var(--text-primary); }
+        .end-row-val { font-weight: 700; color: #FFFFFF; }
 
-        .end-rate { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); width: 100%; }
-        .end-rate-title { font-size: var(--text-md); font-weight: var(--weight-bold); }
-        .end-rate-label { font-size: var(--text-base); color: var(--text-secondary); min-height: 20px; }
+        .end-rate { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+        .end-rate-title { font-size: 15px; font-weight: 700; color: #FFFFFF; }
+        .end-rate-label { font-size: 13px; color: #A78BFA; min-height: 20px; font-weight: 600; }
 
-        .stars { display: flex; gap: var(--space-1); }
+        .stars { display: flex; gap: 6px; }
         .star {
-          width: 46px; height: 46px;
+          width: 48px; height: 48px;
           display: flex; align-items: center; justify-content: center;
-          color: var(--border);
-          transition: color var(--t), transform var(--t-spring);
+          color: rgba(148, 163, 184, 0.25);
+          transition: transform 0.15s, color 0.15s;
+          background: transparent; border: none; cursor: pointer;
         }
-        .star.on     { color: #FFC857; fill: #FFC857; }
-        .star:active { transform: scale(0.85); }
+        .star.on     { color: #F59E0B; fill: #F59E0B; filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.5)); }
+        .star:active { transform: scale(0.88); }
 
         .end-skip {
-          font-size: var(--text-sm); color: var(--text-secondary);
-          padding: var(--space-2); font-weight: var(--weight-medium); transition: opacity var(--t);
+          font-size: 13px; color: #64748B;
+          padding: 8px; font-weight: 600; transition: color 0.15s;
+          background: transparent; border: none; cursor: pointer;
         }
-        .end-skip:active { opacity: 0.6; }
+        .end-skip:active { color: #94A3B8; }
 
-        .end-thanks { font-size: var(--text-md); font-weight: var(--weight-bold); }
-        .end-actions { display: flex; flex-direction: column; gap: var(--space-1-5); width: 100%; }
+        .end-thanks { font-size: 15px; font-weight: 700; color: #34D399; }
+        .end-actions { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+
+        .end-actions .btn-primary {
+          background: linear-gradient(135deg, #7C3AED, #00B2FE);
+          color: #FFFFFF; border: none; font-weight: 700; border-radius: 14px;
+          min-height: 48px; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+        }
+        .end-actions .btn-secondary {
+          background: #140E2D; color: #FFFFFF;
+          border: 1px solid rgba(139, 92, 246, 0.20); border-radius: 14px;
+          min-height: 48px;
+        }
 
         /* ── Post-Session Celebration Banner ── */
         .end-ai-stats {
-          display: flex; gap: var(--space-2);
-          margin: var(--space-3) 0;
+          display: flex; gap: 8px; width: 100%;
+          margin: 8px 0;
         }
         .end-ai-stat {
           flex: 1;
-          display: flex; flex-direction: column; align-items: center; gap: 2px;
-          padding: var(--space-3) var(--space-2);
-          border-radius: var(--radius-md);
-          border: 1px solid var(--border);
-          background: var(--bg-secondary);
-          box-shadow: var(--shadow-sm);
+          display: flex; flex-direction: column; align-items: center; gap: 3px;
+          padding: 12px 6px;
+          border-radius: 16px;
+          border: 1px solid rgba(139, 92, 246, 0.20);
+          background: #140E2D;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
         .end-ai-stat__value {
-          font-family: var(--font-display);
-          font-size: var(--text-lg); font-weight: var(--weight-heavy);
-          color: var(--text-primary); line-height: 1;
+          font-size: 18px; font-weight: 800;
+          color: #FFFFFF; line-height: 1;
         }
         .end-ai-stat__label {
-          font-size: var(--text-2xs); font-weight: var(--weight-bold);
+          font-size: 9px; font-weight: 700;
           text-transform: uppercase; letter-spacing: 0.06em;
-          color: var(--text-secondary); text-align: center;
+          color: #94A3B8; text-align: center;
         }
 
         .end-report {
-          display: flex; align-items: center; justify-content: center; gap: var(--space-1-5);
-          font-size: var(--text-sm); color: var(--text-tertiary);
-          padding: var(--space-2); font-weight: var(--weight-medium); margin-top: var(--space-0-5);
-          transition: opacity var(--t);
+          display: flex; align-items: center; justify-content: center; gap: 6px;
+          font-size: 12px; color: #64748B;
+          padding: 8px; font-weight: 600; margin-top: 4px;
+          background: transparent; border: none; cursor: pointer;
         }
-        .end-report:active { opacity: 0.6; }
+        .end-report:active { color: #94A3B8; }
         .end-report-done {
-          display: flex; align-items: center; justify-content: center; gap: var(--space-1-5);
-          font-size: var(--text-sm); color: var(--success);
-          padding: var(--space-2); margin-top: var(--space-0-5);
+          display: flex; align-items: center; justify-content: center; gap: 6px;
+          font-size: 12px; color: #34D399;
+          padding: 8px; margin-top: 4px;
         }
       `}</style>
     </div>

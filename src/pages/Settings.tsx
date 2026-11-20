@@ -146,114 +146,114 @@ export default function Settings() {
   const notifSummary = reminders ? t('settings.notifAllOn') : t('settings.notifNone');
 
   return (
-    <div className="flex flex-col h-full bg-[var(--bg)] text-[var(--text-primary)]">
+    <div className="flex flex-col h-full bg-[#070512] text-[#FFFFFF]">
       {/* Topbar */}
-      <div className="flex items-center justify-between p-4 pt-3 border-b border-[var(--border)] shrink-0">
-        <Button variant="ghost" size="icon" className="rounded-full" onClick={back}>
+      <div className="flex items-center justify-between p-4 pt-3 border-b border-[rgba(139,92,246,0.18)] shrink-0 bg-[#080614]/90 backdrop-blur-md z-10">
+        <Button variant="ghost" size="icon" className="rounded-full text-[#FFFFFF] active:bg-[#1D153E]" onClick={back}>
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h1 className="text-base font-bold">{t(TITLES[section])}</h1>
+        <h1 className="text-base font-bold text-[#FFFFFF]">{t(TITLES[section])}</h1>
         <div className="w-10" />
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-[calc(40px+env(safe-area-inset-bottom,0px))]">
         {/* Main Menu */}
         {section === 'menu' && (
           <div className="space-y-3">
             <Card
               as="button"
               type="button"
-              className="w-full text-left p-4 cursor-pointer hover:bg-[var(--surface-2)] transition-all active:scale-[0.99] border-[var(--border)]"
+              className="w-full text-left p-4 cursor-pointer hover:bg-[#191138] transition-all active:scale-[0.99] border-[rgba(139,92,246,0.20)] bg-[#140E2D] shadow-md rounded-2xl"
               onClick={() => { selectionHaptic(); setSection('language'); }}
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-[var(--primary-subtle)] text-[var(--primary)]">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(124,58,237,0.22)] text-[#A78BFA] flex items-center justify-center shrink-0">
                   <Globe className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-bold">Languages &amp; Target</div>
-                  <div className="text-xs text-[var(--text-secondary)] truncate">
+                  <div className="text-sm font-bold text-white">Languages &amp; Target</div>
+                  <div className="text-xs text-[#94A3B8] truncate">
                     Learning: {learningLang === 'ru' ? 'Russian 🇷🇺' : learningLang === 'uz' ? 'Uzbek 🇺🇿' : 'English 🇬🇧'}
                   </div>
                 </div>
-                <ChevronRight className="h-4 w-4 text-[var(--text-secondary)]" />
+                <ChevronRight className="h-4 w-4 text-[#64748B]" />
               </div>
             </Card>
 
             <Card
               as="button"
               type="button"
-              className="w-full text-left p-4 cursor-pointer hover:bg-[var(--surface-2)] transition-all active:scale-[0.99] border-[var(--border)]"
+              className="w-full text-left p-4 cursor-pointer hover:bg-[#191138] transition-all active:scale-[0.99] border-[rgba(139,92,246,0.20)] bg-[#140E2D] shadow-md rounded-2xl"
               onClick={() => { selectionHaptic(); setSection('level'); }}
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-[var(--primary-subtle)] text-[var(--primary)]">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(124,58,237,0.22)] text-[#A78BFA] flex items-center justify-center shrink-0">
                   <Gauge className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-bold">{t('settings.levelTitle')}</div>
-                  <div className="text-xs text-[var(--text-secondary)] truncate">
+                  <div className="text-sm font-bold text-white">{t('settings.levelTitle')}</div>
+                  <div className="text-xs text-[#94A3B8] truncate">
                     {t(`level.${level}`)} · {t(`levelName.${level}`)}
                   </div>
                 </div>
-                <ChevronRight className="h-4 w-4 text-[var(--text-secondary)]" />
+                <ChevronRight className="h-4 w-4 text-[#64748B]" />
               </div>
             </Card>
 
             <Card
               as="button"
               type="button"
-              className="w-full text-left p-4 cursor-pointer hover:bg-[var(--surface-2)] transition-all active:scale-[0.99] border-[var(--border)]"
+              className="w-full text-left p-4 cursor-pointer hover:bg-[#191138] transition-all active:scale-[0.99] border-[rgba(139,92,246,0.20)] bg-[#140E2D] shadow-md rounded-2xl"
               onClick={() => { selectionHaptic(); setSection('gender'); }}
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-[var(--accent-bg)] text-[var(--accent)]">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(6,182,212,0.22)] text-[#38BDF8] flex items-center justify-center shrink-0">
                   <User className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-bold">{t('settings.genderTitle')}</div>
-                  <div className="text-xs text-[var(--text-secondary)] truncate">
+                  <div className="text-sm font-bold text-white">{t('settings.genderTitle')}</div>
+                  <div className="text-xs text-[#94A3B8] truncate">
                     {gender ? t(`gender.${gender}`) : t('settings.genderNotSet')}
                   </div>
                 </div>
-                <ChevronRight className="h-4 w-4 text-[var(--text-secondary)]" />
+                <ChevronRight className="h-4 w-4 text-[#64748B]" />
               </div>
             </Card>
 
             <Card
               as="button"
               type="button"
-              className="w-full text-left p-4 cursor-pointer hover:bg-[var(--surface-2)] transition-all active:scale-[0.99] border-[var(--border)]"
+              className="w-full text-left p-4 cursor-pointer hover:bg-[#191138] transition-all active:scale-[0.99] border-[rgba(139,92,246,0.20)] bg-[#140E2D] shadow-md rounded-2xl"
               onClick={() => { selectionHaptic(); setSection('notifications'); }}
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-[var(--success-bg)] text-[var(--success)]">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(16,185,129,0.22)] text-[#34D399] flex items-center justify-center shrink-0">
                   <Bell className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-bold">{t('settings.notifTitle')}</div>
-                  <div className="text-xs text-[var(--text-secondary)] truncate">{notifSummary}</div>
+                  <div className="text-sm font-bold text-white">{t('settings.notifTitle')}</div>
+                  <div className="text-xs text-[#94A3B8] truncate">{notifSummary}</div>
                 </div>
-                <ChevronRight className="h-4 w-4 text-[var(--text-secondary)]" />
+                <ChevronRight className="h-4 w-4 text-[#64748B]" />
               </div>
             </Card>
 
             <Card
               as="button"
               type="button"
-              className="w-full text-left p-4 cursor-pointer hover:bg-[var(--surface-2)] transition-all active:scale-[0.99] border-[var(--border)]"
+              className="w-full text-left p-4 cursor-pointer hover:bg-[#191138] transition-all active:scale-[0.99] border-[rgba(139,92,246,0.20)] bg-[#140E2D] shadow-md rounded-2xl"
               onClick={() => {
                 tapHaptic('light');
                 setSection('mic');
               }}
             >
-              <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-xl transition-colors ${
+              <div className="flex items-center gap-3.5">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
                   micStatus === 'ok'
-                    ? 'bg-green-500/15 text-green-500'
+                    ? 'bg-emerald-500/20 text-emerald-400'
                     : micStatus === 'fail'
-                    ? 'bg-red-500/15 text-red-500'
-                    : 'bg-[var(--primary-subtle)] text-[var(--primary)]'
+                    ? 'bg-rose-500/20 text-rose-400'
+                    : 'bg-[rgba(124,58,237,0.22)] text-[#A78BFA]'
                 }`}>
                   {micStatus === 'testing' ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -264,7 +264,7 @@ export default function Settings() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-bold">
+                  <div className="text-sm font-bold text-white">
                     {micStatus === 'ok'
                       ? 'Microphone Ready!'
                       : micStatus === 'testing'
@@ -273,7 +273,7 @@ export default function Settings() {
                       ? 'Permission Needed'
                       : 'Audio & Microphone'}
                   </div>
-                  <div className="text-xs text-[var(--text-secondary)] truncate">
+                  <div className="text-xs text-[#94A3B8] truncate">
                     {micStatus === 'ok'
                       ? 'Access granted and working'
                       : micStatus === 'fail'
@@ -281,7 +281,7 @@ export default function Settings() {
                       : 'Tap to test and verify microphone access'}
                   </div>
                 </div>
-                <ChevronRight className="h-4 w-4 text-[var(--text-secondary)]" />
+                <ChevronRight className="h-4 w-4 text-[#64748B]" />
               </div>
             </Card>
           </div>
@@ -291,8 +291,8 @@ export default function Settings() {
         {section === 'language' && (
           <div className="space-y-5">
             <div>
-              <h2 className="text-sm font-bold text-[var(--text-primary)] mb-1 px-1">Language You Want to Practice</h2>
-              <p className="text-xs text-[var(--text-secondary)] px-1 mb-3">Choose the language you are learning to find compatible speaking partners.</p>
+              <h2 className="text-sm font-bold text-[#FFFFFF] mb-1 px-1">Language You Want to Practice</h2>
+              <p className="text-xs text-[#94A3B8] px-1 mb-3">Choose the language you are learning to find compatible speaking partners.</p>
               <div className="space-y-2">
                 {TARGET_LANGS.map((lang) => {
                   const selected = learningLang === lang.code;
@@ -304,19 +304,19 @@ export default function Settings() {
                       onClick={() => pickLearningLang(lang.code)}
                       className={`w-full text-left p-3.5 cursor-pointer transition-all active:scale-[0.98] border rounded-2xl flex items-center justify-between ${
                         selected
-                          ? 'border-[var(--primary)] bg-[var(--primary-subtle)] shadow-sm ring-1 ring-[var(--primary)]'
-                          : 'border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)]'
+                          ? 'border-[rgba(139,92,246,0.6)] bg-[rgba(124,58,237,0.20)] shadow-md ring-1 ring-[#7C3AED]'
+                          : 'border-[rgba(139,92,246,0.20)] bg-[#140E2D] hover:bg-[#191138]'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-xl">{lang.flag}</span>
-                        <span className="text-sm font-bold text-[var(--text-primary)]">{lang.name}</span>
+                        <span className="text-2xl">{lang.flag}</span>
+                        <span className="text-sm font-bold text-white">{lang.name}</span>
                       </div>
                       <div
                         className={`h-5 w-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
                           selected
-                            ? 'bg-[var(--primary)] border-[var(--primary)] text-[#FFFFFF]'
-                            : 'border-[var(--border-strong)]'
+                            ? 'bg-[#7C3AED] border-[#7C3AED] text-[#FFFFFF]'
+                            : 'border-[rgba(139,92,246,0.3)]'
                         }`}
                       >
                         {selected && <Check className="h-3 w-3" strokeWidth={3} />}
@@ -327,9 +327,9 @@ export default function Settings() {
               </div>
             </div>
 
-            <div className="pt-2 border-t border-[var(--border)]">
-              <h2 className="text-sm font-bold text-[var(--text-primary)] mb-1 px-1">Your Native Language</h2>
-              <p className="text-xs text-[var(--text-secondary)] px-1 mb-3">Helps language exchange partners who want to learn your native tongue.</p>
+            <div className="pt-2 border-t border-[rgba(139,92,246,0.18)]">
+              <h2 className="text-sm font-bold text-[#FFFFFF] mb-1 px-1">Your Native Language</h2>
+              <p className="text-xs text-[#94A3B8] px-1 mb-3">Helps language exchange partners who want to learn your native tongue.</p>
               <div className="space-y-2">
                 {NATIVE_LANGS.map((lang) => {
                   const selected = nativeLang === lang.code;
@@ -341,19 +341,19 @@ export default function Settings() {
                       onClick={() => pickNativeLang(lang.code)}
                       className={`w-full text-left p-3.5 cursor-pointer transition-all active:scale-[0.98] border rounded-2xl flex items-center justify-between ${
                         selected
-                          ? 'border-[var(--primary)] bg-[var(--primary-subtle)] shadow-sm ring-1 ring-[var(--primary)]'
-                          : 'border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)]'
+                          ? 'border-[rgba(139,92,246,0.6)] bg-[rgba(124,58,237,0.20)] shadow-md ring-1 ring-[#7C3AED]'
+                          : 'border-[rgba(139,92,246,0.20)] bg-[#140E2D] hover:bg-[#191138]'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-xl">{lang.flag}</span>
-                        <span className="text-sm font-bold text-[var(--text-primary)]">{lang.name}</span>
+                        <span className="text-2xl">{lang.flag}</span>
+                        <span className="text-sm font-bold text-white">{lang.name}</span>
                       </div>
                       <div
                         className={`h-5 w-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
                           selected
-                            ? 'bg-[var(--primary)] border-[var(--primary)] text-[#FFFFFF]'
-                            : 'border-[var(--border-strong)]'
+                            ? 'bg-[#7C3AED] border-[#7C3AED] text-[#FFFFFF]'
+                            : 'border-[rgba(139,92,246,0.3)]'
                         }`}
                       >
                         {selected && <Check className="h-3 w-3" strokeWidth={3} />}
@@ -369,7 +369,7 @@ export default function Settings() {
         {/* Level Section */}
         {section === 'level' && (
           <div className="space-y-3">
-            <p className="text-xs text-[var(--text-secondary)] px-1">{t('settings.levelSub')}</p>
+            <p className="text-xs text-[#94A3B8] px-1">{t('settings.levelSub')}</p>
             <div className="space-y-2.5" role="radiogroup" aria-label={t('settings.levelTitle')}>
               {LEVELS.map((lv) => {
                 const selected = level === lv.value;
@@ -383,23 +383,23 @@ export default function Settings() {
                     onClick={() => pickLevel(lv.value)}
                     className={`w-full text-left p-4 cursor-pointer transition-all active:scale-[0.98] border rounded-2xl ${
                       selected
-                        ? 'border-[var(--primary)] bg-[var(--primary-subtle)] shadow-sm ring-1 ring-[var(--primary)]'
-                        : 'border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)]'
+                        ? 'border-[rgba(139,92,246,0.6)] bg-[rgba(124,58,237,0.20)] shadow-md ring-1 ring-[#7C3AED]'
+                        : 'border-[rgba(139,92,246,0.20)] bg-[#140E2D] hover:bg-[#191138]'
                     }`}
                   >
                     <div className="flex items-center gap-3.5">
-                      <span className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black text-[var(--primary)] bg-[var(--surface-2)] font-mono shrink-0">
+                      <span className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black text-[#C4B5FD] bg-[#1E123D] border border-[rgba(139,92,246,0.3)] font-mono shrink-0">
                         {t(`level.${lv.value}`)}
                       </span>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-bold text-[var(--text-primary)]">{t(`levelName.${lv.value}`)}</div>
-                        <div className="text-xs text-[var(--text-secondary)] truncate">{t(`ob.level${lv.value}.sub`)}</div>
+                        <div className="text-sm font-bold text-white">{t(`levelName.${lv.value}`)}</div>
+                        <div className="text-xs text-[#94A3B8] truncate">{t(`ob.level${lv.value}.sub`)}</div>
                       </div>
                       <div
                         className={`h-5 w-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
                           selected
-                            ? 'bg-[var(--primary)] border-[var(--primary)] text-[#FFFFFF]'
-                            : 'border-[var(--border-strong)]'
+                            ? 'bg-[#7C3AED] border-[#7C3AED] text-[#FFFFFF]'
+                            : 'border-[rgba(139,92,246,0.3)]'
                         }`}
                       >
                         {selected && <Check className="h-3 w-3" strokeWidth={3} />}
@@ -415,7 +415,7 @@ export default function Settings() {
         {/* Gender Section */}
         {section === 'gender' && (
           <div className="space-y-3">
-            <p className="text-xs text-[var(--text-secondary)] px-1">{t('settings.genderSub')}</p>
+            <p className="text-xs text-[#94A3B8] px-1">{t('settings.genderSub')}</p>
             <div className="space-y-2.5" role="radiogroup" aria-label={t('settings.genderTitle')}>
               {GENDERS.map((g) => {
                 const selected = (g.v === 'skip' ? null : g.v) === gender;
@@ -429,19 +429,19 @@ export default function Settings() {
                     onClick={() => pickGender(g.v)}
                     className={`w-full text-left p-4 cursor-pointer transition-all active:scale-[0.98] border rounded-2xl ${
                       selected
-                        ? 'border-[var(--primary)] bg-[var(--primary-subtle)] shadow-sm ring-1 ring-[var(--primary)]'
-                        : 'border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)]'
+                        ? 'border-[rgba(139,92,246,0.6)] bg-[rgba(124,58,237,0.20)] shadow-md ring-1 ring-[#7C3AED]'
+                        : 'border-[rgba(139,92,246,0.20)] bg-[#140E2D] hover:bg-[#191138]'
                     }`}
                   >
                     <div className="flex items-center gap-3.5">
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-bold text-[var(--text-primary)]">{t(g.key)}</div>
+                        <div className="text-sm font-bold text-white">{t(g.key)}</div>
                       </div>
                       <div
                         className={`h-5 w-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
                           selected
-                            ? 'bg-[var(--primary)] border-[var(--primary)] text-[#FFFFFF]'
-                            : 'border-[var(--border-strong)]'
+                            ? 'bg-[#7C3AED] border-[#7C3AED] text-[#FFFFFF]'
+                            : 'border-[rgba(139,92,246,0.3)]'
                         }`}
                       >
                         {selected && <Check className="h-3 w-3" strokeWidth={3} />}
@@ -457,12 +457,12 @@ export default function Settings() {
         {/* Notifications Section */}
         {section === 'notifications' && (
           <div className="space-y-3">
-            <p className="text-xs text-[var(--text-secondary)] px-1">{t('settings.notifSub')}</p>
-            <Card className="p-4 border-[var(--border)] bg-[var(--surface)]">
+            <p className="text-xs text-[#94A3B8] px-1">{t('settings.notifSub')}</p>
+            <Card className="p-4 border-[rgba(139,92,246,0.20)] bg-[#140E2D] rounded-2xl shadow-md">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <div className="text-sm font-bold">{t('settings.notifReminders')}</div>
-                  <div className="text-xs text-[var(--text-secondary)]">{t('settings.notifRemindersSub')}</div>
+                  <div className="text-sm font-bold text-white">{t('settings.notifReminders')}</div>
+                  <div className="text-xs text-[#94A3B8]">{t('settings.notifRemindersSub')}</div>
                 </div>
                 <button
                   type="button"
@@ -471,7 +471,7 @@ export default function Settings() {
                   onClick={() => toggleNotif('remindersEnabled', !reminders)}
                   disabled={updateNotifMutation.isPending}
                   className={`w-12 h-7 rounded-full transition-colors relative p-0.5 ${
-                    reminders ? 'bg-[var(--primary)]' : 'bg-[var(--surface-3)]'
+                    reminders ? 'bg-[#7C3AED]' : 'bg-[#1D153E]'
                   }`}
                 >
                   <span
@@ -485,20 +485,20 @@ export default function Settings() {
           </div>
         )}
 
-        {/* Microphone Test Section (Full Page) */}
+        {/* Microphone Test Section */}
         {section === 'mic' && (
           <div className="space-y-4">
-            <p className="text-xs text-[var(--text-secondary)] px-1">
+            <p className="text-xs text-[#94A3B8] px-1">
               Verify your microphone permissions and audio clarity before starting calls.
             </p>
 
-            <Card className="p-6 border-[var(--border)] bg-[var(--surface)] text-center flex flex-col items-center gap-4">
+            <Card className="p-6 border-[rgba(139,92,246,0.20)] bg-[#140E2D] rounded-2xl shadow-lg text-center flex flex-col items-center gap-4">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-colors ${
                 micStatus === 'ok'
-                  ? 'bg-green-500/15 text-green-500'
+                  ? 'bg-emerald-500/20 text-emerald-400'
                   : micStatus === 'fail'
-                  ? 'bg-red-500/15 text-red-500'
-                  : 'bg-[var(--primary-subtle)] text-[var(--primary)]'
+                  ? 'bg-rose-500/20 text-rose-400'
+                  : 'bg-[rgba(124,58,237,0.22)] text-[#A78BFA]'
               }`}>
                 {micStatus === 'testing' ? (
                   <Loader2 className="w-8 h-8 animate-spin" />
@@ -510,7 +510,7 @@ export default function Settings() {
               </div>
 
               <div>
-                <h3 className="font-bold text-base text-[var(--text-primary)]">
+                <h3 className="font-bold text-base text-white">
                   {micStatus === 'ok'
                     ? 'Microphone Working Great!'
                     : micStatus === 'testing'
@@ -519,18 +519,18 @@ export default function Settings() {
                     ? 'Microphone Permission Denied'
                     : 'Test Your Microphone'}
                 </h3>
-                <p className="text-xs text-[var(--text-secondary)] mt-1 max-w-[260px]">
+                <p className="text-xs text-[#94A3B8] mt-1 max-w-[260px]">
                   {micStatus === 'ok'
                     ? 'Your microphone is detected and ready for voice calls.'
                     : micStatus === 'fail'
-                    ? 'Please grant microphone access in Telegram / iOS device settings.'
+                    ? 'Please grant microphone access in Telegram / device settings.'
                     : 'Tap the button below to test your audio input.'}
                 </p>
               </div>
 
               <Button
                 type="button"
-                className="w-full font-bold mt-2"
+                className="w-full font-bold mt-2 bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white hover:opacity-95"
                 onClick={testMic}
                 disabled={micStatus === 'testing'}
               >

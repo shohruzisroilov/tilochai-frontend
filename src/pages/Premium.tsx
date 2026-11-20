@@ -100,73 +100,83 @@ export default function Premium() {
       <style>{`
         .free-page {
           display: flex; flex-direction: column; height: 100%;
-          background: var(--bg); color: var(--text-primary);
+          background: #070512; color: #FFFFFF;
         }
         .free-topbar {
           display: flex; align-items: center; justify-content: space-between;
-          padding: calc(var(--space-2) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-2);
-          border-bottom: 1px solid var(--border);
-          background: var(--chrome-bg);
+          padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
+          border-bottom: 1px solid rgba(139, 92, 246, 0.18);
+          background: rgba(8, 6, 20, 0.85);
           backdrop-filter: blur(20px);
           flex-shrink: 0;
+          z-index: 10;
         }
         .free-back {
-          width: 36px; height: 36px; border-radius: 50%;
+          width: 38px; height: 38px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          color: var(--text-secondary); background: transparent; border: none;
-          cursor: pointer;
+          color: #FFFFFF; background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.25);
+          cursor: pointer; transition: transform 0.15s;
         }
+        .free-back:active { transform: scale(0.94); }
         .free-topbar-title {
-          font-size: var(--text-base); font-weight: var(--weight-bold);
+          font-size: 16px; font-weight: 800; color: #FFFFFF;
         }
         .free-scroll {
-          flex: 1; overflow-y: auto; padding: var(--space-5) var(--space-4) calc(40px + env(safe-area-inset-bottom, 0px));
-          display: flex; flex-direction: column; gap: var(--space-5); max-width: 440px; margin: 0 auto; width: 100%;
+          flex: 1; overflow-y: auto; padding: 20px 16px calc(40px + env(safe-area-inset-bottom, 0px));
+          display: flex; flex-direction: column; gap: 20px; max-width: 440px; margin: 0 auto; width: 100%;
         }
         .free-hero {
           text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px;
-          padding: 24px 16px; border-radius: var(--radius-xl);
-          background: linear-gradient(180deg, var(--primary-subtle) 0%, transparent 100%);
-          border: 1px solid var(--border);
+          padding: 28px 18px; border-radius: 24px;
+          background: linear-gradient(180deg, rgba(124, 58, 237, 0.25) 0%, rgba(20, 14, 45, 0.6) 100%);
+          border: 1px solid rgba(139, 92, 246, 0.3);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
         }
         .free-hero__badge {
           display: inline-flex; align-items: center; gap: 6px;
-          padding: 5px 12px; border-radius: var(--radius-full);
-          background: var(--success-bg); color: var(--success);
+          padding: 5px 12px; border-radius: 9999px;
+          background: rgba(16, 185, 129, 0.18); color: #34D399;
+          border: 1px solid rgba(16, 185, 129, 0.3);
           font-size: 12px; font-weight: 700;
         }
         .free-hero h2 {
-          font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25;
+          font-size: 24px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.25; color: #FFFFFF;
         }
         .free-hero p {
-          font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+          font-size: 13px; color: #94A3B8; line-height: 1.5;
         }
         .free-features {
           display: flex; flex-direction: column; gap: 12px;
         }
         .free-feat-item {
           display: flex; align-items: center; gap: 14px;
-          padding: 16px; border-radius: var(--radius-lg);
-          background: var(--surface); border: 1px solid var(--border);
+          padding: 16px; border-radius: 20px;
+          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.20);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
         }
         .free-feat-ico {
-          width: 42px; height: 42px; border-radius: var(--radius-md);
-          background: var(--primary-subtle); color: var(--primary);
+          width: 44px; height: 44px; border-radius: 12px;
+          background: rgba(124, 58, 237, 0.25); color: #C4B5FD;
           display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
         .free-feat-text { flex: 1; min-width: 0; }
         .free-feat-text h3 {
-          font-size: 14px; font-weight: 700; margin: 0 0 2px 0; color: var(--text-primary);
+          font-size: 15px; font-weight: 700; margin: 0 0 2px 0; color: #FFFFFF;
         }
         .free-feat-text p {
-          font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.4;
+          font-size: 12px; color: #94A3B8; margin: 0; line-height: 1.4;
         }
-        .free-check { color: var(--success); flex-shrink: 0; }
+        .free-check { color: #34D399; flex-shrink: 0; }
         .free-cta-btn {
-          width: 100%; height: 50px; font-size: 15px; font-weight: 700;
+          width: 100%; height: 52px; font-size: 15px; font-weight: 700;
           display: flex; align-items: center; justify-content: center; gap: 8px;
-          border-radius: var(--radius-md); background: var(--grad-primary); color: #fff; margin-top: 8px;
+          border-radius: 16px;
+          background: linear-gradient(135deg, #7C3AED, #00B2FE);
+          color: #FFFFFF; margin-top: 8px; border: none; cursor: pointer;
+          box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+          transition: transform 0.15s, opacity 0.15s;
         }
+        .free-cta-btn:active { transform: scale(0.98); opacity: 0.95; }
       `}</style>
     </div>
   );

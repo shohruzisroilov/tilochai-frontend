@@ -167,72 +167,80 @@ export default function Statistics() {
       </div>
 
       <style>{`
-        .stx-page { display: flex; flex-direction: column; height: 100%; background: var(--bg); }
+        .stx-page { display: flex; flex-direction: column; height: 100%; background: #070512; }
         .stx-topbar {
           display: flex; align-items: center; justify-content: space-between;
-          padding: calc(var(--space-4) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-3);
-          border-bottom: 1px solid var(--border);
+          padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px;
+          border-bottom: 1px solid rgba(139, 92, 246, 0.18);
+          background: rgba(8, 6, 20, 0.85);
+          backdrop-filter: blur(12px);
           flex-shrink: 0;
+          z-index: 10;
         }
         .stx-back {
-          width: 36px; height: 36px; border-radius: 50%;
+          width: 38px; height: 38px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          background: var(--bg-secondary); color: var(--text-primary);
-          border: 1px solid var(--border);
-          transition: opacity var(--t), background var(--t);
+          background: #140E2D; color: #FFFFFF;
+          border: 1px solid rgba(139, 92, 246, 0.25);
+          transition: transform 0.15s, background 0.15s;
         }
-        .stx-back:active { opacity: 0.6; background: var(--surface-2); }
-        .stx-topbar-title { font-size: var(--text-md); font-weight: var(--weight-bold); }
+        .stx-back:active { transform: scale(0.94); background: #1D153E; }
+        .stx-topbar-title { font-size: 16px; font-weight: 800; color: #FFFFFF; }
 
         .stx-scroll {
           flex: 1; overflow-y: auto;
-          padding: var(--space-4) var(--space-4) calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
-          display: flex; flex-direction: column; gap: var(--space-4);
+          padding: 16px 16px calc(30px + env(safe-area-inset-bottom, 0px));
+          display: flex; flex-direction: column; gap: 16px;
           -webkit-overflow-scrolling: touch;
         }
 
         .stx-card {
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-lg);
-          padding: var(--space-4);
-          display: flex; flex-direction: column; gap: var(--space-4);
+          background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.20);
+          border-radius: 20px;
+          padding: 18px;
+          display: flex; flex-direction: column; gap: 16px;
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
         }
-        .stx-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
-        .stx-card-title { font-size: var(--text-md); font-weight: var(--weight-heavy); letter-spacing: -0.3px; }
-        .stx-card-sub { font-size: var(--text-xs); color: var(--text-secondary); margin-top: var(--space-0-5); }
+        .stx-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .stx-card-title { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; color: #FFFFFF; }
+        .stx-card-sub { font-size: 12px; color: #94A3B8; margin-top: 3px; }
 
         .stx-seg {
-          display: flex; gap: var(--space-1); padding: 3px;
-          background: var(--surface-2); border: 1px solid var(--border);
-          border-radius: var(--radius-full);
+          display: flex; gap: 4px; padding: 4px;
+          background: #191138; border: 1px solid rgba(139, 92, 246, 0.20);
+          border-radius: 9999px;
         }
         .stx-seg-btn {
-          flex: 1; padding: var(--space-1-5) 0; border-radius: 999px;
-          font-size: var(--text-xs); font-weight: var(--weight-bold); color: var(--text-secondary);
-          transition: background var(--t), color var(--t);
+          flex: 1; padding: 8px 0; border-radius: 9999px;
+          font-size: 12px; font-weight: 700; color: #94A3B8;
+          transition: background 0.18s, color 0.18s;
+          border: none; background: transparent; cursor: pointer;
         }
         .stx-seg-btn--on {
-          background: var(--primary); color: var(--primary-contrast);
-          box-shadow: 0 2px 10px rgba(0, 168, 255, 0.3);
+          background: linear-gradient(135deg, #7C3AED, #00B2FE);
+          color: #FFFFFF;
+          box-shadow: 0 2px 10px rgba(124, 58, 237, 0.4);
         }
 
         .stx-summary {
-          display: flex; align-items: center; justify-content: center; gap: var(--space-3);
-          font-size: var(--text-base); font-weight: var(--weight-heavy); color: var(--text-primary);
-          padding: var(--space-2) var(--space-4);
-          background: var(--surface-2); border-radius: var(--radius-sm);
+          display: flex; align-items: center; justify-content: center; gap: 12px;
+          font-size: 14px; font-weight: 800; color: #FFFFFF;
+          padding: 10px 16px;
+          background: rgba(124, 58, 237, 0.15);
+          border: 1px solid rgba(139, 92, 246, 0.25);
+          border-radius: 12px;
         }
-        .stx-summary-sep { color: var(--text-tertiary); font-weight: var(--weight-semi); }
+        .stx-summary-sep { color: #A78BFA; font-weight: 600; }
 
         .stx-chart {
           display: flex; align-items: flex-end; justify-content: space-between;
-          gap: var(--space-1-5); height: 160px;
+          gap: 6px; height: 160px;
         }
-        .stx-chart--dense { gap: var(--space-0-5); }
+        .stx-chart--dense { gap: 3px; }
         .stx-bar-col {
           flex: 1; display: flex; flex-direction: column; align-items: center;
-          gap: var(--space-1-5); height: 100%; min-width: 0;
+          gap: 6px; height: 100%; min-width: 0;
         }
         .stx-bar-track {
           flex: 1; width: 100%;
@@ -240,27 +248,27 @@ export default function Statistics() {
         }
         .stx-bar {
           width: 70%; max-width: 22px; min-height: 0;
-          background: var(--surface-3);
+          background: rgba(148, 163, 184, 0.18);
           border-radius: 6px 6px 3px 3px;
-          transition: height 0.45s var(--ease-out);
+          transition: height 0.45s ease-out;
         }
-        .stx-chart--dense .stx-bar { width: 80%; max-width: none; border-radius: 3px 3px 1px 1px; }
+        .stx-chart--dense .stx-bar { width: 85%; max-width: none; border-radius: 4px 4px 1px 1px; }
         .stx-bar--today {
-          background: var(--grad-primary);
-          box-shadow: 0 2px 10px rgba(0, 168, 255, 0.35);
+          background: linear-gradient(180deg, #00B2FE 0%, #7C3AED 100%);
+          box-shadow: 0 0 12px rgba(0, 178, 254, 0.5);
         }
-        .stx-bar--skel { height: 40%; opacity: 0.4; }
-        .stx-chart--skel { opacity: 0.5; }
+        .stx-bar--skel { height: 40%; opacity: 0.3; }
+        .stx-chart--skel { opacity: 0.4; }
         .stx-bar-day {
-          font-size: var(--text-xs); color: var(--text-tertiary); font-weight: var(--weight-semi);
+          font-size: 11px; color: #64748B; font-weight: 600;
           text-transform: capitalize; white-space: nowrap;
         }
-        .stx-chart--dense .stx-bar-day { font-size: var(--text-xs); }
-        .stx-bar-day--today { color: var(--primary); font-weight: var(--weight-heavy); }
+        .stx-chart--dense .stx-bar-day { font-size: 10px; }
+        .stx-bar-day--today { color: #C4B5FD; font-weight: 800; }
 
         .stx-empty {
-          text-align: center; color: var(--text-secondary);
-          font-size: var(--text-sm); padding: var(--space-7) 0;
+          text-align: center; color: #94A3B8;
+          font-size: 13px; padding: 32px 0;
         }
       `}</style>
     </div>
