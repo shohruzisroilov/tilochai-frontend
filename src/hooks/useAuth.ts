@@ -43,12 +43,9 @@ export function useAuth() {
 
   useEffect(() => {
     const applyTheme = () => {
-      const scheme = window.Telegram?.WebApp?.colorScheme === 'dark' ? 'dark' : 'light';
       const root = document.documentElement;
-      if (!root.classList.contains(scheme)) {
-        root.classList.add(scheme);
-        root.classList.remove(scheme === 'dark' ? 'light' : 'dark');
-      }
+      root.classList.add('dark');
+      root.classList.remove('light');
     };
 
     applyTheme();

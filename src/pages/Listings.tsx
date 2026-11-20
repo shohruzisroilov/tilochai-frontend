@@ -622,31 +622,36 @@ export default function Listings(_props: ListingsProps) {
           <div className="listings-page__header">
         <div className="listings-page__header-top">
           <div className="listings-page__header-title-wrap">
-            <h1 className="listings-page__title">{t('listings.title')}</h1>
-            <p className="listings-page__sub">{t('listings.subtitle')}</p>
+            <div className="listings-page__header-icon">
+              <Users size={19} />
+            </div>
+            <div>
+              <h1 className="listings-page__title">{t('listings.title')}</h1>
+              <p className="listings-page__sub">{t('listings.subtitle')}</p>
+            </div>
           </div>
 
-          {/* "Mine" is a different mode, not another filter, so it sits with the
-              actions rather than in the row of type chips. */}
-          <button
-            type="button"
-            className={`listings-page__mine-btn ${isMine ? 'active' : ''}`}
-            aria-pressed={isMine}
-            aria-label={t('listings.tab.mine')}
-            onClick={() => { selectionHaptic(); setActiveTab(isMine ? 'all' : 'my'); }}
-          >
-            <UserCircle size={18} />
-            {pendingCount > 0 && <span className="listings-page__mine-dot">{pendingCount}</span>}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className={`listings-page__mine-btn ${isMine ? 'active' : ''}`}
+              aria-pressed={isMine}
+              aria-label={t('listings.tab.mine')}
+              onClick={() => { selectionHaptic(); setActiveTab(isMine ? 'all' : 'my'); }}
+            >
+              <UserCircle size={18} />
+              {pendingCount > 0 && <span className="listings-page__mine-dot">{pendingCount}</span>}
+            </button>
 
-          <button
-            type="button"
-            className="listings-page__add-btn"
-            onClick={openCreateModal}
-          >
-            <Plus size={18} strokeWidth={2.5} />
-            <span>{t('listings.new')}</span>
-          </button>
+            <button
+              type="button"
+              className="listings-page__add-btn"
+              onClick={openCreateModal}
+            >
+              <Edit size={15} strokeWidth={2.4} />
+              <span>Post</span>
+            </button>
+          </div>
         </div>
 
         {!isMine && (
@@ -776,14 +781,20 @@ export default function Listings(_props: ListingsProps) {
           </div>
         ) : displayedListings.length === 0 ? (
           <div className="listings-empty">
-            <div className="listings-empty__icon">
-              <Sparkles size={28} />
+            <div className="listings-empty__art">
+              <div className="listings-empty__badge-plane">✈️</div>
+              <div className="listings-empty__sheet">
+                <div className="listings-empty__sheet-user">👤</div>
+                <div className="listings-empty__sheet-line" />
+                <div className="listings-empty__sheet-line short" />
+                <div className="listings-empty__badge-plus">+</div>
+              </div>
             </div>
             <h3>{isMine ? t('listings.empty.mineTitle') : t('listings.empty.feedTitle')}</h3>
             <p>{isMine ? t('listings.empty.mineSub') : t('listings.empty.feedSub')}</p>
             {!atLimit && (
-              <button type="button" className="btn-primary" onClick={openCreateModal}>
-                <Plus size={18} /> {t('listings.empty.cta')}
+              <button type="button" className="listings-empty__cta-btn" onClick={openCreateModal}>
+                <Plus size={18} strokeWidth={2.4} /> <span>{t('listings.empty.cta')}</span>
               </button>
             )}
           </div>
@@ -1017,137 +1028,184 @@ export default function Listings(_props: ListingsProps) {
           font-size: 10px; font-weight: 900; line-height: 17px; text-align: center;
           border: 2px solid var(--chrome-bg);
         }
-        .listings-page__header-title-wrap { flex: 1; min-width: 0; }
+        .listings-page__header-title-wrap {
+          flex: 1; min-width: 0;
+          display: flex; align-items: center; gap: 12px;
+        }
+        .listings-page__header-icon {
+          width: 38px; height: 38px; border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(135deg, #4C1D95 0%, #2E1065 100%);
+          border: 1px solid rgba(139, 92, 246, 0.35);
+          color: #FFFFFF; flex-shrink: 0;
+        }
         .listings-page__title {
-          font-size: 17px; font-weight: var(--weight-heavy); color: var(--text-primary);
-          letter-spacing: -0.3px; margin: 0;
+          font-size: 18px; font-weight: 800; color: #FFFFFF;
+          letter-spacing: -0.02em; margin: 0;
         }
         .listings-page__sub {
-          font-size: 11px; color: var(--text-tertiary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+          font-size: 11px; color: #94A3B8; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .listings-page__mine-btn {
-          width: 36px; height: 36px; border-radius: var(--radius-sm);
-          border: 1px solid var(--border); background: var(--surface-2);
-          color: var(--text-secondary); display: flex; align-items: center; justify-content: center;
+          width: 38px; height: 38px; border-radius: 12px;
+          border: 1px solid rgba(139, 92, 246, 0.25); background: #150F2C;
+          color: #94A3B8; display: flex; align-items: center; justify-content: center;
           position: relative; cursor: pointer; transition: all 0.2s var(--ease-out);
         }
         .listings-page__mine-btn.active {
-          background: var(--primary-subtle); color: var(--primary); border-color: var(--primary);
+          background: rgba(124, 58, 237, 0.3); color: #C4B5FD; border-color: #7C3AED;
         }
         .listings-page__mine-dot {
           position: absolute; top: -3px; right: -3px;
           min-width: 16px; height: 16px; border-radius: 99px;
-          background: var(--primary); color: var(--primary-contrast);
+          background: #7C3AED; color: #FFFFFF;
           font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center;
-          padding: 0 4px; border: 2px solid var(--bg);
+          padding: 0 4px; border: 2px solid #070512;
         }
         .listings-page__add-btn {
           display: flex; align-items: center; gap: 6px;
-          padding: 8px 16px; border-radius: var(--radius-md);
-          background: var(--grad-primary);
-          color: #FFFFFF; border: none; font-size: 13px; font-weight: var(--weight-bold);
-          box-shadow: 0 4px 14px rgba(53, 12, 168, 0.25); cursor: pointer;
+          padding: 8px 18px; border-radius: 14px;
+          background: linear-gradient(135deg, #7C3AED 0%, #2563EB 100%);
+          color: #FFFFFF; border: none; font-size: 13px; font-weight: 700;
+          box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4); cursor: pointer;
           transition: transform 0.15s var(--ease-out);
         }
         .listings-page__add-btn:active { transform: scale(0.96); }
 
         /* Tabs */
         .listings-tabs {
-          display: flex; align-items: center; gap: 6px; overflow-x: auto;
+          display: flex; align-items: center; gap: 8px; overflow-x: auto;
           padding-bottom: 4px; scrollbar-width: none;
         }
         .listings-tabs::-webkit-scrollbar { display: none; }
         .listings-tab {
-          padding: 7px 15px; border-radius: var(--radius-full);
-          background: var(--bg-secondary); border: 1px solid var(--border);
-          color: var(--text-secondary); font-size: 12px; font-weight: var(--weight-semi);
+          padding: 8px 18px; border-radius: var(--radius-full);
+          background: #150F2C; border: 1px solid rgba(139, 92, 246, 0.2);
+          color: #94A3B8; font-size: 12px; font-weight: 600;
           white-space: nowrap; cursor: pointer; transition: all 0.2s var(--ease-out);
         }
         .listings-tab:hover {
-          color: var(--primary);
+          color: #FFFFFF;
         }
         .listings-tab.active {
-          background: var(--primary); color: #FFFFFF; border-color: var(--primary);
-          font-weight: var(--weight-bold); box-shadow: 0 2px 8px rgba(53, 12, 168, 0.25);
+          background: #6D28D9; color: #FFFFFF; border-color: #7C3AED;
+          font-weight: 700; box-shadow: 0 2px 12px rgba(109, 40, 217, 0.4);
         }
 
         /* Search + filters */
-        .listings-controls { display: flex; flex-direction: column; gap: 8px; }
+        .listings-controls { display: flex; flex-direction: column; gap: 10px; }
         .listings-searchrow { display: flex; align-items: center; gap: 8px; }
         .listings-search {
           position: relative; flex: 1; min-width: 0;
         }
         .listings-filter-btn {
           position: relative; flex-shrink: 0;
-          width: 36px; height: 36px; border-radius: var(--radius-sm);
-          border: 1px solid var(--border); background: var(--surface-2);
-          color: var(--text-secondary);
+          width: 38px; height: 38px; border-radius: 12px;
+          border: 1px solid rgba(139, 92, 246, 0.22); background: #150F2C;
+          color: #94A3B8;
           display: flex; align-items: center; justify-content: center;
         }
-        .listings-filter-btn.open { color: var(--primary); border-color: var(--primary); background: var(--primary-subtle); }
+        .listings-filter-btn.open { color: #C4B5FD; border-color: #7C3AED; background: rgba(124, 58, 237, 0.25); }
         .listings-filter-btn__dot {
           position: absolute; top: 6px; right: 6px;
-          width: 7px; height: 7px; border-radius: 50%; background: var(--primary);
+          width: 7px; height: 7px; border-radius: 50%; background: #38BDF8;
         }
         .listings-clear-btn {
-          flex-shrink: 0; padding: 6px 12px; border-radius: var(--radius-sm);
-          border: 1px solid var(--border); background: var(--surface-2);
-          color: var(--text-secondary); font-size: 11px; font-weight: 700;
+          flex-shrink: 0; padding: 6px 12px; border-radius: 10px;
+          border: 1px solid rgba(139, 92, 246, 0.22); background: #150F2C;
+          color: #94A3B8; font-size: 11px; font-weight: 700;
         }
         .listings-search__icon {
-          position: absolute; left: 12px; top: 11px; color: var(--text-tertiary); pointer-events: none;
+          position: absolute; left: 12px; top: 12px; color: #64748B; pointer-events: none;
         }
         .listings-search__input {
-          width: 100%; padding: 9px 12px 9px 36px; border-radius: var(--radius-md);
-          border: 1px solid var(--border); background-color: var(--surface-2);
-          color: var(--text-primary); font-size: 13px; outline: none;
+          width: 100%; padding: 10px 12px 10px 36px; border-radius: 14px;
+          border: 1px solid rgba(139, 92, 246, 0.22); background-color: #150F2C;
+          color: #FFFFFF; font-size: 13px; outline: none;
           transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
         }
         .listings-search__input:focus {
-          border-color: var(--primary);
-          box-shadow: 0 0 0 3px var(--primary-subtle);
+          border-color: #7C3AED;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
         }
         .listings-selects { display: flex; gap: 8px; align-items: center; }
         .listings-select {
-          flex: 1; min-width: 0; padding: 8px 30px 8px 10px; border-radius: var(--radius-sm);
-          border: 1px solid var(--border); background-color: var(--surface-2);
-          color: var(--text-primary); font-size: 12px; font-weight: 600; outline: none;
+          flex: 1; min-width: 0; padding: 8px 30px 8px 10px; border-radius: 10px;
+          border: 1px solid rgba(139, 92, 246, 0.22); background-color: #150F2C;
+          color: #FFFFFF; font-size: 12px; font-weight: 600; outline: none;
         }
 
         /* Scroll Area & Grid */
         .listings-scroll {
           flex: 1; overflow-y: auto;
-          padding: var(--space-4) var(--space-4) calc(90px + env(safe-area-inset-bottom, 0px));
+          padding: 14px 16px calc(90px + env(safe-area-inset-bottom, 0px));
         }
         .spinner {
-          width: 28px; height: 28px; border: 3px solid var(--border);
-          border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite;
+          width: 28px; height: 28px; border: 3px solid rgba(139, 92, 246, 0.2);
+          border-top-color: #7C3AED; border-radius: 50%; animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Empty State */
         .listings-empty {
           display: flex; flex-direction: column; align-items: center; text-align: center;
-          padding: 48px 24px; gap: 12px; background: var(--bg-secondary);
-          border: 1px dashed var(--border); border-radius: var(--radius-lg); margin-top: 16px;
+          padding: 36px 20px; gap: 12px; background: #110B26;
+          border: 1px solid rgba(139, 92, 246, 0.22); border-radius: 22px; margin-top: 12px;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
         }
-        .listings-empty__icon {
-          width: 54px; height: 54px; border-radius: 50%;
-          background: var(--primary-subtle); color: var(--primary);
+        .listings-empty__art {
+          position: relative; width: 100px; height: 90px;
           display: flex; align-items: center; justify-content: center;
+          margin-bottom: 6px;
         }
-        .listings-empty h3 { font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0; }
-        .listings-empty p { font-size: 13px; color: var(--text-tertiary); max-width: 280px; margin: 0; }
-        .btn-primary {
-          display: flex; align-items: center; gap: 6px; padding: 10px 20px;
-          border-radius: var(--radius-md); background: var(--grad-primary); color: #fff; border: none;
-          font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 4px;
+        .listings-empty__sheet {
+          width: 58px; height: 72px; border-radius: 12px;
+          background: linear-gradient(135deg, #EEF2FF 0%, #C7D2FE 100%);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+          position: relative; display: flex; flex-direction: column;
+          align-items: center; padding-top: 10px; gap: 5px;
         }
+        .listings-empty__sheet-user { font-size: 20px; }
+        .listings-empty__sheet-line { width: 34px; height: 4px; border-radius: 2px; background: #818CF8; }
+        .listings-empty__sheet-line.short { width: 22px; }
+        .listings-empty__badge-plus {
+          position: absolute; bottom: -6px; right: -6px;
+          width: 26px; height: 26px; border-radius: 50%;
+          background: #4F46E5; color: #FFFFFF; font-size: 16px; font-weight: 800;
+          display: flex; align-items: center; justify-content: center;
+          border: 2px solid #110B26; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.5);
+        }
+        .listings-empty__badge-plane {
+          position: absolute; top: -4px; right: -4px; font-size: 22px;
+          animation: planeFloat 3s ease-in-out infinite;
+        }
+        @keyframes planeFloat {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(3px, -4px); }
+        }
+        .listings-empty h3 { font-size: 17px; font-weight: 800; color: #FFFFFF; margin: 0; }
+        .listings-empty p { font-size: 13px; color: #94A3B8; max-width: 260px; margin: 0; line-height: 1.45; }
+        .listings-empty__cta-btn {
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          padding: 12px 24px; min-height: 48px; width: 100%; max-width: 280px;
+          border-radius: 16px; background: linear-gradient(90deg, #6366F1 0%, #3B82F6 100%);
+          color: #fff; border: none; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 6px;
+          box-shadow: 0 4px 18px rgba(99, 102, 241, 0.4);
+          transition: transform 0.15s var(--ease-out);
+        }
+        .listings-empty__cta-btn:active { transform: scale(0.97); }
 
         .listings-grid { display: flex; flex-direction: column; gap: 12px; }
 
         /* Card */
         .listing-card {
-          background: var(--bg-secondary); border: 1px solid var(--border);
+          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.2);
+          border-radius: 20px; padding: 16px;
+          display: flex; flex-direction: column; gap: 10px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+        }
+        .listing-card:hover { border-color: rgba(139, 92, 246, 0.4); }
           border-radius: var(--radius-lg); padding: 14px 16px;
           display: flex; flex-direction: column; gap: 10px;
           box-shadow: var(--shadow-sm);

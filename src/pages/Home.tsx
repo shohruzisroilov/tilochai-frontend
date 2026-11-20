@@ -10,6 +10,8 @@ import {
   MessageSquare,
   Users,
   Flame,
+  History,
+  ArrowRight,
 } from 'lucide-react';
 
 import HomeHeader from '../components/HomeHeader';
@@ -17,7 +19,7 @@ import SessionRow from '../components/SessionRow';
 import SkeletonRow from '../components/SkeletonRow';
 
 /**
- * Bosh sahifa — Oddiy, qulay va toza suhbat markazi.
+ * Bosh sahifa — Premium Dark UI suhbat markazi.
  */
 export default function Home() {
   const {
@@ -59,14 +61,14 @@ export default function Home() {
       />
 
       <div className="home__scroll">
-        {/* Xavfsizlik filtri (Ayollar / Girls uchun eng tepada) */}
+        {/* Girls Only Safety Filter */}
         {isFemale && (
           <button
             type="button"
             className={`row${womenOnly ? ' row--on' : ''} fade-up`}
             onClick={() => { selectionHaptic(); setPartnerPref(womenOnly ? 'any' : 'female'); }}
             aria-pressed={womenOnly}
-            style={{ marginBottom: '8px' }}
+            style={{ marginBottom: '2px' }}
           >
             <span className={`row__ico${womenOnly ? ' row__ico--primary' : ''}`}>
               <ShieldCheck size={18} />
@@ -79,21 +81,16 @@ export default function Home() {
           </button>
         )}
 
-        {/* ── ASOSIY QO'NG'IROQ MARKAZI (Hero Card) ── */}
+        {/* ── HERO FIND PARTNER CARD (Image 1 Left) ── */}
         <section className="hero fade-up">
           <div className="hero__orb hero__orb--1" aria-hidden="true" />
           <div className="hero__orb hero__orb--2" aria-hidden="true" />
 
           <div className="hero__inner">
-            {/* Live badge & presence */}
             <div className="hero__top-row">
               <span className="hero__tag">
                 <span className="hero__live-dot" />
-                {waitingCount >= 2
-                  ? t('home.heroLive', { n: waitingCount })
-                  : waitingCount === 1
-                    ? t('home.heroLiveOne')
-                    : t('home.heroTag')}
+                <span>Live voice • 1-on-1</span>
               </span>
               {waitingCount > 0 && (
                 <span className="hero__online-pill">
@@ -103,17 +100,24 @@ export default function Home() {
               )}
             </div>
 
-            {/* Title & Description */}
-            <div className="hero__content">
-              <h1 className="hero__title">
-                {t('home.ctaTitle')}
-              </h1>
-              <p className="hero__sub">
-                {t('home.ctaSub')}
-              </p>
+            <div className="hero__content-row">
+              <div className="hero__content">
+                <h1 className="hero__title">
+                  Talk to a<br />
+                  <span className="hero__title-highlight">real partner</span>
+                </h1>
+                <p className="hero__sub">
+                  {t('home.ctaSub')}
+                </p>
+              </div>
+
+              <div className="hero__art" aria-hidden="true">
+                <div className="hero__mic-badge">🎙️</div>
+                <div className="hero__bubble hero__bubble--1">💬</div>
+                <div className="hero__bubble hero__bubble--2">💭</div>
+              </div>
             </div>
 
-            {/* Main Action Button */}
             <button
               type="button"
               className="hero__main-btn"
@@ -122,24 +126,28 @@ export default function Home() {
                 navigate('matching');
               }}
             >
-              <div className="hero__mic-ring">
-                <div className="hero__mic-pulse" />
-                <div className="hero__mic-icon">
-                  <Mic size={19} strokeWidth={2.5} />
-                </div>
+              <div className="hero__mic-icon">
+                <Mic size={18} strokeWidth={2.6} />
               </div>
               <span>{t('home.start')}</span>
-              <ChevronRight size={18} strokeWidth={2.5} />
+              <ChevronRight size={17} strokeWidth={2.6} />
             </button>
           </div>
         </section>
 
-        {/* ── SPEAKING PROGRESS (Section 7.B) ── */}
+        {/* ── SPEAKING PROGRESS CARD ── */}
         {homeLoaded && (
-          <div className="home__progress-card fade-up">
+          <button
+            type="button"
+            className="home__progress-card fade-up"
+            onClick={() => {
+              tapHaptic('light');
+              navigate('statistics', { from: 'home' });
+            }}
+          >
             <div className="home__progress-left">
               <div className="home__progress-icon">
-                <Flame size={18} className="text-[#FF9F0A]" />
+                <Flame size={20} className="text-[#FF9F0A]" />
               </div>
               <div className="home__progress-text">
                 <div className="home__progress-title">
@@ -147,287 +155,346 @@ export default function Home() {
                 </div>
                 <div className="home__progress-sub">
                   {(stats?.total_minutes || 0) > 0
-                    ? `${stats.total_minutes} mins total · ${stats?.streakCount || 0} day streak`
+                    ? `${stats.total_minutes} mins total • ${stats?.streakCount || 0} day streak`
                     : 'Practice 5 mins today to start your streak'}
                 </div>
               </div>
             </div>
-            {stats?.hasPracticedToday ? (
-              <span className="home__progress-badge done">Done</span>
-            ) : (
-              <span className="home__progress-badge todo">Today</span>
-            )}
-          </div>
+            <span className={`home__progress-badge ${stats?.hasPracticedToday ? 'done' : 'todo'}`}>
+              <span>{stats?.hasPracticedToday ? 'Done' : 'Today'}</span>
+              <ChevronRight size={13} strokeWidth={2.5} />
+            </span>
+          </button>
         )}
 
-        {/* ── HAMKORLAR E'LONLARI (Listings Board) ── */}
+        {/* ── PARTNER & TEACHER BOARD CARD ── */}
         <button
           type="button"
-          className="row fade-up"
+          className="home__board-card fade-up"
           onClick={() => {
             tapHaptic('medium');
             navigate('listings');
           }}
         >
-          <span
-            className="row__ico"
-            style={{ background: 'var(--soft-yellow)', color: 'var(--warning, #F59E0B)' }}
-          >
-            <Users size={18} aria-hidden="true" />
-          </span>
-          <span className="row__text">
-            <span className="row__title">{t('home.listingsTitle')}</span>
-            <span className="row__sub">{t('home.listingsSub')}</span>
-          </span>
-          <ChevronRight size={18} className="row__arrow" aria-hidden="true" />
+          <div className="home__board-icon">
+            <Users size={18} />
+          </div>
+          <div className="home__board-text">
+            <span className="home__board-title">{t('home.listingsTitle')}</span>
+            <span className="home__board-sub">{t('home.listingsSub')}</span>
+          </div>
+          <ChevronRight size={18} className="home__board-arrow" />
         </button>
 
-        {/* ── OXIRGI SUHBATLAR TARIXI ── */}
-        {!homeLoaded ? (
-          <section className="home__section">
-            <p className="eyebrow">{t('home.recent')}</p>
+        {/* ── RECENT PRACTICE SECTION ── */}
+        <section className="home__section fade-up">
+          <div className="home__section-head">
+            <div className="flex items-center gap-2">
+              <History size={16} className="text-[#A78BFA]" />
+              <span className="home__section-title">Recent Practice</span>
+            </div>
+            <button
+              type="button"
+              className="home__see-all-btn"
+              onClick={() => navigate('statistics', { from: 'home' })}
+            >
+              <span>See all</span>
+              <ArrowRight size={12} />
+            </button>
+          </div>
+
+          {!homeLoaded ? (
             <div className="home__sessions">
               {[0, 1, 2].map(i => <SkeletonRow key={i} avatar={40} />)}
             </div>
-          </section>
-        ) : (recentSessions?.length ?? 0) > 0 ? (
-          <section className="home__section">
-            <p className="eyebrow">{t('home.recent')}</p>
+          ) : (recentSessions?.length ?? 0) > 0 ? (
             <div className="home__sessions">
               {recentSessions.slice(0, 5).map((s: any) => <SessionRow key={s.id} session={s} />)}
             </div>
-          </section>
-        ) : (
-          <section className="home__empty">
-            <span className="home__empty-ico"><MessageSquare size={22} /></span>
-            <p className="home__empty-title">{t('home.noSessions')}</p>
-            <p className="home__empty-sub">{t('home.noSessionsSub')}</p>
-          </section>
-        )}
+          ) : (
+            <div className="home__empty">
+              <span className="home__empty-ico"><MessageSquare size={22} /></span>
+              <p className="home__empty-title">{t('home.noSessions')}</p>
+              <p className="home__empty-sub">{t('home.noSessionsSub')}</p>
+            </div>
+          )}
+        </section>
 
         <div className="home__foot" />
       </div>
 
       <style>{`
         /* ── Page Shell ── */
-        .home { display: flex; flex-direction: column; height: 100%; overflow: hidden; background: var(--bg); }
+        .home { display: flex; flex-direction: column; height: 100%; overflow: hidden; background: #070512; }
         .home__scroll {
           flex: 1; overflow-y: auto;
-          padding: var(--space-3) var(--space-4) calc(90px + env(safe-area-inset-bottom, 0px));
-          display: flex; flex-direction: column; gap: var(--space-3);
+          padding: 12px 16px calc(90px + env(safe-area-inset-bottom, 0px));
+          display: flex; flex-direction: column; gap: 14px;
         }
-        .home__list { display: flex; flex-direction: column; gap: var(--space-2); }
 
         /* ── Hero / Find Partner Card ── */
         .hero {
           position: relative; isolation: isolate; overflow: hidden;
           flex-shrink: 0;
-          background: var(--grad-hero);
-          border: 1px solid rgba(255, 255, 255, 0.20);
-          border-radius: var(--radius-lg);
+          background: linear-gradient(135deg, #3813A8 0%, #200B68 45%, #0B337A 100%);
+          border: 1px solid rgba(139, 92, 246, 0.35);
+          border-radius: 22px;
           padding: 18px 16px;
           display: flex; flex-direction: column;
-          box-shadow: 0 8px 24px -4px rgba(53, 12, 168, 0.32), var(--shadow-sm);
-          transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
-          -webkit-tap-highlight-color: transparent;
+          box-shadow: 0 12px 36px rgba(40, 14, 130, 0.45);
+          transition: transform 0.18s var(--ease-out);
         }
 
-        /* Animated background orbs */
         .hero__orb {
           position: absolute; z-index: -1; border-radius: 50%; pointer-events: none;
         }
         .hero__orb--1 {
           width: 180px; height: 180px;
-          top: -60px; right: -40px;
-          background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%);
-          animation: orbFloat1 6s ease-in-out infinite;
+          top: -50px; right: -30px;
+          background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
         }
         .hero__orb--2 {
-          width: 100px; height: 100px;
-          bottom: -30px; left: 20px;
-          background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
-          animation: orbFloat2 8s ease-in-out infinite;
+          width: 140px; height: 140px;
+          bottom: -40px; left: 10px;
+          background: radial-gradient(circle, rgba(0, 178, 254, 0.25) 0%, transparent 70%);
         }
-        .hero__orb--3 {
-          width: 60px; height: 60px;
-          top: 30px; right: 60px;
-          background: radial-gradient(circle, rgba(255,255,255,0.10) 0%, transparent 70%);
-          animation: orbFloat3 5s ease-in-out infinite;
-        }
-        @keyframes orbFloat1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-10px,8px) scale(1.05); } }
-        @keyframes orbFloat2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(8px,-6px); } }
-        @keyframes orbFloat3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5px,5px) scale(0.95); } }
 
         .hero__inner { display: flex; flex-direction: column; gap: 14px; }
 
-        /* Top row: live badge + online count */
         .hero__top-row { display: flex; align-items: center; justify-content: space-between; }
         .hero__tag {
           display: inline-flex; align-items: center; gap: 6px;
-          padding: 4px 10px;
+          padding: 5px 12px;
           border-radius: var(--radius-full);
-          background: rgba(255, 255, 255, 0.20);
-          border: 1px solid rgba(255, 255, 255, 0.30);
+          background: rgba(0, 0, 0, 0.35);
+          border: 1px solid rgba(255, 255, 255, 0.15);
           color: #FFFFFF;
-          font-size: 11px; font-weight: var(--weight-bold);
+          font-size: 11px; font-weight: 700;
           letter-spacing: 0.02em;
-          backdrop-filter: blur(4px);
+          backdrop-filter: blur(8px);
         }
         .hero__live-dot {
           width: 7px; height: 7px; border-radius: 50%;
-          background: #86EFAC;
-          box-shadow: 0 0 6px #86EFAC;
+          background: #10B981;
+          box-shadow: 0 0 8px #10B981;
           animation: livePulse 1.8s ease-in-out infinite;
           flex-shrink: 0;
         }
         @keyframes livePulse {
           0%,100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.4); opacity: 0.7; }
+          50% { transform: scale(1.3); opacity: 0.7; }
         }
         .hero__online-pill {
           display: inline-flex; align-items: center; gap: 4px;
-          padding: 3px 8px;
+          padding: 4px 9px;
           border-radius: var(--radius-full);
-          background: rgba(134, 239, 172, 0.20);
-          border: 1px solid rgba(134, 239, 172, 0.35);
-          color: #86EFAC;
-          font-size: 10px; font-weight: var(--weight-bold);
+          background: rgba(16, 185, 129, 0.20);
+          border: 1px solid rgba(16, 185, 129, 0.4);
+          color: #6EE7B7;
+          font-size: 10px; font-weight: 700;
         }
 
-        /* Title & sub */
-        .hero__content { display: flex; flex-direction: column; gap: 4px; }
+        .hero__content-row {
+          display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        }
+        .hero__content { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
         .hero__title {
           font-family: var(--font-display);
-          font-size: 20px; font-weight: var(--weight-heavy);
+          font-size: 24px; font-weight: 800;
           color: #FFFFFF; letter-spacing: -0.02em;
           line-height: 1.15;
-          text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        .hero__title-highlight {
+          background: linear-gradient(90deg, #FFFFFF 0%, #38BDF8 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
         .hero__sub {
           font-size: 13px; line-height: 1.4;
           color: rgba(255, 255, 255, 0.85);
         }
 
-        /* CTA main button */
-        .hero__main-btn {
-          display: flex; align-items: center; justify-content: center; gap: 10px;
-          min-height: 52px; width: 100%;
-          background: #FFFFFF; color: var(--primary);
-          border-radius: var(--radius-md); border: none;
-          font-size: 15px; font-weight: var(--weight-heavy);
-          letter-spacing: -0.01em;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-          cursor: pointer;
-          transition: transform 0.15s var(--ease-out);
-          margin-top: 4px;
-          flex-shrink: 0;
-          box-sizing: border-box;
-          -webkit-appearance: none;
-          appearance: none;
-        }
-        .hero__main-btn:active {
-          transform: scale(0.97);
-        }
-        .hero__mic-ring {
-          position: relative; flex-shrink: 0;
-          width: 30px; height: 30px;
+        .hero__art {
+          position: relative; width: 80px; height: 80px; flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
         }
-        .hero__mic-pulse {
-          position: absolute; inset: -3px;
-          border-radius: 50%;
-          border: 1.5px solid rgba(53, 12, 168, 0.35);
-          animation: micRingPulse 2s ease-out infinite;
+        .hero__mic-badge {
+          font-size: 42px;
+          filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+          animation: micFloat 3s ease-in-out infinite;
         }
-        @keyframes micRingPulse {
-          0% { transform: scale(0.85); opacity: 0.9; }
-          100% { transform: scale(1.35); opacity: 0; }
+        @keyframes micFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
         }
-        .hero__mic-icon {
-          display: flex; align-items: center; justify-content: center;
-          color: var(--primary);
+        .hero__bubble {
+          position: absolute;
+          font-size: 18px;
+          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        .hero__bubble--1 { top: -2px; right: 2px; animation: bubbleFloat 2.6s ease-in-out infinite; }
+        .hero__bubble--2 { bottom: 0px; left: 0px; animation: bubbleFloat 3.2s ease-in-out infinite 0.5s; }
+        @keyframes bubbleFloat {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-3px) scale(1.08); }
         }
 
-        /* ── Progress Card (Section 7.B) ── */
+        /* Hero Main CTA Button */
+        .hero__main-btn {
+          display: flex; align-items: center; justify-content: center; gap: 10px;
+          min-height: 50px; width: 100%;
+          background: #FFFFFF; color: #350CA8;
+          border-radius: var(--radius-full); border: none;
+          font-size: 15px; font-weight: 800;
+          letter-spacing: -0.01em;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+          cursor: pointer;
+          transition: transform 0.15s var(--ease-out);
+        }
+        .hero__main-btn:active { transform: scale(0.97); }
+        .hero__mic-icon {
+          display: flex; align-items: center; justify-content: center;
+          color: #350CA8;
+        }
+
+        /* ── Progress Card ── */
         .home__progress-card {
           display: flex; align-items: center; justify-content: space-between;
-          padding: 12px 14px;
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-md);
-          box-shadow: var(--shadow-sm);
-          flex-shrink: 0;
+          padding: 14px 16px;
+          background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.22);
+          border-radius: 18px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          width: 100%; text-align: left; cursor: pointer;
+          transition: transform 0.15s var(--ease-out);
         }
+        .home__progress-card:active { transform: scale(0.99); background: #1B133B; }
         .home__progress-left {
-          display: flex; align-items: center; gap: 10px; min-width: 0;
+          display: flex; align-items: center; gap: 12px; min-width: 0;
         }
         .home__progress-icon {
-          width: 36px; height: 36px; border-radius: var(--radius-sm);
+          width: 38px; height: 38px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          background: var(--soft-yellow, #FFF5DE); flex-shrink: 0;
+          background: rgba(245, 158, 11, 0.16);
+          border: 1px solid rgba(245, 158, 11, 0.3);
+          flex-shrink: 0;
         }
         .home__progress-text {
           display: flex; flex-direction: column; gap: 1px; min-width: 0;
         }
         .home__progress-title {
-          font-size: 13px; font-weight: var(--weight-bold);
-          color: var(--text-primary);
+          font-size: 14px; font-weight: 700; color: #FFFFFF;
         }
         .home__progress-sub {
-          font-size: 11px; color: var(--text-secondary);
+          font-size: 12px; color: #94A3B8;
           overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
         .home__progress-badge {
-          font-size: 11px; font-weight: var(--weight-bold);
-          padding: 3px 8px; border-radius: var(--radius-full);
+          display: inline-flex; align-items: center; gap: 4px;
+          font-size: 12px; font-weight: 700;
+          padding: 4px 12px; border-radius: var(--radius-full);
           flex-shrink: 0;
         }
         .home__progress-badge.done {
-          background: var(--soft-green, #E6F8F0); color: var(--success, #21B887);
+          background: rgba(16, 185, 129, 0.16);
+          border: 1px solid rgba(16, 185, 129, 0.35);
+          color: #10B981;
         }
         .home__progress-badge.todo {
-          background: var(--primary-subtle); color: var(--primary);
+          background: rgba(124, 58, 237, 0.22);
+          border: 1px solid rgba(139, 92, 246, 0.35);
+          color: #C4B5FD;
         }
 
-        .home__section { display: flex; flex-direction: column; gap: var(--space-2); flex-shrink: 0; }
-        .home__section-head { display: flex; align-items: center; justify-content: space-between; }
+        /* ── Listings Board Card ── */
+        .home__board-card {
+          display: flex; align-items: center; gap: 12px;
+          padding: 14px 16px;
+          background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.22);
+          border-radius: 18px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          width: 100%; text-align: left; cursor: pointer;
+          transition: transform 0.15s var(--ease-out);
+        }
+        .home__board-card:active { transform: scale(0.99); background: #1B133B; }
+        .home__board-icon {
+          width: 38px; height: 38px; border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(135deg, #4C1D95 0%, #2E1065 100%);
+          border: 1px solid rgba(139, 92, 246, 0.35);
+          color: #FFFFFF; flex-shrink: 0;
+        }
+        .home__board-text {
+          flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;
+        }
+        .home__board-title {
+          font-size: 14px; font-weight: 700; color: #FFFFFF;
+        }
+        .home__board-sub {
+          font-size: 12px; color: #94A3B8;
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .home__board-arrow { color: #64748B; flex-shrink: 0; }
 
-        /* ── Toggle Row extras ── */
-        .row--on { border-color: var(--btn-bg); }
-        .row__arrow { color: var(--text-secondary); flex-shrink: 0; }
+        /* ── Recent Practice Section ── */
+        .home__section { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+        .home__section-head { display: flex; align-items: center; justify-content: space-between; }
+        .home__section-title { font-size: 14px; font-weight: 700; color: #FFFFFF; }
+        .home__see-all-btn {
+          display: inline-flex; align-items: center; gap: 4px;
+          font-size: 12px; font-weight: 600; color: #38BDF8;
+          cursor: pointer;
+        }
+        .home__sessions { display: flex; flex-direction: column; gap: 8px; }
+
+        /* ── Safety Row Switch ── */
+        .row {
+          display: flex; align-items: center; gap: 12px;
+          padding: 12px 14px;
+          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.22);
+          border-radius: 16px; width: 100%; text-align: left;
+        }
+        .row--on { border-color: rgba(124, 58, 237, 0.6); }
+        .row__ico {
+          width: 32px; height: 32px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(124, 58, 237, 0.18); color: #C4B5FD;
+        }
+        .row__ico--primary { background: rgba(16, 185, 129, 0.20); color: #10B981; }
+        .row__text { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+        .row__title { font-size: 13px; font-weight: 700; color: #FFFFFF; }
+        .row__sub { font-size: 11px; color: #94A3B8; }
         .switch {
           flex-shrink: 0; width: 40px; height: 24px; border-radius: var(--radius-full);
-          background: var(--surface-2); border: 1px solid var(--border);
-          position: relative; transition: background var(--t), border-color var(--t);
+          background: #1F173D; border: 1px solid rgba(139, 92, 246, 0.25);
+          position: relative; transition: all var(--t);
         }
         .switch::after {
           content: ''; position: absolute; top: 2px; left: 2px;
           width: 18px; height: 18px; border-radius: 50%;
-          background: var(--text-secondary);
+          background: #64748B;
           transition: transform var(--t), background var(--t);
         }
-        .switch--on { background: var(--btn-bg); border-color: var(--btn-bg); }
-        .switch--on::after { transform: translateX(16px); background: var(--btn-text); }
+        .switch--on { background: #7C3AED; border-color: #7C3AED; }
+        .switch--on::after { transform: translateX(16px); background: #FFFFFF; }
 
-        /* ── Sessions list ── */
-        .home__sessions { display: flex; flex-direction: column; gap: var(--space-1-5); }
-
-        /* ── Empty state ── */
+        /* ── Empty State ── */
         .home__empty {
-          display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
-          padding: var(--space-6) var(--space-5); text-align: center;
-          background: var(--bg-secondary); border: 1px solid var(--border);
-          border-radius: var(--radius-lg);
-          flex-shrink: 0;
+          display: flex; flex-direction: column; align-items: center; gap: 6px;
+          padding: 28px 20px; text-align: center;
+          background: #140E2D; border: 1px solid rgba(139, 92, 246, 0.18);
+          border-radius: 18px;
         }
         .home__empty-ico {
-          width: 48px; height: 48px; border-radius: var(--radius-full);
+          width: 44px; height: 44px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          background: var(--btn-bg-soft); color: var(--btn-bg);
-          margin-bottom: var(--space-1);
+          background: rgba(124, 58, 237, 0.18); color: #C4B5FD;
+          margin-bottom: 4px;
         }
-
-        .home__foot { padding-bottom: var(--space-2); }
+        .home__empty-title { font-size: 14px; font-weight: 700; color: #FFFFFF; }
+        .home__empty-sub { font-size: 12px; color: #94A3B8; max-width: 260px; }
+        .home__foot { padding-bottom: 8px; }
       `}</style>
     </div>
   );

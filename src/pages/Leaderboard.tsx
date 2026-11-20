@@ -5,7 +5,7 @@ import { useT } from '../i18n';
 import { selectionHaptic } from '../utils/haptics';
 import Avatar from '../components/Avatar';
 import SkeletonRow from '../components/SkeletonRow';
-import { Flame, Star, Trophy, Crown } from 'lucide-react';
+import { Flame, Star, Trophy, Crown, Calendar, BarChart3 } from 'lucide-react';
 
 const LEVEL_CODE: Record<number, string> = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2' };
 
@@ -17,7 +17,7 @@ function Row({ row, index, me, valueText }: { row: any; index: number; me: any; 
 
   let rankBadge = null;
   if (rank === 1) {
-    rankBadge = <Crown size={18} className="text-[#D97706] fill-[#FFC857]" />;
+    rankBadge = <Crown size={20} className="text-[#F59E0B] fill-[#FFC857]" />;
   } else if (rank === 2) {
     rankBadge = <span className="lb-rank-badge lb-rank-badge--2">2</span>;
   } else if (rank === 3) {
@@ -27,11 +27,11 @@ function Row({ row, index, me, valueText }: { row: any; index: number; me: any; 
   }
 
   return (
-    <div className={`lb-row lb-row--rank-${rank <= 3 ? rank : 'normal'} ${isMe ? 'me' : ''}`}>
+    <div className={`lb-row ${rank === 1 ? 'lb-row--rank-1' : ''} ${isMe ? 'me' : ''}`}>
       <div className="lb-rank-col">
         {rankBadge}
       </div>
-      <Avatar name={name} avatarUrl={row.avatar_url} size={40} />
+      <Avatar name={name} avatarUrl={row.avatar_url} size={42} />
       <div className="lb-row__info">
         <div className="lb-row__name-line">
           <span className="lb-row__nametext">{name}</span>
@@ -42,6 +42,7 @@ function Row({ row, index, me, valueText }: { row: any; index: number; me: any; 
         )}
       </div>
       <div className="lb-row__value-col">
+        <Flame size={14} className="text-[#FF9F0A]" />
         <span className="lb-row__value">{valueText}</span>
       </div>
     </div>
@@ -49,9 +50,9 @@ function Row({ row, index, me, valueText }: { row: any; index: number; me: any; 
 }
 
 const SCOPES = [
-  { key: 'today',   label: 'lb.scopeToday' },
-  { key: 'weekly',  label: 'lb.scopeWeekly' },
-  { key: 'monthly', label: 'lb.scopeMonthly' },
+  { key: 'today',   label: 'lb.scopeToday', icon: Calendar },
+  { key: 'weekly',  label: 'lb.scopeWeekly', icon: BarChart3 },
+  { key: 'monthly', label: 'lb.scopeMonthly', icon: Calendar },
 ];
 
 export default function Leaderboard() {
@@ -88,25 +89,39 @@ export default function Leaderboard() {
 
   return (
     <div className="lb">
+      {/* Header Banner with Podium Illustration */}
       <div className="lb-head">
-        <div className="flex items-center gap-2">
-          <Trophy className="text-[#FFD700]" size={24} />
-          <h1 className="lb-title">{t('lb.title')}</h1>
+        <div className="lb-head__left">
+          <div className="lb-head__icon">
+            <Trophy className="text-[#FFD700]" size={26} />
+          </div>
+          <div>
+            <h1 className="lb-title">{t('lb.title')}</h1>
+            <p className="lb-sub">{t('lb.subtitle')}</p>
+          </div>
         </div>
-        <p className="lb-sub">{t('lb.subtitle')}</p>
+
+        <div className="lb-head__podium" aria-hidden="true">
+          <div className="lb-head__podium-trophy">🏆</div>
+          <div className="lb-head__podium-block">1</div>
+        </div>
       </div>
 
-      {/* Scope filter */}
+      {/* Scope filter (Time Period) */}
       <div className="lb-scope">
-        {SCOPES.map((s) => (
-          <button
-            key={s.key}
-            className={`lb-scope-btn ${scope === s.key ? 'on' : ''}`}
-            onClick={() => { if (scope !== s.key) { selectionHaptic(); setScope(s.key as any); } }}
-          >
-            {t(s.label)}
-          </button>
-        ))}
+        {SCOPES.map((s) => {
+          const Icon = s.icon;
+          return (
+            <button
+              key={s.key}
+              className={`lb-scope-btn ${scope === s.key ? 'on' : ''}`}
+              onClick={() => { if (scope !== s.key) { selectionHaptic(); setScope(s.key as any); } }}
+            >
+              <Icon size={14} />
+              <span>{t(s.label)}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Category Tabs */}
@@ -132,7 +147,7 @@ export default function Leaderboard() {
       <div className="lb-scroll">
         {!loaded ? (
           <div className="lb-list">
-            {[0, 1, 2, 3, 4].map(i => <SkeletonRow key={i} rank avatar={36} />)}
+            {[0, 1, 2, 3, 4].map(i => <SkeletonRow key={i} rank avatar={40} />)}
           </div>
         ) : activeList.length > 0 ? (
           <div className="lb-list">
@@ -155,91 +170,124 @@ export default function Leaderboard() {
       <style>{`
         .lb {
           display: flex; flex-direction: column;
-          height: 100%; overflow: hidden; background: var(--bg);
+          height: 100%; overflow: hidden; background: #070512;
         }
-        .lb-head {
-          padding: calc(var(--space-4) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-2);
-        }
-        .lb-title { font-size: 22px; font-weight: var(--weight-heavy); letter-spacing: -0.5px; }
-        .lb-sub { font-size: var(--text-xs); color: var(--text-secondary); margin-top: 2px; }
 
+        /* ── Header Banner ── */
+        .lb-head {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 14px;
+          position: relative;
+        }
+        .lb-head__left {
+          display: flex; align-items: center; gap: 12px;
+        }
+        .lb-head__icon {
+          width: 44px; height: 44px; border-radius: 14px;
+          display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.08) 100%);
+          border: 1px solid rgba(245, 158, 11, 0.35);
+          box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+          flex-shrink: 0;
+        }
+        .lb-title { font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; }
+        .lb-sub { font-size: 12px; color: #94A3B8; margin-top: 1px; }
+
+        .lb-head__podium {
+          display: flex; flex-direction: column; align-items: center;
+          position: relative; padding-right: 8px;
+        }
+        .lb-head__podium-trophy {
+          font-size: 28px; filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.5));
+          animation: podiumPulse 2.8s ease-in-out infinite;
+        }
+        @keyframes podiumPulse {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-3px); }
+        }
+        .lb-head__podium-block {
+          width: 42px; height: 26px; border-radius: 8px 8px 0 0;
+          background: linear-gradient(180deg, #4F46E5 0%, #312E81 100%);
+          border: 1px solid rgba(139, 92, 246, 0.4);
+          color: #FFFFFF; font-size: 12px; font-weight: 800;
+          display: flex; align-items: center; justify-content: center;
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+        }
+
+        /* ── Scope Filter ── */
         .lb-scope {
-          display: flex; gap: var(--space-1-5);
-          margin: 0 var(--space-4) var(--space-2);
-          background: var(--surface-2);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-full);
-          padding: 3px;
+          display: flex; gap: 8px;
+          margin: 0 16px 12px;
         }
         .lb-scope-btn {
-          flex: 1; padding: 7px var(--space-2);
-          font-size: var(--text-xs); font-weight: var(--weight-bold);
-          color: var(--text-secondary);
+          flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+          padding: 8px 12px;
+          font-size: 12px; font-weight: 700;
+          color: #94A3B8;
+          background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.2);
           border-radius: var(--radius-full);
           transition: all 0.18s var(--ease-out);
         }
         .lb-scope-btn.on {
-          color: #FFFFFF; background: var(--primary);
-          box-shadow: 0 2px 8px rgba(53, 12, 168, 0.25);
+          color: #FFFFFF;
+          background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+          border-color: rgba(139, 92, 246, 0.5);
+          box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
         }
-        .lb-scope-btn:active:not(.on) { background: var(--surface-3); color: var(--text-primary); }
+        .lb-scope-btn:active:not(.on) { background: #1B1238; color: #FFFFFF; }
 
+        /* ── Category Tabs ── */
         .lb-tabs {
-          display: flex; gap: var(--space-1);
-          margin: 0 var(--space-4) var(--space-3);
-          padding: 4px;
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-md);
+          display: flex; gap: 8px;
+          margin: 0 16px 14px;
         }
         .lb-tab {
           flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-          padding: 8px var(--space-2);
-          font-size: var(--text-xs); font-weight: var(--weight-bold);
-          color: var(--text-secondary);
-          border: none;
-          border-radius: calc(var(--radius-md) - 4px);
+          padding: 9px 14px;
+          font-size: 12px; font-weight: 700;
+          color: #94A3B8;
+          background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.2);
+          border-radius: var(--radius-full);
           transition: all var(--t);
           cursor: pointer;
         }
         .lb-tab.on {
-          background: var(--surface-2);
-          color: var(--text-primary);
-          box-shadow: var(--shadow-sm);
+          background: #1C123D;
+          border-color: rgba(139, 92, 246, 0.45);
+          color: #FFFFFF;
+          box-shadow: 0 2px 14px rgba(124, 58, 237, 0.25);
         }
 
         .lb-scroll {
           flex: 1; overflow-y: auto;
-          padding: 0 var(--space-4) calc(120px + env(safe-area-inset-bottom, 0px));
-          display: flex; flex-direction: column; gap: var(--space-3);
+          padding: 0 16px calc(120px + env(safe-area-inset-bottom, 0px));
+          display: flex; flex-direction: column; gap: 12px;
         }
 
-        .lb-list { display: flex; flex-direction: column; gap: 8px; }
+        .lb-list { display: flex; flex-direction: column; gap: 10px; }
 
+        /* ── Ranking Row Cards ── */
         .lb-row {
           display: flex; align-items: center; gap: 12px;
           padding: 12px 14px;
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-md);
-          box-shadow: var(--shadow-sm);
+          background: #120B26;
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          border-radius: 18px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
           transition: transform 0.15s ease, border-color 0.15s ease;
         }
         .lb-row:active { transform: scale(0.99); }
-        .lb-row.me { border-color: var(--primary) !important; background: var(--primary-subtle) !important; }
+        .lb-row.me {
+          border-color: rgba(99, 102, 241, 0.65) !important;
+          background: #160F33 !important;
+        }
 
         .lb-row--rank-1 {
-          border-color: rgba(255, 200, 87, 0.55);
-          background: linear-gradient(135deg, rgba(255, 200, 87, 0.12) 0%, var(--bg-secondary) 100%);
-          box-shadow: 0 4px 14px rgba(255, 200, 87, 0.12);
-        }
-        .lb-row--rank-2 {
-          border-color: rgba(148, 163, 184, 0.45);
-          background: linear-gradient(135deg, rgba(148, 163, 184, 0.10) 0%, var(--bg-secondary) 100%);
-        }
-        .lb-row--rank-3 {
-          border-color: rgba(217, 119, 6, 0.45);
-          background: linear-gradient(135deg, rgba(217, 119, 6, 0.10) 0%, var(--bg-secondary) 100%);
+          border-color: rgba(139, 92, 246, 0.5);
+          background: #150E2F;
+          box-shadow: 0 4px 20px rgba(124, 58, 237, 0.25);
         }
 
         .lb-rank-col {
@@ -247,61 +295,64 @@ export default function Leaderboard() {
           flex-shrink: 0;
         }
         .lb-rank-num {
-          font-size: 12px; font-weight: var(--weight-heavy); color: var(--text-tertiary);
+          font-size: 13px; font-weight: 800; color: #64748B;
         }
         .lb-rank-badge {
           display: flex; align-items: center; justify-content: center;
-          width: 24px; height: 24px; border-radius: 50%;
-          font-size: 11px; font-weight: var(--weight-heavy);
+          width: 26px; height: 26px; border-radius: 50%;
+          font-size: 12px; font-weight: 800;
         }
         .lb-rank-badge--2 {
-          background: var(--surface-2);
-          color: var(--text-primary);
-          border: 1px solid rgba(148, 163, 184, 0.5);
+          background: #1C153B;
+          color: #E2E8F0;
+          border: 1px solid rgba(148, 163, 184, 0.4);
         }
         .lb-rank-badge--3 {
-          background: rgba(217, 119, 6, 0.16);
+          background: rgba(217, 119, 6, 0.2);
           color: #F59E0B;
-          border: 1px solid rgba(217, 119, 6, 0.4);
+          border: 1px solid rgba(217, 119, 6, 0.45);
         }
 
-        .lb-row__info { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+        .lb-row__info { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
         .lb-row__name-line {
           display: flex; align-items: center; gap: 6px; min-width: 0;
         }
         .lb-row__nametext {
-          font-size: 14px; font-weight: var(--weight-bold); color: var(--text-primary);
+          font-size: 14px; font-weight: 700; color: #FFFFFF;
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
         }
         .lb-you {
-          font-size: 9px; font-weight: var(--weight-bold);
-          padding: 2px 6px; border-radius: 999px;
-          background: var(--primary); color: #FFFFFF;
+          font-size: 10px; font-weight: 700;
+          padding: 2px 7px; border-radius: 999px;
+          background: rgba(99, 102, 241, 0.35); color: #C7D2FE;
+          border: 1px solid rgba(99, 102, 241, 0.5);
           flex-shrink: 0;
         }
         .lb-row__level {
-          font-size: 10px; font-weight: var(--weight-bold);
-          color: var(--primary);
-          background: var(--primary-subtle);
-          padding: 1px 6px; border-radius: 4px;
+          font-size: 10px; font-weight: 700;
+          color: #C4B5FD;
+          background: rgba(124, 58, 237, 0.25);
+          padding: 1px 7px; border-radius: 6px;
           width: fit-content;
         }
 
-        .lb-row__value-col { flex-shrink: 0; text-align: right; }
+        .lb-row__value-col {
+          display: flex; align-items: center; gap: 4px;
+          flex-shrink: 0; text-align: right;
+        }
         .lb-row__value {
-          font-size: 13px; font-weight: var(--weight-heavy);
-          color: var(--primary); white-space: nowrap;
+          font-size: 13px; font-weight: 800;
+          color: #FFFFFF; white-space: nowrap;
         }
 
         .lb-empty {
-          font-size: var(--text-sm); color: var(--text-secondary);
-          text-align: center; padding: var(--space-5) var(--space-3);
-          background: var(--bg-secondary); border: 1px solid var(--border);
-          border-radius: var(--radius-md);
+          font-size: 13px; color: #94A3B8;
+          text-align: center; padding: 36px 20px;
+          background: #120B26; border: 1px solid rgba(139, 92, 246, 0.18);
+          border-radius: 18px;
         }
-        .lb-footer { padding-bottom: var(--space-2); }
+        .lb-footer { padding-bottom: 8px; }
       `}</style>
     </div>
   );
 }
-

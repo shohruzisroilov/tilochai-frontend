@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getMe, getMyRatings, updateMe } from '../api/endpoints';
+import { getMe, getMyRatings } from '../api/endpoints';
 import { useTelegramBackButton } from '../hooks/useTelegramBackButton';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
-import { selectionHaptic, tapHaptic } from '../utils/haptics';
+import { tapHaptic } from '../utils/haptics';
 import Avatar from '../components/Avatar';
 import {
   ArrowLeft,
   BarChart2,
-  Check,
   ChevronRight,
   Clock,
   Gift,
@@ -18,7 +17,8 @@ import {
   Star,
   Users,
   Flame,
-  X,
+  Pencil,
+  Crown,
 } from 'lucide-react';
 
 const SUPPORT_URL = 'https://t.me/Shohruz_Isroilov';
@@ -187,11 +187,26 @@ export default function Profile() {
       <div className="profile__scroll">
         {/* User Hero Header */}
         <div className="profile__hero">
-          <div className="profile__avatar-ring">
-            <Avatar name={user?.displayName || undefined} avatarUrl={user?.avatarUrl || undefined} size={64} />
+          <div className="profile__avatar-wrap">
+            <div className="profile__avatar-ring">
+              <Avatar name={user?.displayName || undefined} avatarUrl={user?.avatarUrl || undefined} size={76} />
+            </div>
+            <button
+              type="button"
+              className="profile__avatar-edit-btn"
+              onClick={() => {
+                tapHaptic('light');
+                navigate('settings', { from: 'profile' });
+              }}
+              aria-label="Edit Profile"
+            >
+              <Pencil size={11} />
+            </button>
           </div>
+
           <h1 className="profile__name">{user?.displayName || t('common.anonymous')}</h1>
           {user?.username && <p className="profile__username">@{user.username}</p>}
+
           <div className="profile__pills-row">
             <button
               type="button"
@@ -201,11 +216,12 @@ export default function Profile() {
                 navigate('settings', { from: 'profile' });
               }}
             >
-              <span>{t(`level.${level}`)} · {t(`levelName.${level}`)}</span>
-              <ChevronRight size={12} />
+              <BarChart2 size={12} className="profile__level-icon" />
+              <span>{t(`level.${level}`)} • {t(`levelName.${level}`)}</span>
+              <ChevronRight size={11} className="opacity-70" />
             </button>
             <span className="profile__status-badge">
-              <span className="profile__status-dot" />
+              <Crown size={12} className="profile__crown-icon" />
               <span>Free &amp; Unlimited</span>
             </span>
           </div>
@@ -221,7 +237,7 @@ export default function Profile() {
             }}
           >
             <span className="profile__stat-icon profile__stat-icon--time">
-              <Clock size={15} />
+              <Clock size={16} />
             </span>
             <span className="profile__stat-value">{formatPracticeTime(totalMinutes)}</span>
             <span className="profile__stat-label">{t('profile.timeTalked')}</span>
@@ -229,7 +245,7 @@ export default function Profile() {
 
           <div className="profile__stat-box">
             <span className="profile__stat-icon profile__stat-icon--users">
-              <Users size={15} />
+              <Users size={16} />
             </span>
             <span className="profile__stat-value">{uniquePartners}</span>
             <span className="profile__stat-label">{t('profile.partners')}</span>
@@ -240,7 +256,7 @@ export default function Profile() {
             onClick={openRatings}
           >
             <span className="profile__stat-icon profile__stat-icon--star">
-              <Star size={15} fill="currentColor" />
+              <Star size={16} fill="currentColor" />
             </span>
             <span className="profile__stat-value">{avgRatingNum} ★</span>
             <span className="profile__stat-label">
@@ -250,17 +266,20 @@ export default function Profile() {
 
           <div className="profile__stat-box">
             <span className="profile__stat-icon profile__stat-icon--flame">
-              <Flame size={15} />
+              <Flame size={16} />
             </span>
             <span className="profile__stat-value">{streakCount}</span>
             <span className="profile__stat-label">
-              {longestStreak > streakCount ? `Streak (Best: ${longestStreak})` : 'Day Streak'}
+              {longestStreak > streakCount ? `Streak (Best ${longestStreak})` : 'Day Streak'}
             </span>
           </div>
         </div>
 
         {/* Section 1: Activity & Progress */}
-        <div className="profile__section-header">Activity &amp; Progress</div>
+        <div className="profile__section-header">
+          <BarChart2 size={13} className="text-[#A78BFA]" />
+          <span>Activity &amp; Progress</span>
+        </div>
         <div className="profile__card">
           <button
             type="button"
@@ -270,8 +289,8 @@ export default function Profile() {
               navigate('statistics', { from: 'profile' });
             }}
           >
-            <span className="profile__row-icon-wrapper profile__row-icon-wrapper--blue">
-              <BarChart2 size={16} />
+            <span className="profile__row-icon-wrapper profile__row-icon-wrapper--purple">
+              <BarChart2 size={18} />
             </span>
             <div className="profile__row-text">
               <span className="profile__row-title">Detailed Statistics</span>
@@ -286,7 +305,7 @@ export default function Profile() {
             onClick={openRatings}
           >
             <span className="profile__row-icon-wrapper profile__row-icon-wrapper--amber">
-              <Star size={16} />
+              <Star size={18} />
             </span>
             <div className="profile__row-text">
               <span className="profile__row-title">{t('profile.ratingsModalTitle')}</span>
@@ -305,7 +324,7 @@ export default function Profile() {
             }}
           >
             <span className="profile__row-icon-wrapper profile__row-icon-wrapper--cyan">
-              <Users size={16} />
+              <Users size={18} />
             </span>
             <div className="profile__row-text">
               <span className="profile__row-title">{t('home.listingsTitle')}</span>
@@ -316,7 +335,10 @@ export default function Profile() {
         </div>
 
         {/* Section 2: Community & Invites */}
-        <div className="profile__section-header">Community &amp; Sharing</div>
+        <div className="profile__section-header">
+          <Users size={13} className="text-[#38BDF8]" />
+          <span>Community &amp; Sharing</span>
+        </div>
         <div className="profile__card">
           <button
             type="button"
@@ -327,7 +349,7 @@ export default function Profile() {
             }}
           >
             <span className="profile__row-icon-wrapper profile__row-icon-wrapper--green">
-              <Gift size={16} />
+              <Gift size={18} />
             </span>
             <div className="profile__row-text">
               <span className="profile__row-title">{t('nav.invite')}</span>
@@ -344,8 +366,8 @@ export default function Profile() {
               navigate('reviews');
             }}
           >
-            <span className="profile__row-icon-wrapper profile__row-icon-wrapper--purple">
-              <MessageSquare size={16} />
+            <span className="profile__row-icon-wrapper profile__row-icon-wrapper--violet">
+              <MessageSquare size={18} />
             </span>
             <div className="profile__row-text">
               <span className="profile__row-title">{t('profile.reviews')}</span>
@@ -356,7 +378,10 @@ export default function Profile() {
         </div>
 
         {/* Section 3: Preferences & Support */}
-        <div className="profile__section-header">{t('settings.title')} &amp; Support</div>
+        <div className="profile__section-header">
+          <SlidersHorizontal size={13} className="text-[#94A3B8]" />
+          <span>{t('settings.title')} &amp; Support</span>
+        </div>
         <div className="profile__card">
           <button
             type="button"
@@ -367,7 +392,7 @@ export default function Profile() {
             }}
           >
             <span className="profile__row-icon-wrapper profile__row-icon-wrapper--slate">
-              <SlidersHorizontal size={16} />
+              <SlidersHorizontal size={18} />
             </span>
             <div className="profile__row-text">
               <span className="profile__row-title">{t('settings.title')}</span>
@@ -386,7 +411,7 @@ export default function Profile() {
             }}
           >
             <span className="profile__row-icon-wrapper profile__row-icon-wrapper--rose">
-              <LifeBuoy size={16} />
+              <LifeBuoy size={18} />
             </span>
             <div className="profile__row-text">
               <span className="profile__row-title">{t('profile.support')}</span>
@@ -402,98 +427,142 @@ export default function Profile() {
       <style>{`
         .profile {
           display: flex; flex-direction: column;
-          height: 100%; background: var(--bg);
+          height: 100%; background: #070512;
         }
         .profile__scroll {
           flex: 1;
           min-height: 0;
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
-          padding: var(--space-3) var(--space-4) calc(110px + env(safe-area-inset-bottom, 0px));
-          display: flex; flex-direction: column; gap: 12px;
+          padding: 12px 16px calc(115px + env(safe-area-inset-bottom, 0px));
+          display: flex; flex-direction: column; gap: 14px;
         }
 
         .profile__hero {
-          display: flex; flex-direction: column; align-items: center; gap: 6px;
-          padding: 8px 0 2px;
+          display: flex; flex-direction: column; align-items: center; gap: 7px;
+          padding: 8px 0 4px;
           flex-shrink: 0;
         }
-        .profile__avatar-ring {
+        .profile__avatar-wrap {
           position: relative;
+          display: inline-block;
+          margin-bottom: 2px;
+        }
+        .profile__avatar-ring {
           padding: 3px;
           border-radius: 50%;
-          background: linear-gradient(135deg, var(--primary), var(--accent-cyan, #00B2FE));
-          margin-bottom: 2px;
-          box-shadow: 0 4px 14px rgba(53, 12, 168, 0.25);
+          background: linear-gradient(135deg, rgba(124, 58, 237, 0.7), rgba(0, 178, 254, 0.7));
+          box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
         }
-        .profile__name { font-size: 19px; font-weight: var(--weight-heavy); letter-spacing: -0.4px; text-align: center; color: var(--text-primary); }
-        .profile__username { font-size: 12px; color: var(--text-secondary); margin-top: -3px; }
+        .profile__avatar-edit-btn {
+          position: absolute;
+          bottom: 2px;
+          right: 2px;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: #1E123D;
+          border: 1.5px solid #8B5CF6;
+          color: #DDD6FE;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+          transition: transform 0.15s ease;
+        }
+        .profile__avatar-edit-btn:active {
+          transform: scale(0.92);
+        }
+
+        .profile__name {
+          font-size: 21px;
+          font-weight: 800;
+          letter-spacing: -0.4px;
+          text-align: center;
+          color: #FFFFFF;
+        }
+        .profile__username {
+          font-size: 13px;
+          color: #94A3B8;
+          margin-top: -4px;
+          font-weight: 500;
+        }
         .profile__pills-row {
           display: flex; align-items: center; gap: 8px; margin-top: 4px;
           flex-wrap: wrap; justify-content: center;
         }
         .profile__level-badge {
-          display: inline-flex; align-items: center; gap: 4px;
-          padding: 4px 10px; border-radius: var(--radius-full);
-          background: var(--primary-subtle); border: 1px solid rgba(53, 12, 168, 0.25);
-          color: var(--primary); font-size: 11px; font-weight: var(--weight-bold);
-          cursor: pointer; transition: transform 0.15s ease;
+          display: inline-flex; align-items: center; gap: 6px;
+          padding: 5px 12px; border-radius: 9999px;
+          background: rgba(124, 58, 237, 0.22);
+          border: 1px solid rgba(139, 92, 246, 0.35);
+          color: #C4B5FD; font-size: 12px; font-weight: 600;
+          cursor: pointer; transition: transform 0.15s ease, background-color 0.15s ease;
         }
-        .profile__level-badge:active { transform: scale(0.96); }
+        .profile__level-badge:active { transform: scale(0.96); background: rgba(124, 58, 237, 0.35); }
+        .profile__level-icon { color: #A78BFA; }
+
         .profile__status-badge {
-          padding: 4px 10px; border-radius: var(--radius-full);
-          background: var(--soft-green);
-          border: 1px solid rgba(33, 184, 135, 0.3);
-          color: var(--success);
-          font-size: 11px; font-weight: var(--weight-bold);
+          padding: 5px 12px; border-radius: 9999px;
+          background: rgba(16, 185, 129, 0.16);
+          border: 1px solid rgba(16, 185, 129, 0.32);
+          color: #34D399;
+          font-size: 12px; font-weight: 600;
           display: inline-flex; align-items: center; gap: 6px;
         }
-        .profile__status-dot {
-          width: 6px; height: 6px; border-radius: 50%;
-          background: var(--success);
-        }
+        .profile__crown-icon { color: #34D399; }
 
         .profile__stats-grid {
-          display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 2px;
+          display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 4px;
           flex-shrink: 0;
         }
         .profile__stat-box {
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-md);
-          padding: 10px 4px;
+          background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.20);
+          border-radius: 16px;
+          padding: 12px 4px;
           display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-          gap: 3px;
-          box-shadow: var(--shadow-sm);
-          transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+          gap: 4px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+          transition: transform 0.15s, border-color 0.15s;
           box-sizing: border-box;
         }
         .profile__stat-box--clickable { cursor: pointer; }
-        .profile__stat-box--clickable:active { transform: scale(0.96); border-color: var(--primary); box-shadow: 0 4px 14px var(--primary-subtle); }
+        .profile__stat-box--clickable:active {
+          transform: scale(0.95);
+          border-color: rgba(139, 92, 246, 0.5);
+          background: #191138;
+        }
         .profile__stat-icon {
-          width: 26px; height: 26px; border-radius: var(--radius-xs);
+          width: 28px; height: 28px; border-radius: 8px;
           display: flex; align-items: center; justify-content: center; margin-bottom: 2px;
         }
-        .profile__stat-icon--time  { background: var(--primary-subtle); color: var(--primary); }
-        .profile__stat-icon--users { background: var(--soft-green); color: var(--success); }
-        .profile__stat-icon--star  { background: var(--soft-yellow); color: #D97706; }
-        .profile__stat-icon--flame { background: rgba(255, 159, 10, 0.16); color: #FF9F0A; }
+        .profile__stat-icon--time  { background: rgba(124, 58, 237, 0.25); color: #C4B5FD; }
+        .profile__stat-icon--users { background: rgba(6, 182, 212, 0.22); color: #38BDF8; }
+        .profile__stat-icon--star  { background: rgba(245, 158, 11, 0.22); color: #F59E0B; }
+        .profile__stat-icon--flame { background: rgba(239, 68, 68, 0.22); color: #F97316; }
 
-        .profile__stat-value { font-size: 14px; font-weight: var(--weight-heavy); color: var(--text-primary); letter-spacing: -0.3px; line-height: 1.1; }
-        .profile__stat-label { font-size: 9px; color: var(--text-secondary); font-weight: var(--weight-bold); text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.1; }
+        .profile__stat-value {
+          font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; line-height: 1.1;
+        }
+        .profile__stat-label {
+          font-size: 9px; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.1;
+        }
 
         .profile__section-header {
-          font-size: 11px; font-weight: var(--weight-bold);
-          color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em;
-          padding: 4px 2px 0;
+          font-size: 12px; font-weight: 700;
+          color: #C4B5FD; letter-spacing: 0.02em;
+          padding: 6px 2px 0;
+          display: flex; align-items: center; gap: 6px;
           flex-shrink: 0;
         }
 
         .profile__card {
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-lg);
-          box-shadow: var(--shadow-sm);
+          background: #140E2D;
+          border: 1px solid rgba(139, 92, 246, 0.20);
+          border-radius: 18px;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
           display: flex; flex-direction: column;
           flex-shrink: 0;
           width: 100%;
@@ -501,13 +570,13 @@ export default function Profile() {
           overflow: hidden;
         }
         .profile__row {
-          display: flex; align-items: center; gap: 12px;
-          width: 100%; min-height: 56px;
+          display: flex; align-items: center; gap: 13px;
+          width: 100%; min-height: 58px;
           box-sizing: border-box;
           text-align: left;
-          padding: 12px 14px;
-          border-bottom: 1px solid var(--border);
-          transition: background-color 0.15s, opacity 0.15s;
+          padding: 13px 15px;
+          border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+          transition: background-color 0.15s;
           border-top: none; border-left: none; border-right: none;
           background: transparent; cursor: pointer;
           flex-shrink: 0;
@@ -517,30 +586,31 @@ export default function Profile() {
         .profile__row:last-child {
           border-bottom: none;
         }
-        .profile__row:active:not(:disabled) { background: var(--surface-2); }
-        .profile__row:disabled { cursor: default; opacity: 0.8; }
+        .profile__row:active {
+          background: rgba(139, 92, 246, 0.12);
+        }
 
         .profile__row-icon-wrapper {
-          width: 34px; height: 34px; border-radius: var(--radius-sm);
+          width: 36px; height: 36px; border-radius: 10px;
           display: flex; align-items: center; justify-content: center;
           flex-shrink: 0;
         }
-        .profile__row-icon-wrapper--blue   { background: var(--primary-subtle); color: var(--primary); }
-        .profile__row-icon-wrapper--purple { background: rgba(147, 51, 234, 0.12); color: #9333ea; }
-        .profile__row-icon-wrapper--amber  { background: var(--soft-yellow); color: #D97706; }
-        .profile__row-icon-wrapper--cyan   { background: rgba(6, 182, 212, 0.12); color: #0891b2; }
-        .profile__row-icon-wrapper--rose   { background: rgba(244, 63, 94, 0.12); color: #f43f5e; }
-        .profile__row-icon-wrapper--slate  { background: var(--surface-2); color: var(--text-secondary); }
-        .profile__row-icon-wrapper--green  { background: var(--soft-green); color: var(--success); }
+        .profile__row-icon-wrapper--purple { background: rgba(124, 58, 237, 0.28); color: #A78BFA; }
+        .profile__row-icon-wrapper--amber  { background: rgba(245, 158, 11, 0.25); color: #F59E0B; }
+        .profile__row-icon-wrapper--cyan   { background: rgba(6, 182, 212, 0.25); color: #38BDF8; }
+        .profile__row-icon-wrapper--green  { background: rgba(16, 185, 129, 0.25); color: #34D399; }
+        .profile__row-icon-wrapper--violet { background: rgba(168, 85, 247, 0.25); color: #C084FC; }
+        .profile__row-icon-wrapper--slate  { background: rgba(148, 163, 184, 0.18); color: #94A3B8; }
+        .profile__row-icon-wrapper--rose   { background: rgba(244, 63, 94, 0.22); color: #FB7185; }
 
         .profile__row-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-        .profile__row-title { font-size: 14px; font-weight: var(--weight-bold); color: var(--text-primary); }
-        .profile__row-sub { font-size: 11px; color: var(--text-secondary); line-height: 1.35; }
+        .profile__row-title { font-size: 14px; font-weight: 700; color: #FFFFFF; }
+        .profile__row-sub { font-size: 12px; color: #94A3B8; line-height: 1.35; }
         .profile__row-val {
-          font-size: 11px; font-weight: var(--weight-bold); color: var(--text-secondary);
-          white-space: nowrap; flex-shrink: 0; margin-right: 2px;
+          font-size: 12px; font-weight: 700; color: #C4B5FD;
+          white-space: nowrap; flex-shrink: 0; margin-right: 4px;
         }
-        .profile__chev { color: var(--text-tertiary); flex-shrink: 0; }
+        .profile__chev { color: #64748B; flex-shrink: 0; }
         .profile__footer { padding-bottom: 24px; flex-shrink: 0; }
       `}</style>
     </div>
