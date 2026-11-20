@@ -8,7 +8,7 @@ export default function LoadingScreen() {
         <div className="loading-logo">
           <Mic size={26} strokeWidth={2.5} />
         </div>
-        <span className="loading-name">Suhbatdosh</span>
+        <span className="loading-name">Tiloch AI</span>
         <div className="loading-dots">
           <span />
           <span />

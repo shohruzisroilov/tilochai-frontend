@@ -33,7 +33,7 @@ export default function Premium() {
         <button className="free-back" onClick={back} aria-label="Go Back">
           <ArrowLeft size={20} />
         </button>
-        <h1 className="free-topbar-title">Suhbatdosh</h1>
+        <h1 className="free-topbar-title">Tiloch AI</h1>
         <div style={{ width: 36 }} />
       </div>
 

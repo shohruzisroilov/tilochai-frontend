@@ -153,7 +153,7 @@ export default function HomeReviews() {
         </>
       ) : (
         <div className="home-reviews-empty" onClick={openModal}>
-          <p>Be the first to leave a review for Suhbatdosh!</p>
+          <p>Be the first to leave a review for Tiloch AI!</p>
         </div>
       )}
 

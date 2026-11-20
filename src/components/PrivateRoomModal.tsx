@@ -23,7 +23,7 @@ export default function PrivateRoomModal({
   isOpen,
   onClose,
   onJoinRoom,
-  botUsername = 'suhbatdoshbot',
+  botUsername = 'tilochaibot',
 }: PrivateRoomModalProps) {
   const [tab, setTab] = useState<'create' | 'join'>('create');
   const [createdCode] = useState(() => generateCode());
@@ -32,9 +32,9 @@ export default function PrivateRoomModal({
 
   if (!isOpen) return null;
 
-  const botName = botUsername?.replace(/^@/, '') || 'suhbatdoshbot';
+  const botName = botUsername?.replace(/^@/, '') || 'tilochaibot';
   const shareLink = `https://t.me/${botName}?startapp=room_${createdCode.toLowerCase()}`;
-  const shareText = `Hello! Tap this link to practice speaking English with me on Suhbatdosh 🎙️`;
+  const shareText = `Hello! Tap this link to practice speaking English with me on Tiloch AI 🎙️`;
 
   const handleCopy = () => {
     tapHaptic('light');

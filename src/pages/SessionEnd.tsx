@@ -42,7 +42,7 @@ export default function SessionEnd() {
   const isAi        = !!screenParams?.isAi || !!session?.isAi;
   const aiStats     = screenParams?.aiStats || null;
   const sessionId   = screenParams?.sessionId || session?.id;
-  const partnerName = isAi ? 'Suhbatdosh AI' : (session?.partnerName || t('common.yourPartner'));
+  const partnerName = isAi ? 'Tiloch AI' : (session?.partnerName || t('common.yourPartner'));
   const reason      = screenParams?.reason;
 
   function handleGoHome() {
