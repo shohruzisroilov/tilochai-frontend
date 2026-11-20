@@ -323,7 +323,7 @@ const Styles = React.memo(function Styles() {
 
       .mt__status {
         display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
-        width: 100%;
+        width: 100%; max-width: 330px;
       }
       .mt__meta {
         display: flex; align-items: stretch; width: 100%;
@@ -334,16 +334,17 @@ const Styles = React.memo(function Styles() {
       }
       .mt__cell {
         flex: 1; min-width: 0;
-        display: flex; flex-direction: column; align-items: center; gap: var(--space-1);
-        padding: var(--space-3) var(--space-2);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+        padding: 10px 8px; text-align: center;
       }
-      .mt__div { width: 1px; background: var(--border); margin: var(--space-3) 0; }
+      .mt__div { width: 1px; background: var(--border); margin: 6px 0; flex-shrink: 0; }
       .mt__val {
-        display: flex; align-items: center; gap: var(--space-1-5);
+        display: inline-flex; align-items: center; justify-content: center; gap: 5px;
         font-family: var(--font-display);
-        font-size: var(--text-md); font-weight: var(--weight-bold);
+        font-size: 14px; font-weight: var(--weight-bold);
         letter-spacing: -0.01em; color: var(--text-primary);
-        white-space: nowrap;
+        white-space: nowrap; text-overflow: ellipsis; max-width: 100%;
+        overflow: hidden;
       }
       .mt__val--live { color: var(--success); }
       .mt__hint {

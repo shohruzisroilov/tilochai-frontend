@@ -57,19 +57,18 @@ export default function HomeHeader({
         <div className="hh__actions">
           <button
             type="button"
-            className={`hh__time-pill ${availableMinutes <= 3 ? 'hh__time-pill--low' : ''}`}
+            className={`hh__pill hh__pill--time ${availableMinutes <= 3 ? 'hh__pill--low' : ''}`}
             onClick={() => { tapHaptic('light'); navigate('invite', { from: 'home' }); }}
             aria-label="Available minutes today"
           >
-            <Clock size={13} className={availableMinutes <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
-            <span className="hh__time-val">{availableMinutes}m</span>
+            <Clock size={12} className={availableMinutes <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
+            <span className="hh__pill-text">{availableMinutes}m</span>
           </button>
 
           {shown > 0 && (
-            <div className={`hh__streak ${doneToday ? 'hh__streak--active' : ''}`}>
-              <Flame size={15} strokeWidth={2.5} className="hh__flame-icon" />
-              <span className="hh__streak-num num">{shown}</span>
-              <span className="hh__streak-label">day{shown > 1 ? 's' : ''}</span>
+            <div className={`hh__pill hh__pill--streak ${doneToday ? 'hh__pill--streak-active' : ''}`}>
+              <Flame size={13} strokeWidth={2.5} className="hh__flame-icon" />
+              <span className="hh__pill-text">{shown}d</span>
             </div>
           )}
         </div>
@@ -77,8 +76,8 @@ export default function HomeHeader({
 
       <style>{`
         .hh {
-          display: flex; align-items: center; gap: var(--space-3);
-          padding: calc(var(--space-3) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-3);
+          display: flex; align-items: center; gap: 10px;
+          padding: calc(var(--space-2) + env(safe-area-inset-top, 0px)) 14px var(--space-2);
           border-bottom: 1px solid var(--border);
           background: var(--chrome-bg);
           backdrop-filter: blur(16px);
@@ -95,13 +94,14 @@ export default function HomeHeader({
         .hh__avatar-btn:active { transform: scale(0.92); }
         .hh__info {
           flex: 1; display: flex; flex-direction: column; min-width: 0; gap: 2px;
-          text-align: left; cursor: pointer;
+          text-align: left; cursor: pointer; overflow: hidden;
         }
-        .hh__name-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
+        .hh__name-row { display: flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
         .hh__name {
-          font-size: var(--text-base); font-weight: 700;
+          font-size: 15px; font-weight: 700;
           letter-spacing: -0.01em; color: var(--text-primary);
           overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+          flex-shrink: 1; min-width: 0;
         }
         .hh__level-pill {
           display: inline-flex; align-items: center;
@@ -115,42 +115,47 @@ export default function HomeHeader({
         .hh__info:active .hh__level-pill {
           transform: scale(0.96);
         }
-        .hh__sub { font-size: var(--text-xs); color: var(--text-secondary); }
+        .hh__sub {
+          font-size: 11px; color: var(--text-secondary);
+          white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+          display: block; max-width: 100%; line-height: 1.3;
+        }
         
-        .hh__actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .hh__actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
         
-        .hh__time-pill {
+        .hh__pill {
           display: inline-flex; align-items: center; gap: 4px;
-          padding: 5px 10px; border-radius: var(--radius-full);
+          height: 28px; padding: 0 8px; border-radius: var(--radius-full);
           background: var(--surface); border: 1px solid var(--border);
-          color: var(--text-primary); cursor: pointer;
+          color: var(--text-primary); cursor: pointer; flex-shrink: 0;
           transition: transform 0.15s ease, border-color 0.15s ease;
         }
-        .hh__time-pill:active { transform: scale(0.94); border-color: var(--primary); }
-        .hh__time-pill--low {
-          border-color: rgba(245, 158, 11, 0.4);
-          background: rgba(245, 158, 11, 0.1);
+        .hh__pill:active { transform: scale(0.94); }
+        .hh__pill--time {
+          border-color: rgba(0, 178, 254, 0.3);
+          background: rgba(0, 178, 254, 0.08);
         }
-        .hh__time-val { font-family: monospace; font-size: 11px; font-weight: 800; color: var(--text-primary); }
-
-        .hh__streak {
-          display: flex; align-items: center; gap: 5px;
-          padding: 5px 12px; border-radius: var(--radius-full);
-          background: var(--surface); border: 1px solid rgba(245, 158, 11, 0.35);
-          color: #F59E0B;
-          box-shadow: 0 0 14px rgba(245, 158, 11, 0.15);
-          transition: all 0.25s var(--ease-out);
+        .hh__pill--low {
+          border-color: rgba(245, 158, 11, 0.45);
+          background: rgba(245, 158, 11, 0.12);
         }
-        .hh__streak--active {
+        .hh__pill--streak {
+          border-color: rgba(245, 158, 11, 0.35);
+          background: rgba(245, 158, 11, 0.08);
+          box-shadow: 0 0 10px rgba(245, 158, 11, 0.1);
+        }
+        .hh__pill--streak-active {
           border-color: rgba(245, 158, 11, 0.6);
-          box-shadow: 0 0 18px rgba(245, 158, 11, 0.28);
+          box-shadow: 0 0 14px rgba(245, 158, 11, 0.22);
+        }
+        .hh__pill-text {
+          font-size: 11px; font-weight: 700; line-height: 1;
+          color: #FFFFFF; font-variant-numeric: tabular-nums;
         }
         .hh__flame-icon {
           color: #FF9F0A;
           filter: drop-shadow(0 0 4px rgba(255, 159, 10, 0.6));
         }
-        .hh__streak-num { font-size: 13px; font-weight: 800; color: #FFFFFF; }
-        .hh__streak-label { font-size: 11px; font-weight: 600; color: #FF9F0A; }
       `}</style>
     </>
   );

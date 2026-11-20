@@ -236,7 +236,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'match.lookingFor': 'Looking for someone at your English level…',
     'match.queueLabel': 'Queue',
     'match.queueMany': '{n} people waiting',
-    'match.queueAlone': 'You are first in queue',
+    'match.queueAlone': '1st in queue',
     'match.waitLabel': 'Wait time',
     'match.hintMany': 'Connecting takes a few seconds.',
     'match.hintAlone': 'We will connect you as soon as someone joins.',
