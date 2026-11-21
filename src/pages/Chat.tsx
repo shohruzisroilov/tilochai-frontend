@@ -373,33 +373,34 @@ export default function Chat() {
       {/* ── Header — audio mode (tepada sherik ma'lumotlari) ── */}
       {!camOn && (
         <div className="call-header">
-          <div className={`call-presence${partnerSpeaking ? ' call-presence--speaking' : ''}`}>
-            <Avatar name={session?.partnerName} avatarUrl={session?.partnerAvatarUrl} size={44} />
-          </div>
-          <div className="call-header__info">
-            <span className="call-header__name">
-              {session?.partnerName || 'Partner'}
-            </span>
-            <div className="call-header__meta">
-              <div className="call-header__meta-row">
-                <span className="call-tag">{t('lang.en')}</span>
-                {(session?.partnerLevel || user?.level) && (
-                  <span className="call-tag call-tag--dim">{t(`level.${session?.partnerLevel || user?.level}`)}</span>
+          <div className="call-header__left">
+            <div className={`call-presence${partnerSpeaking ? ' call-presence--speaking' : ''}`}>
+              <Avatar name={session?.partnerName} avatarUrl={session?.partnerAvatarUrl} size={42} />
+            </div>
+            <div className="call-header__info">
+              <span className="call-header__name">
+                {session?.partnerName || 'Partner'}
+              </span>
+              <div className="call-header__level-pill">
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor" className="call-level-bars" aria-hidden="true">
+                  <rect x="1" y="6" width="2" height="5" rx="1" />
+                  <rect x="5" y="3.5" width="2" height="7.5" rx="1" />
+                  <rect x="9" y="1" width="2" height="10" rx="1" />
+                </svg>
+                <span>{t(`levelName.${session?.partnerLevel || user?.level || 3}`)}</span>
+                {partnerSpeaking && (
+                  <span className="call-status--speaking-dot" title="Speaking" />
                 )}
-                {partnerSpeaking ? (
-                  <span className="call-status call-status--speaking">
-                    {t('call.speaking')}
-                  </span>
-                ) : null}
               </div>
             </div>
           </div>
-          <div className="call-header__timer">
+
+          <div className="call-header__timer-pill">
             <span
-              className="call-dot"
+              className="call-timer-dot"
               style={{
-                background: partnerConnected ? 'var(--success)' : 'var(--warning)',
-                boxShadow: partnerConnected ? '0 0 8px var(--success)' : '0 0 8px var(--warning)',
+                background: partnerConnected ? '#10B981' : '#F59E0B',
+                boxShadow: partnerConnected ? '0 0 8px rgba(16, 185, 129, 0.8)' : '0 0 8px rgba(245, 158, 11, 0.8)',
               }}
             />
             <span className="call-header__elapsed">
@@ -474,13 +475,14 @@ export default function Chat() {
 
         .call-header {
           position: relative; z-index: 10;
-          display: flex; align-items: center; gap: var(--space-3);
-          padding: calc(var(--space-3) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-3);
-          border-bottom: 1px solid var(--border);
+          display: flex; align-items: center; justify-content: space-between;
+          padding: calc(var(--space-3) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-2);
           animation: fadeIn 0.2s ease both;
           flex-shrink: 0;
-          background: var(--chrome-bg);
-          backdrop-filter: blur(10px);
+          background: transparent;
+        }
+        .call-header__left {
+          display: flex; align-items: center; gap: 12px;
         }
         .call-presence {
           position: relative;
@@ -496,77 +498,80 @@ export default function Chat() {
           pointer-events: none;
         }
         .call-presence--speaking::after {
-          border-color: var(--success);
+          border-color: #10B981;
           animation: speakPulse 1.3s ease-out infinite;
         }
         @keyframes speakPulse {
-          0%   { box-shadow: 0 0 0 0 rgba(52,199,89,0.45); }
-          100% { shadow: 0 0 0 9px rgba(52,199,89,0); }
+          0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+          100% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
         }
 
         .call-header__info {
-          flex: 1; min-width: 0;
-          display: flex; flex-direction: column; gap: var(--space-1);
+          display: flex; flex-direction: column; gap: 3px;
         }
         .call-header__name {
-          font-size: var(--text-md); font-weight: var(--weight-bold);
-          color: var(--text-primary);
+          font-size: 16px; font-weight: 700;
+          color: #FFFFFF;
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
           line-height: 1.2;
+          letter-spacing: -0.2px;
         }
-        .call-header__meta {
-          display: flex; flex-direction: column; gap: var(--space-1); align-items: flex-start;
+        .light .call-header__name {
+          color: #0F172A;
         }
-        .call-header__meta-row {
-          display: flex; align-items: center; gap: var(--space-1);
+
+        .call-header__level-pill {
+          display: inline-flex; align-items: center; gap: 5px;
+          background: rgba(139, 92, 246, 0.18);
+          border: 1px solid rgba(139, 92, 246, 0.35);
+          border-radius: 99px; padding: 2px 8px;
+          font-size: 11px; font-weight: 600;
+          color: #C084FC;
+          letter-spacing: 0.1px;
+          width: fit-content;
         }
-        .call-tag {
-          font-size: var(--text-xs); font-weight: var(--weight-bold);
-          color: var(--primary);
-          background: var(--primary-subtle);
-          border: 1px solid var(--border-strong);
-          border-radius: 6px; padding: 2px 6px;
-          letter-spacing: 0.3px;
-          white-space: nowrap;
+        .light .call-header__level-pill {
+          background: rgba(139, 92, 246, 0.1);
+          border: 1px solid rgba(139, 92, 246, 0.25);
+          color: #7C3AED;
         }
-        .call-tag--dim {
-          color: var(--text-tertiary);
-          background: var(--surface-2);
-          border: 1px solid var(--border);
-          font-weight: var(--weight-medium);
-        }
-        .call-status {
-          font-size: var(--text-xs); font-weight: var(--weight-semi);
-          color: var(--text-tertiary);
-          display: inline-flex; align-items: center;
-          white-space: nowrap;
-          transition: color 0.18s ease;
-        }
-        .call-status::before {
-          content: '';
-          width: 6px; height: 6px; border-radius: 50%;
-          margin-right: var(--space-1);
-          background: currentColor;
+        .call-level-bars {
+          color: currentColor;
           flex-shrink: 0;
         }
-        .call-status--speaking { color: var(--success); }
-        .call-header__timer {
-          display: flex; align-items: center; gap: var(--space-1-5);
-          background: var(--surface-2);
-          border: 1px solid var(--border);
-          border-radius: 99px; padding: var(--space-1) var(--space-3);
-          font-size: var(--text-sm); font-weight: var(--weight-bold);
-          color: var(--text-primary);
+        .call-status--speaking-dot {
+          width: 5px; height: 5px; border-radius: 50%;
+          background: #10B981;
+          margin-left: 2px;
+          box-shadow: 0 0 4px #10B981;
+          animation: dotPulse 1.5s infinite;
+        }
+
+        .call-header__timer-pill {
+          display: flex; align-items: center; gap: 7px;
+          background: rgba(18, 15, 34, 0.75);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 99px; padding: 6px 14px;
+          font-size: 13px; font-weight: 700;
+          color: #FFFFFF;
           font-variant-numeric: tabular-nums;
           white-space: nowrap;
           flex-shrink: 0;
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
         }
-        .call-header__elapsed { letter-spacing: 0.3px; }
-        .call-dot {
+        .light .call-header__timer-pill {
+          background: rgba(255, 255, 255, 0.85);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          color: #0F172A;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .call-timer-dot {
           width: 7px; height: 7px; border-radius: 50%;
           flex-shrink: 0;
           animation: dotPulse 2s ease-in-out infinite;
         }
+        .call-header__elapsed { letter-spacing: 0.3px; }
 
         .call-body {
           flex: 1;
