@@ -247,21 +247,32 @@ export default function Home() {
                 Today's 15 mins used!
               </h2>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Want to keep talking? Invite your friends and get <strong className="text-[var(--text-primary)]">+10 extra minutes</strong> immediately for each friend who joins!
+                Want to keep talking? Get <strong>Premium ($2)</strong> for unlimited time, or invite friends to get <strong className="text-[var(--text-primary)]">+15 extra minutes</strong> for each friend!
               </p>
             </div>
 
             <div className="w-full space-y-2 pt-2">
               <button
                 type="button"
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-900/30 active:scale-[0.98] transition-transform"
+                className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/30 active:scale-[0.98] transition-transform"
+                onClick={() => {
+                  setLimitModalOpen(false);
+                  navigate('premium', { from: 'home' });
+                }}
+              >
+                <span>Get Unlimited Premium ($2)</span>
+              </button>
+
+              <button
+                type="button"
+                className="w-full h-11 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] text-[var(--text-primary)] font-bold text-xs flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
                 onClick={() => {
                   setLimitModalOpen(false);
                   navigate('invite', { from: 'home' });
                 }}
               >
-                <Gift size={18} />
-                <span>Invite Friends (+10m)</span>
+                <Gift size={16} />
+                <span>Invite Friends (+15m Bonus)</span>
               </button>
 
               <button

@@ -96,16 +96,23 @@ export default function Matching() {
             <h2 className="mt__title">15 Minutes Used Today!</h2>
             <p className="mt__desc">
               Your free 15 minutes of speaking time for today has ended.
-              Invite friends and get <strong className="text-[var(--text-primary)]">+10 bonus minutes</strong> for each friend who joins!
+              Get <strong>Unlimited Premium ($2)</strong> or invite friends to get <strong className="text-[var(--text-primary)]">+15 bonus minutes</strong> for each friend!
             </p>
           </div>
+
+          <button
+            className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/30 active:scale-[0.98] transition-transform"
+            onClick={() => navigate('premium', { from: 'matching' })}
+          >
+            <span>Get Unlimited Premium ($2)</span>
+          </button>
 
           <button
             className="btn-primary flex items-center justify-center gap-2 w-full"
             onClick={() => navigate('invite', { from: 'matching' })}
           >
             <Gift size={18} />
-            <span>Invite Friends (+10m)</span>
+            <span>Invite Friends (+15m)</span>
           </button>
 
           <button className="btn-quiet" onClick={() => navigate('home')}>

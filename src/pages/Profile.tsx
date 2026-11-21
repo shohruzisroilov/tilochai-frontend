@@ -222,21 +222,28 @@ export default function Profile() {
               <ChevronRight size={11} className="opacity-70" />
             </button>
             {isPremium ? (
-              <span className="profile__status-badge profile__status-badge--premium">
+              <button
+                type="button"
+                className="profile__status-badge profile__status-badge--premium"
+                onClick={() => {
+                  tapHaptic('light');
+                  navigate('premium', { from: 'profile' });
+                }}
+              >
                 <Crown size={12} className="profile__crown-icon" />
-                <span>Premium</span>
-              </span>
+                <span>Premium {premiumUntil ? `• ${premiumUntil}` : ''}</span>
+              </button>
             ) : (
               <button
                 type="button"
                 className="profile__status-badge profile__status-badge--free"
                 onClick={() => {
                   tapHaptic('light');
-                  navigate('invite', { from: 'profile' });
+                  navigate('premium', { from: 'profile' });
                 }}
               >
-                <Clock size={12} className="profile__clock-icon" />
-                <span>{availableMinutes}m Available</span>
+                <Crown size={12} className="text-amber-400" />
+                <span>Get Premium • {availableMinutes}m</span>
               </button>
             )}
           </div>
@@ -355,6 +362,24 @@ export default function Profile() {
           <span>Community &amp; Sharing</span>
         </div>
         <div className="profile__card">
+          <button
+            type="button"
+            className="profile__row"
+            onClick={() => {
+              tapHaptic('light');
+              navigate('premium', { from: 'profile' });
+            }}
+          >
+            <span className="profile__row-icon-wrapper" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B' }}>
+              <Crown size={18} />
+            </span>
+            <div className="profile__row-text">
+              <span className="profile__row-title">Tariflar &amp; Premium</span>
+              <span className="profile__row-sub">{isPremium ? 'Cheklanmagan VIP faol' : 'Cheklanmagan suhbat ($2)'}</span>
+            </div>
+            <Chevron />
+          </button>
+
           <button
             type="button"
             className="profile__row"

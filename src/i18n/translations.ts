@@ -268,7 +268,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'profile.free': 'Free',
     'profile.premiumUntil': 'Until {date}',
     'profile.unlimited': 'No daily limit',
-    'profile.freeSub': '10 minutes of talking every day',
+    'profile.freeSub': '15 minutes of talking every day',
     'profile.stats': 'My Progress',
     'profile.statsSub': 'Your practice time and rating',
     'profile.partners': 'Partners',
@@ -502,10 +502,10 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
 
     // invite modal
     'im.title': 'Invite Friends',
-    'im.subtitle': '+10 minutes for every friend who joins. Daily limit is 15 minutes.',
+    'im.subtitle': '+15 minutes for every friend who joins (e.g. 10 friends = 150m!). Daily limit is 15 minutes.',
     'im.invited': 'Invited',
     'im.daysEarned': 'Bonus Minutes',
-    'im.share': 'Invite a friend (+10m)',
+    'im.share': 'Invite a friend (+15m)',
     'im.copy': 'Copy',
     'im.copied': 'Copied',
     'im.shareText': 'Practice English with real people for free on Tiloch! Use my link to get free speaking time: ',
@@ -739,7 +739,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'ai.endWpmLabel': 'Words / min',
 
     'nav.mock': 'Exams',
-    'profile.inviteSub': 'Get +10 bonus minutes for each friend',
+    'profile.inviteSub': 'Get +15 bonus minutes for each friend',
     'profile.settingsSub': 'Level, gender and notifications',
     'vocab.newWord': 'New word',
     'vocab.save': 'Save',
