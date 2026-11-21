@@ -21,7 +21,7 @@ function fmtElapsed(s: number): string {
  * Sherik qidirish ekrani (Umumiy yoki Do'st bilan xona).
  */
 export default function Matching() {
-  const { user, navigate, waitingCount, screenParams } = useAppStore();
+  const { user, navigate, waitingCount, screenParams, aiEnabled } = useAppStore();
   const { matchingStatus, startSearch, cancel } = useMatch();
   const { joinPrivateRoom, leavePrivateRoom } = useSocket();
   const t = useT();
@@ -137,16 +137,18 @@ export default function Matching() {
             <p className="mt__desc">{t('match.noneDesc')}</p>
           </div>
 
-          <button
-            className="w-full h-12 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-900/40 active:scale-[0.98] transition-transform mb-2"
-            onClick={() => {
-              cancel();
-              navigate('ai_talk');
-            }}
-          >
-            <Bot size={18} />
-            <span>Practice with AI Partner (Ovozli AI)</span>
-          </button>
+          {aiEnabled && (
+            <button
+              className="w-full h-12 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-900/40 active:scale-[0.98] transition-transform mb-2"
+              onClick={() => {
+                cancel();
+                navigate('ai_talk');
+              }}
+            >
+              <Bot size={18} />
+              <span>Practice with AI Partner</span>
+            </button>
+          )}
 
           <button
             className="btn-primary flex items-center justify-center gap-2"
@@ -241,11 +243,11 @@ export default function Matching() {
           <span>{SPEAKING_TIPS[tipIndex]}</span>
         </div>
 
-        {/* If searching for >= 15 seconds, offer instant switch to AI Partner */}
-        {!isPrivateRoom && elapsed >= 15 && (
+        {/* If searching for >= 15 seconds, offer instant switch to AI Partner if configured */}
+        {!isPrivateRoom && aiEnabled && elapsed >= 15 && (
           <div className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-purple-500/30 flex flex-col items-center gap-2 animate-in fade-in slide-in-from-bottom-2">
             <span className="text-xs text-[var(--text-secondary)] font-medium text-center">
-              Kutishni xohlamaysizmi? Ovozli AI sherik bilan hoziroq gaplashing!
+              Don't want to wait? Practice with AI Voice Partner right now!
             </span>
             <button
               className="w-full h-10 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-purple-900/30 active:scale-98 transition-transform"

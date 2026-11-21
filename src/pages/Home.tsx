@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getMe } from '../api/endpoints';
+import { getMe, getAiStatus } from '../api/endpoints';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
 import { tapHaptic, selectionHaptic } from '../utils/haptics';
@@ -41,6 +41,8 @@ export default function Home() {
     partnerPref,
     setPartnerPref,
     waitingCount,
+    aiEnabled,
+    setAiEnabled,
   } = useAppStore();
   const t = useT();
 
@@ -62,6 +64,10 @@ export default function Home() {
       })
       .catch(() => { })
       .finally(() => setHomeLoaded(true));
+
+    getAiStatus()
+      .then((res: any) => setAiEnabled(Boolean(res?.enabled)))
+      .catch(() => setAiEnabled(false));
   }, [screen]);
 
   return (
@@ -225,35 +231,37 @@ export default function Home() {
           <ChevronRight size={18} className="home__board-arrow" />
         </button>
 
-        {/* ── AI VOICE PARTNER CARD ── */}
-        <button
-          type="button"
-          className="home__board-card fade-up"
-          style={{
-            background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.12) 0%, rgba(0, 178, 254, 0.12) 100%)',
-            borderColor: 'rgba(124, 58, 237, 0.35)',
-          }}
-          onClick={() => {
-            tapHaptic('heavy');
-            navigate('ai_talk');
-          }}
-        >
-          <div
-            className="home__board-icon"
+        {/* ── AI VOICE PARTNER CARD (Only if configured in Admin) ── */}
+        {aiEnabled && (
+          <button
+            type="button"
+            className="home__board-card fade-up"
             style={{
-              background: 'linear-gradient(135deg, #7C3AED 0%, #00B2FE 100%)',
-              color: '#FFFFFF',
-              boxShadow: '0 4px 12px rgba(124, 58, 237, 0.35)',
+              background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.12) 0%, rgba(0, 178, 254, 0.12) 100%)',
+              borderColor: 'rgba(124, 58, 237, 0.35)',
+            }}
+            onClick={() => {
+              tapHaptic('heavy');
+              navigate('ai_talk');
             }}
           >
-            <Bot size={18} />
-          </div>
-          <div className="home__board-text">
-            <span className="home__board-title">AI Speaking Partner</span>
-            <span className="home__board-sub">Instant voice practice available 24/7</span>
-          </div>
-          <ChevronRight size={18} className="home__board-arrow" />
-        </button>
+            <div
+              className="home__board-icon"
+              style={{
+                background: 'linear-gradient(135deg, #7C3AED 0%, #00B2FE 100%)',
+                color: '#FFFFFF',
+                boxShadow: '0 4px 12px rgba(124, 58, 237, 0.35)',
+              }}
+            >
+              <Bot size={18} />
+            </div>
+            <div className="home__board-text">
+              <span className="home__board-title">AI Speaking Partner</span>
+              <span className="home__board-sub">Instant voice practice available 24/7</span>
+            </div>
+            <ChevronRight size={18} className="home__board-arrow" />
+          </button>
+        )}
 
         {/* ── USER REVIEWS CAROUSEL ── */}
         <HomeReviews />

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Bot } from 'lucide-react';
 import useAppStore from '../store/useAppStore';
 import { createAiConversation, recordAiPartnerSession } from '../api/endpoints';
 import { useVoiceConversation } from '../hooks/useVoiceConversation';
@@ -29,7 +29,7 @@ function fmt(seconds: number): string {
  * the only thing that moves.
  */
 export default function AiTalk() {
-  const { user, navigate, updateUser } = useAppStore();
+  const { user, navigate, updateUser, aiEnabled } = useAppStore();
   const t = useT();
 
   const [conversationId, setConversationId] = useState<string | null>(null);
@@ -189,6 +189,26 @@ export default function AiTalk() {
     : t(`ai.voice.${status}`);
 
   const isFailed = Boolean(error) || startFailed;
+
+  if (!aiEnabled) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[100dvh] bg-[#080C14] text-white p-6 text-center">
+        <div className="w-16 h-16 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4 shadow-lg shadow-purple-900/30">
+          <Bot size={32} />
+        </div>
+        <h2 className="text-xl font-bold mb-2">AI Partner Unavailable</h2>
+        <p className="text-sm text-slate-400 max-w-xs mb-6">
+          AI Speaking Partner has not been configured by the administrator yet.
+        </p>
+        <button
+          onClick={() => navigate('home')}
+          className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold text-sm shadow-md active:scale-95 transition-transform"
+        >
+          Go Back Home
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="talk">

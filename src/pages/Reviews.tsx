@@ -163,7 +163,7 @@ export default function Reviews() {
 
             {!myReview.isApproved && (
               <p className="text-[11px] text-[var(--text-secondary)] leading-tight">
-                ℹ️ Sharhingiz admin tomonidan tasdiqlangach barcha foydalanuvchilarga ko'rinadi.
+                ℹ️ Your review will be visible to everyone once approved by an admin.
               </p>
             )}
           </Card>

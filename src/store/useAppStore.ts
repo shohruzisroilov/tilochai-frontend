@@ -92,6 +92,9 @@ export interface AppState {
   noPartnerYet: boolean;
   setNoPartnerYet: (val: boolean) => void;
 
+  aiEnabled: boolean;
+  setAiEnabled: (enabled: boolean) => void;
+
   callMode: 'free' | 'ielts';
   setCallMode: (mode: 'free' | 'ielts') => void;
 
@@ -174,6 +177,9 @@ const useAppStore = create<AppState>((set) => ({
   setPartnerPref: (partnerPref) => set({ partnerPref }),
   noPartnerYet: false,
   setNoPartnerYet: (noPartnerYet) => set({ noPartnerYet }),
+
+  aiEnabled: false,
+  setAiEnabled: (aiEnabled) => set({ aiEnabled }),
 
   callMode: 'free',
   setCallMode: (callMode) => set({ callMode }),
