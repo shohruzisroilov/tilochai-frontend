@@ -109,7 +109,7 @@ export default function Home() {
               {isPremium ? (
                 <span className="hero__tag hero__tag--premium">
                   <Crown size={12} className="text-amber-400" />
-                  <span>VIP Member • Unlimited</span>
+                  <span>VIP Member</span>
                 </span>
               ) : (
                 <span className="hero__tag">
