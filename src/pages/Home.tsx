@@ -16,6 +16,7 @@ import {
   Gift,
   Crown,
   Sparkles,
+  Bot,
 } from 'lucide-react';
 
 import HomeHeader from '../components/HomeHeader';
@@ -219,6 +220,36 @@ export default function Home() {
           <div className="home__board-text">
             <span className="home__board-title">{t('home.listingsTitle')}</span>
             <span className="home__board-sub">{t('home.listingsSub')}</span>
+          </div>
+          <ChevronRight size={18} className="home__board-arrow" />
+        </button>
+
+        {/* ── AI VOICE PARTNER CARD ── */}
+        <button
+          type="button"
+          className="home__board-card fade-up"
+          style={{
+            background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.12) 0%, rgba(0, 178, 254, 0.12) 100%)',
+            borderColor: 'rgba(124, 58, 237, 0.35)',
+          }}
+          onClick={() => {
+            tapHaptic('heavy');
+            navigate('ai_talk');
+          }}
+        >
+          <div
+            className="home__board-icon"
+            style={{
+              background: 'linear-gradient(135deg, #7C3AED 0%, #00B2FE 100%)',
+              color: '#FFFFFF',
+              boxShadow: '0 4px 12px rgba(124, 58, 237, 0.35)',
+            }}
+          >
+            <Bot size={18} />
+          </div>
+          <div className="home__board-text">
+            <span className="home__board-title">AI Speaking Partner</span>
+            <span className="home__board-sub">Instant voice practice available 24/7</span>
           </div>
           <ChevronRight size={18} className="home__board-arrow" />
         </button>

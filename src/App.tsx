@@ -24,6 +24,7 @@ import Statistics from './pages/Statistics.tsx';
 import Matching from './pages/Matching.tsx';
 import SessionEnd from './pages/SessionEnd.tsx';
 import Listings from './pages/Listings.tsx';
+import AiTalk from './pages/AiTalk.tsx';
 
 
 
@@ -51,6 +52,7 @@ const SCREENS: Record<string, React.ComponentType<any>> = {
   matching: Matching,
   chat: Chat,
   session_end: SessionEnd,
+  ai_talk: AiTalk,
 };
 
 const TAB_SCREENS = ['home', 'listings', 'leaderboard', 'profile'];

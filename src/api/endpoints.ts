@@ -51,6 +51,65 @@ export const getMyReview = () => api.get('/reviews/me').then((r) => r.data);
 export const submitReview = (rating: number, comment: string) =>
   api.post('/reviews', { rating, comment }).then((r) => r.data);
 
+// ─── AI Speaking Partner ───────────────────────────────────────────────────
+export const getAiStatus = () => api.get('/ai-partner/status').then((r) => r.data);
+
+export const sendAIPartnerTurn = (payload: {
+  text?: string;
+  topic?: string | null;
+  audioBase64?: string;
+  audioMimeType?: string;
+  history?: Array<{ role: 'user' | 'assistant'; content: string }>;
+  userLevel?: string;
+}) => api.post('/ai-partner/chat', payload).then((r) => r.data);
+
+export const saveVocabularyItem = (payload: {
+  word: string;
+  meaning?: string;
+  example?: string;
+  category?: string;
+}) => api.post('/ai-partner/vocabulary', payload).then((r) => r.data);
+
+export const getVocabularyItems = () =>
+  api.get('/ai-partner/vocabulary').then((r) => r.data);
+
+export const deleteVocabularyItem = (id: number) =>
+  api.delete(`/ai-partner/vocabulary/${id}`).then((r) => r.data);
+
+export const getTTSAudio = (text: string, role?: 'examiner') =>
+  api.post('/ai-partner/tts', { text, role }).then((r) => r.data);
+
+export interface AiConversationSummary {
+  id: string;
+  title: string | null;
+  topic: string | null;
+  lastMessageAt: string;
+  createdAt: string;
+  preview?: string | null;
+}
+
+export const createAiConversation = (
+  topic?: string | null
+): Promise<{ ok: boolean; conversation: AiConversationSummary }> =>
+  api.post('/ai-partner/conversations', { topic }).then((r) => r.data);
+
+export const transcribeAiAudio = (payload: {
+  audioBase64: string;
+  audioMimeType?: string;
+}): Promise<{
+  ok: boolean;
+  text: string;
+  wordsPerMinute: number;
+  longPauses: number;
+  clarity: number | null;
+}> => api.post('/ai-partner/transcribe', payload, { timeout: 60_000 }).then((r) => r.data);
+
+export const recordAiPartnerSession = (payload: {
+  durationSeconds: number;
+  history?: Array<{ role: 'user' | 'assistant'; content: string }>;
+  wpmSamples?: number[];
+}) => api.post('/ai-partner/session-end', payload).then((r) => r.data);
+
 // ─── Partner & Mentor Listings ──────────────────────────────────────────────
 export const getListings = (params: {
   type?: string;

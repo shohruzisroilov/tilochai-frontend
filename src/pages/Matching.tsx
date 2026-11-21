@@ -3,7 +3,7 @@ import { useMatch } from '../hooks/useMatch';
 import { useSocket } from '../hooks/useSocket';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
-import { Users, RotateCcw, Megaphone, MessageSquare, KeyRound, Sparkles, Gift } from 'lucide-react';
+import { Users, RotateCcw, Megaphone, MessageSquare, KeyRound, Sparkles, Gift, Bot } from 'lucide-react';
 
 const SPEAKING_TIPS = [
   "💡 Icebreaker: Ask your partner where they are from and what they do!",
@@ -138,6 +138,17 @@ export default function Matching() {
           </div>
 
           <button
+            className="w-full h-12 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-900/40 active:scale-[0.98] transition-transform mb-2"
+            onClick={() => {
+              cancel();
+              navigate('ai_talk');
+            }}
+          >
+            <Bot size={18} />
+            <span>Practice with AI Partner (Ovozli AI)</span>
+          </button>
+
+          <button
             className="btn-primary flex items-center justify-center gap-2"
             onClick={startSearch}
           >
@@ -229,6 +240,25 @@ export default function Matching() {
           <Sparkles size={14} className="text-accent flex-shrink-0" />
           <span>{SPEAKING_TIPS[tipIndex]}</span>
         </div>
+
+        {/* If searching for >= 15 seconds, offer instant switch to AI Partner */}
+        {!isPrivateRoom && elapsed >= 15 && (
+          <div className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-purple-500/30 flex flex-col items-center gap-2 animate-in fade-in slide-in-from-bottom-2">
+            <span className="text-xs text-[var(--text-secondary)] font-medium text-center">
+              Kutishni xohlamaysizmi? Ovozli AI sherik bilan hoziroq gaplashing!
+            </span>
+            <button
+              className="w-full h-10 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#00B2FE] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-purple-900/30 active:scale-98 transition-transform"
+              onClick={() => {
+                cancel();
+                navigate('ai_talk');
+              }}
+            >
+              <Bot size={16} />
+              <span>Talk to AI Partner</span>
+            </button>
+          </div>
+        )}
 
         <button className="btn-quiet mt__cancel" onClick={handleCancel}>{t('common.cancel')}</button>
       </div>
