@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Crown } from 'lucide-react';
 
 const GRADIENTS = [
-  'linear-gradient(135deg, #14B8A6 0%, #06B6D4 100%)', // teal/cyan like screenshot
+  'linear-gradient(135deg, #14B8A6 0%, #06B6D4 100%)', // teal/cyan
   'linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)', // purple/blue
   'linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%)', // pink/purple
   'linear-gradient(135deg, #10B981 0%, #059669 100%)', // emerald
@@ -78,8 +79,9 @@ export default function Avatar({ name, avatarUrl, size = 40, isPremium = false }
     return renderContent();
   }
 
-  const crownSize = Math.max(14, Math.round(size * 0.36));
-  const crownFont = Math.max(8, Math.round(size * 0.22));
+  // High-contrast, sharp vector badge sizing
+  const badgeSize = Math.max(18, Math.round(size * 0.44));
+  const iconSize = Math.max(11, Math.round(badgeSize * 0.62));
 
   return (
     <div
@@ -90,34 +92,43 @@ export default function Avatar({ name, avatarUrl, size = 40, isPremium = false }
         justifyContent: 'center',
         flexShrink: 0,
         borderRadius: '50%',
-        padding: 2,
+        padding: 2.5,
         background: 'linear-gradient(135deg, #F59E0B 0%, #FDE68A 50%, #D97706 100%)',
-        boxShadow: '0 0 10px rgba(245, 158, 11, 0.45)',
+        boxShadow: '0 0 12px rgba(245, 158, 11, 0.55), 0 0 4px rgba(245, 158, 11, 0.3)',
       }}
     >
       {renderContent()}
-      <span
+
+      {/* Crisp vector VIP crown badge with deep contrast */}
+      <div
         style={{
           position: 'absolute',
-          bottom: -2,
-          right: -2,
-          width: crownSize,
-          height: crownSize,
+          bottom: -3,
+          right: -3,
+          width: badgeSize,
+          height: badgeSize,
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+          background: 'linear-gradient(135deg, #1E152E 0%, #0D0818 100%)',
+          border: '1.5px solid #F59E0B',
+          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.7), 0 0 6px rgba(245, 158, 11, 0.5)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: crownFont,
-          boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-          border: '1.5px solid var(--surface, #151128)',
-          lineHeight: 1,
-          zIndex: 2,
+          zIndex: 3,
+          boxSizing: 'border-box',
         }}
-        aria-label="VIP"
+        title="VIP Member"
       >
-        👑
-      </span>
+        <Crown
+          size={iconSize}
+          color="#FDE68A"
+          fill="#F59E0B"
+          strokeWidth={1.75}
+          style={{
+            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.5))',
+          }}
+        />
+      </div>
     </div>
   );
 }

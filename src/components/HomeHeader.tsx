@@ -49,6 +49,12 @@ export default function HomeHeader({
         >
           <div className="hh__name-row">
             <span className="hh__name">{user?.displayName || t('common.anonymous')}</span>
+            {isPremium && (
+              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-black bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-400 border border-amber-500/40 shrink-0">
+                <Crown size={9} className="fill-amber-400 text-amber-300" />
+                <span>VIP</span>
+              </span>
+            )}
             <span className="hh__level-pill">
               {t(`level.${level}`)}
               <ChevronDown size={10} style={{ marginLeft: 2, opacity: 0.8 }} />
