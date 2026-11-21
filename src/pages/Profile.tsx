@@ -249,7 +249,7 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* 4-Item Quick Stats Grid */}
+        {/* 3-Item Quick Stats Grid */}
         <div className="profile__stats-grid">
           <div
             className="profile__stat-box profile__stat-box--clickable"
@@ -271,19 +271,6 @@ export default function Profile() {
             </span>
             <span className="profile__stat-value">{uniquePartners}</span>
             <span className="profile__stat-label">{t('profile.partners')}</span>
-          </div>
-
-          <div
-            className="profile__stat-box profile__stat-box--clickable"
-            onClick={openRatings}
-          >
-            <span className="profile__stat-icon profile__stat-icon--star">
-              <Star size={16} fill="currentColor" />
-            </span>
-            <span className="profile__stat-value">{avgRatingNum} ★</span>
-            <span className="profile__stat-label">
-              {ratingCount} {ratingCount === 1 ? 'review' : 'reviews'}
-            </span>
           </div>
 
           <div className="profile__stat-box">
@@ -564,14 +551,14 @@ export default function Profile() {
         .profile__crown-icon { color: #F59E0B; }
 
         .profile__stats-grid {
-          display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 4px;
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px;
           flex-shrink: 0;
         }
         .profile__stat-box {
           background: var(--surface);
           border: 1px solid var(--border);
           border-radius: 16px;
-          padding: 12px 4px;
+          padding: 12px 6px;
           display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
           gap: 4px;
           box-shadow: var(--shadow-sm);
