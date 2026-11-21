@@ -57,13 +57,15 @@ export default function Premium() {
 
   function handleSendReceipt() {
     tapHaptic('medium');
-    const tgId = user?.telegramId ? String(user.telegramId) : '';
-    const sysId = user?.id ? String(user.id) : '';
-    const name = user?.displayName || 'User';
-    const username = user?.username ? ` (@${user.username})` : '';
+    const name =
+      user?.displayName ||
+      [user?.first_name, user?.last_name].filter(Boolean).join(' ') ||
+      'User';
+    const cleanUsername = user?.username ? user.username.replace(/^@/, '') : '';
+    const usernamePart = cleanUsername ? ` (@${cleanUsername})` : '';
 
     const msg = encodeURIComponent(
-      `Hello! I sent 26,000 so'm for Tiloch AI Premium.\n\n👤 Name: ${name}${username}\n🆔 Telegram ID: ${tgId || 'N/A'}\n🔑 ID (UUID): ${sysId}\n\nHere is my payment receipt:`
+      `Hello! I sent 26,000 so'm for Tiloch AI Premium.\n\n👤 Name: ${name}${usernamePart}\n\nHere is my payment receipt:`
     );
     const url = `https://t.me/${ADMIN_USERNAME}?text=${msg}`;
     const wa = (window as any).Telegram?.WebApp;
