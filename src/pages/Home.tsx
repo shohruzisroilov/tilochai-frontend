@@ -22,6 +22,7 @@ import {
 import HomeHeader from '../components/HomeHeader';
 import SessionRow from '../components/SessionRow';
 import SkeletonRow from '../components/SkeletonRow';
+import HomeReviews from '../components/HomeReviews';
 
 /**
  * Bosh sahifa — Premium Dark UI suhbat markazi.
@@ -253,6 +254,9 @@ export default function Home() {
           </div>
           <ChevronRight size={18} className="home__board-arrow" />
         </button>
+
+        {/* ── USER REVIEWS CAROUSEL ── */}
+        <HomeReviews />
 
         {/* ── RECENT PRACTICE SECTION ── */}
         <section className="home__section fade-up">
