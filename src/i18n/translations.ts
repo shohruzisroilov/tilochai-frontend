@@ -40,6 +40,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'common.tryAgain': 'Try Again',
     'common.next': 'Continue',
     'common.back': 'Back',
+    'common.skip': 'Skip',
 
     // onboarding (welcome)
     'ob.welcome.title': 'Speak English\nevery day',

@@ -54,7 +54,7 @@ export default function Onboarding() {
           disabled={loading}
           className="text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-2.5 py-1 rounded-lg hover:bg-[var(--surface-2)] transition-colors active:scale-95"
         >
-          {t('common.skip') || 'Skip'}
+          {t('common.skip')}
         </button>
       </div>
 
