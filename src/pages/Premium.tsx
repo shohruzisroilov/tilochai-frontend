@@ -16,7 +16,6 @@ import {
 
 const CARD_NUMBER = '9860190110799466';
 const CARD_HOLDER = 'Shohruz Isroilov';
-const AMOUNT_USD = '$2';
 const AMOUNT_UZS = "26 000 so'm";
 const ADMIN_USERNAME = 'Shohruz_Isroilov';
 
@@ -101,7 +100,7 @@ export default function Premium() {
           <p className="prem-hero__sub">
             {isPremium
               ? 'Sizda har kuni cheksiz gaplashish va prioritet matching faol. Ingliz tilini toʻxtovsiz mashq qiling!'
-              : 'Har kuni 15 minut bepul gaplashing yoki $2 evaziga cheksiz erkin suhbat quring.'}
+              : 'Har kuni 15 minut bepul gaplashing yoki 26 000 soʻm evaziga cheksiz erkin suhbat quring.'}
           </p>
         </div>
 
@@ -163,8 +162,8 @@ export default function Premium() {
                 </h3>
               </div>
               <div className="prem-tier-price">
-                <span className="prem-tier-amount text-amber-300">{AMOUNT_USD}</span>
-                <span className="prem-tier-period">({AMOUNT_UZS} / oy)</span>
+                <span className="prem-tier-amount text-amber-300">26 000</span>
+                <span className="prem-tier-period">soʻm / oy</span>
               </div>
             </div>
 
@@ -191,7 +190,7 @@ export default function Premium() {
             <div className="prem-bank-card">
               <div className="prem-bank-card__top">
                 <span className="prem-bank-card__chip">Uzcard / Humo</span>
-                <span className="prem-bank-card__badge">{AMOUNT_USD} ({AMOUNT_UZS})</span>
+                <span className="prem-bank-card__badge">{AMOUNT_UZS}</span>
               </div>
 
               <div className="prem-bank-card__mid">
@@ -220,7 +219,7 @@ export default function Premium() {
             <div className="prem-steps">
               <div className="prem-step">
                 <span className="prem-step__num">1</span>
-                <p>Kartaga <strong>{AMOUNT_USD} ({AMOUNT_UZS})</strong> oʻtkazing</p>
+                <p>Kartaga <strong>{AMOUNT_UZS}</strong> oʻtkazing</p>
               </div>
               <div className="prem-step">
                 <span className="prem-step__num">2</span>

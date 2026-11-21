@@ -251,7 +251,7 @@ export default function Home() {
                 Today's 15 mins used!
               </h2>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Want to keep talking? Get <strong>Premium ($2)</strong> for unlimited time, or invite friends to get <strong className="text-[var(--text-primary)]">+15 extra minutes</strong> for each friend!
+                Want to keep talking? Get <strong>Premium (26 000 so'm)</strong> for unlimited time, or invite friends to get <strong className="text-[var(--text-primary)]">+15 extra minutes</strong> for each friend!
               </p>
             </div>
 
@@ -264,7 +264,7 @@ export default function Home() {
                   navigate('premium', { from: 'home' });
                 }}
               >
-                <span>Get Unlimited Premium ($2)</span>
+                <span>Get Unlimited Premium</span>
               </button>
 
               <button

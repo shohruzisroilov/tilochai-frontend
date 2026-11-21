@@ -116,7 +116,7 @@ export default function SessionEnd() {
           </h2>
           <p>
             {reason === 'daily_limit'
-              ? 'Your free 15 minutes of speaking time for today has ended. Upgrade to Unlimited Premium ($2) or invite friends to get +15 bonus minutes!'
+              ? 'Your free 15 minutes of speaking time for today has ended. Upgrade to Unlimited Premium (26 000 so\'m) or invite friends to get +15 bonus minutes!'
               : reason === 'partner_left'
               ? t('se.partnerLeftDesc', { name: partnerName })
               : t('se.greatConv', { name: partnerName })}
@@ -180,7 +180,7 @@ export default function SessionEnd() {
                 className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/30 active:scale-[0.98] transition-transform mb-2"
                 onClick={() => navigate('premium', { from: 'session_end' })}
               >
-                <span>Get Unlimited Premium ($2)</span>
+                <span>Get Unlimited Premium</span>
               </button>
               <button className="btn-primary" onClick={() => navigate('invite', { from: 'session_end' })}>
                 Invite Friends (+15m Bonus)
