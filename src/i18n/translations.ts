@@ -244,8 +244,8 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'match.waitLabel': 'Wait time',
     'match.hintMany': 'Connecting takes a few seconds.',
     'match.hintAlone': 'We will connect you as soon as someone joins.',
-    'match.noneTitle': 'No partner found right now',
-    'match.noneDesc': 'Nobody was available right now. You can try again or post on the partner board.',
+    'match.noneTitle': 'Everyone is busy right now',
+    'match.noneDesc': 'All speaking partners are currently busy or in a call. Please try again in a moment, or check out the Partner Board!',
     'match.pref.womenOnly': 'Girls only',
     'match.pref.womenOnlyHint': 'Talk only with girls',
 

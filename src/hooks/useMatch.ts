@@ -4,7 +4,7 @@ import { useSocket } from './useSocket';
 import { translate } from '../i18n';
 import { warmAudio } from '../utils/audio';
 
-const MATCH_TIMEOUT_MS = 180_000;
+const MATCH_TIMEOUT_MS = 35_000;
 
 function micErrorMessage(err: any) {
   switch (err?.name) {

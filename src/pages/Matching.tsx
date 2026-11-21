@@ -77,9 +77,19 @@ export default function Matching() {
 
   useEffect(() => {
     if (matchingStatus !== 'searching') { setElapsed(0); return; }
-    const id = setInterval(() => setElapsed(e => e + 1), 1000);
+    const id = setInterval(() => {
+      setElapsed((e) => {
+        const next = e + 1;
+        // Auto-timeout after 35s if still searching in public matching queue
+        if (!isPrivateRoom && next >= 35) {
+          useAppStore.getState().setMatchingStatus('timeout');
+          cancel();
+        }
+        return next;
+      });
+    }, 1000);
     return () => clearInterval(id);
-  }, [matchingStatus]);
+  }, [matchingStatus, isPrivateRoom, cancel]);
 
   const isTimeout = matchingStatus === 'timeout';
   const isPremium = Boolean(user?.isPremium);
@@ -130,7 +140,9 @@ export default function Matching() {
     return (
       <div className="mt">
         <div className="mt__body scale-in">
-          <span className="mt__glyph"><Users size={30} /></span>
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-purple-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center shadow-lg shadow-amber-900/20 mb-2">
+            <Users size={32} />
+          </div>
 
           <div className="mt__copy">
             <h2 className="mt__title">{t('match.noneTitle')}</h2>
@@ -152,7 +164,10 @@ export default function Matching() {
 
           <button
             className="btn-primary flex items-center justify-center gap-2"
-            onClick={startSearch}
+            onClick={() => {
+              setElapsed(0);
+              startSearch();
+            }}
           >
             <RotateCcw size={16} />
             <span>{t('common.tryAgain')}</span>
