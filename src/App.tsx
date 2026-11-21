@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import useAppStore from './store/useAppStore';
@@ -10,6 +10,7 @@ import ConnectionBanner from './components/ConnectionBanner';
 import Toast from './components/Toast';
 import BottomNav from './components/BottomNav';
 import MicPermissionModal from './components/MicPermissionModal';
+import { lazyWithRetry } from './utils/lazyWithRetry';
 
 // Eager: the two screens that can be the first thing rendered after sign-in. Anything
 // lazy here would put a spinner in front of the very first paint.
@@ -17,27 +18,20 @@ import Onboarding from './pages/Onboarding.tsx';
 import Home from './pages/Home.tsx';
 
 /**
- * Everything else is split out.
- *
- * The mock exams alone are ~4,000 lines of screen, and Listings another 1,300; all of
- * it used to sit in the entry bundle whether or not the session ever opened those
- * screens. That is the wrong trade for an audience on Uzbek mobile data, where the
- * cost of the first load is paid before anything at all is on screen.
- *
- * `Suspense` and the shared LoadingScreen were already wired up for Chat, so the
- * fallback behaviour is unchanged — there is simply more behind it now.
+ * Everything else is split out with lazyWithRetry so network drops or post-deploy chunk
+ * mismatches automatically recover rather than crashing the app.
  */
-const Chat = lazy(() => import('./pages/Chat.tsx'));
-const Leaderboard = lazy(() => import('./pages/Leaderboard.tsx'));
-const Invite = lazy(() => import('./pages/Invite.tsx'));
-const Reviews = lazy(() => import('./pages/Reviews.tsx'));
-const Profile = lazy(() => import('./pages/Profile.tsx'));
-const Settings = lazy(() => import('./pages/Settings.tsx'));
-const Premium = lazy(() => import('./pages/Premium.tsx'));
-const Statistics = lazy(() => import('./pages/Statistics.tsx'));
-const Matching = lazy(() => import('./pages/Matching.tsx'));
-const SessionEnd = lazy(() => import('./pages/SessionEnd.tsx'));
-const Listings = lazy(() => import('./pages/Listings.tsx'));
+const Chat = lazyWithRetry(() => import('./pages/Chat.tsx'));
+const Leaderboard = lazyWithRetry(() => import('./pages/Leaderboard.tsx'));
+const Invite = lazyWithRetry(() => import('./pages/Invite.tsx'));
+const Reviews = lazyWithRetry(() => import('./pages/Reviews.tsx'));
+const Profile = lazyWithRetry(() => import('./pages/Profile.tsx'));
+const Settings = lazyWithRetry(() => import('./pages/Settings.tsx'));
+const Premium = lazyWithRetry(() => import('./pages/Premium.tsx'));
+const Statistics = lazyWithRetry(() => import('./pages/Statistics.tsx'));
+const Matching = lazyWithRetry(() => import('./pages/Matching.tsx'));
+const SessionEnd = lazyWithRetry(() => import('./pages/SessionEnd.tsx'));
+const Listings = lazyWithRetry(() => import('./pages/Listings.tsx'));
 
 /**
  * Screens reachable in one tap from Home, fetched once the app is idle.
@@ -171,7 +165,7 @@ function TelegramApp() {
       <ConnectionBanner />
       <Toast />
       <MicPermissionModal />
-      <ErrorBoundary>
+      <ErrorBoundary resetKey={screen}>
         <Suspense fallback={<LoadingScreen />}>
           {showTabs ? (
             <div className="tab-shell">
