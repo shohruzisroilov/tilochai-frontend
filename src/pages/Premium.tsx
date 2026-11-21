@@ -87,15 +87,21 @@ export default function Premium() {
         {/* Header Hero */}
         <div className="prem-hero">
           <div className="prem-hero__glow" />
-          <div className="prem-hero__badge">
-            <Sparkles size={14} className="prem-sparkle" />
+          <div className={`prem-hero__badge ${isPremium ? 'prem-hero__badge--active' : ''}`}>
+            {isPremium ? (
+              <Crown size={14} className="text-amber-400" />
+            ) : (
+              <Sparkles size={14} className="prem-sparkle" />
+            )}
             <span>{isPremium ? 'Sizda Premium Faol!' : 'Oʻzingizga mos tarifni tanlang'}</span>
           </div>
           <h2 className="prem-hero__title">
-            Cheklanmagan ingliz tili suhbati
+            {isPremium ? 'Cheksiz VIP Imkoniyatlar Ochiq' : 'Cheklanmagan ingliz tili suhbati'}
           </h2>
           <p className="prem-hero__sub">
-            Har kuni 15 minut bepul gaplashing yoki $2 evaziga cheksiz erkin suhbat quring.
+            {isPremium
+              ? 'Sizda har kuni cheksiz gaplashish va prioritet matching faol. Ingliz tilini toʻxtovsiz mashq qiling!'
+              : 'Har kuni 15 minut bepul gaplashing yoki $2 evaziga cheksiz erkin suhbat quring.'}
           </p>
         </div>
 
@@ -277,26 +283,36 @@ export default function Premium() {
 
         .prem-hero {
           position: relative; overflow: hidden;
-          text-align: center; display: flex; flex-direction: column; align-items: center;
+          text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
           padding: 24px 16px; border-radius: 24px;
           background: var(--surface); border: 1px solid var(--border);
+          flex-shrink: 0; width: 100%; box-sizing: border-box;
+          min-height: fit-content;
         }
         .prem-hero__glow {
           position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
-          width: 200px; height: 100px;
-          background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, transparent 70%);
+          width: 220px; height: 110px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(124, 58, 237, 0.35) 0%, transparent 70%);
           pointer-events: none;
         }
         .prem-hero__badge {
-          display: inline-flex; align-items: center; gap: 6px;
-          padding: 6px 14px; border-radius: 999px;
+          display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+          padding: 6px 14px; border-radius: 9999px;
           background: rgba(124, 58, 237, 0.15); color: #A78BFA;
-          border: 1px solid rgba(124, 58, 237, 0.3);
-          font-size: 12px; font-weight: 700; margin-bottom: 8px;
+          border: 1px solid rgba(124, 58, 237, 0.35);
+          font-size: 12px; font-weight: 700; line-height: 1.3;
+          margin-bottom: 12px; flex-shrink: 0;
+          box-sizing: border-box;
+        }
+        .prem-hero__badge--active {
+          background: rgba(245, 158, 11, 0.15);
+          border-color: rgba(245, 158, 11, 0.45);
+          color: #FBBF24;
         }
         .prem-sparkle { color: #F59E0B; }
         .prem-hero__title {
-          font-size: 22px; font-weight: 800; line-height: 1.25; margin: 0 0 6px;
+          font-size: 21px; font-weight: 800; line-height: 1.3; margin: 0 0 8px;
           color: var(--text-primary);
         }
         .prem-hero__sub {
@@ -306,6 +322,7 @@ export default function Premium() {
 
         .prem-cards-grid {
           display: flex; flex-direction: column; gap: 18px;
+          width: 100%;
         }
 
         .prem-tier-card {
@@ -313,6 +330,7 @@ export default function Premium() {
           padding: 20px; display: flex; flex-direction: column; gap: 16px;
           background: var(--surface); border: 1px solid var(--border);
           box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+          flex-shrink: 0; width: 100%; box-sizing: border-box;
         }
         .prem-tier-card--premium {
           border: 2px solid rgba(245, 158, 11, 0.6);
@@ -395,17 +413,17 @@ export default function Premium() {
           font-size: 11px; font-weight: 700;
         }
         .prem-bank-card__mid {
-          display: flex; align-items: center; justify-content: space-between; gap: 10px;
+          display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: nowrap;
         }
         .prem-bank-card__num {
-          font-family: monospace; font-size: 16px; font-weight: 800;
-          letter-spacing: 1.5px; color: #FFF;
+          font-family: monospace; font-size: clamp(13px, 4.1vw, 16px); font-weight: 800;
+          letter-spacing: 0.8px; color: #FFF; white-space: nowrap; flex-shrink: 1; min-width: 0;
         }
         .prem-copy-btn {
-          display: inline-flex; align-items: center; gap: 5px;
-          background: #7C3AED; color: #FFF; border: none;
-          padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 700;
-          cursor: pointer; transition: all 0.15s;
+          display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+          background: #7C3AED; color: #FFF; border: none; flex-shrink: 0;
+          padding: 7px 12px; border-radius: 10px; font-size: 12px; font-weight: 700;
+          cursor: pointer; transition: all 0.15s; white-space: nowrap;
         }
         .prem-copy-btn.copied { background: #10B981; }
         .prem-copy-btn:active { transform: scale(0.94); }
