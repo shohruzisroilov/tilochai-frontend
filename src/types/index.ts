@@ -60,6 +60,8 @@ export interface Session {
   partnerName?: string;
   partnerAvatarUrl?: string;
   partnerLevel?: number;
+  partnerIsPremium?: boolean;
+  partner_is_premium?: boolean;
   isAi?: boolean;
   livekit_token?: string;
   livekit_room?: string;

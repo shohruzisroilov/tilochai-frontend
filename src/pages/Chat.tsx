@@ -479,11 +479,16 @@ export default function Chat() {
         <div className="call-header">
           <div className="call-header__left">
             <div className={`call-presence${partnerSpeaking ? ' call-presence--speaking' : ''}`}>
-              <Avatar name={session?.partnerName} avatarUrl={session?.partnerAvatarUrl} size={42} />
+              <Avatar name={session?.partnerName} avatarUrl={session?.partnerAvatarUrl} size={42} isPremium={Boolean(session?.partnerIsPremium)} />
             </div>
             <div className="call-header__info">
               <span className="call-header__name">
                 {session?.partnerName || 'Partner'}
+                {Boolean(session?.partnerIsPremium) && (
+                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 text-[10px] font-black rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-400 border border-amber-500/40">
+                    👑 VIP
+                  </span>
+                )}
               </span>
               <div className="call-header__level-pill">
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor" className="call-level-bars" aria-hidden="true">

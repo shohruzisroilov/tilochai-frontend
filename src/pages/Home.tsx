@@ -590,8 +590,13 @@ export default function Home() {
           width: 48px; height: 48px; border-radius: 50%;
           background: var(--primary-subtle); color: var(--primary);
           display: flex; align-items: center; justify-content: center;
-          margin-bottom: 4px;
+          margin: 0 auto 4px;
           flex-shrink: 0;
+          line-height: 0;
+        }
+        .home__empty-ico svg {
+          display: block;
+          margin: auto;
         }
         .home__empty-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
         .home__empty-sub { font-size: 12px; color: var(--text-secondary); max-width: 260px; }

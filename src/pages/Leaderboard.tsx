@@ -31,10 +31,15 @@ function Row({ row, index, me, valueText }: { row: any; index: number; me: any; 
       <div className="lb-rank-col">
         {rankBadge}
       </div>
-      <Avatar name={name} avatarUrl={row.avatar_url} size={42} />
+      <Avatar name={name} avatarUrl={row.avatar_url} size={42} isPremium={Boolean(row.is_premium)} />
       <div className="lb-row__info">
         <div className="lb-row__name-line">
           <span className="lb-row__nametext">{name}</span>
+          {Boolean(row.is_premium) && (
+            <span className="inline-flex items-center px-1.5 py-0.2 text-[10px] font-extrabold rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+              VIP
+            </span>
+          )}
           {isMe && <span className="lb-you">{t('lb.you')}</span>}
         </div>
         {LEVEL_CODE[row.level] && (

@@ -36,7 +36,7 @@ export default function HomeHeader({
           onClick={() => { tapHaptic('light'); navigate('profile'); }}
           aria-label={t('nav.profile')}
         >
-          <Avatar name={user?.displayName || undefined} avatarUrl={user?.avatarUrl || undefined} size={42} />
+          <Avatar name={user?.displayName || undefined} avatarUrl={user?.avatarUrl || undefined} size={42} isPremium={isPremium} />
         </button>
 
         <button

@@ -15,9 +15,10 @@ interface AvatarProps {
   name?: string;
   avatarUrl?: string;
   size?: number;
+  isPremium?: boolean;
 }
 
-export default function Avatar({ name, avatarUrl, size = 40 }: AvatarProps) {
+export default function Avatar({ name, avatarUrl, size = 40, isPremium = false }: AvatarProps) {
   const [imgError, setImgError] = useState(false);
 
   const initials = name
@@ -33,7 +34,7 @@ export default function Avatar({ name, avatarUrl, size = 40 }: AvatarProps) {
     ? Math.abs(name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)) % GRADIENTS.length
     : 0;
 
-  const baseStyle: React.CSSProperties = {
+  const innerStyle: React.CSSProperties = {
     width: size,
     height: size,
     borderRadius: '50%',
@@ -44,31 +45,79 @@ export default function Avatar({ name, avatarUrl, size = 40 }: AvatarProps) {
     overflow: 'hidden',
   };
 
-  if (avatarUrl && !imgError) {
+  const renderContent = () => {
+    if (avatarUrl && !imgError) {
+      return (
+        <img
+          src={avatarUrl}
+          alt={name || 'Avatar'}
+          style={{ ...innerStyle, objectFit: 'cover' }}
+          onError={() => setImgError(true)}
+        />
+      );
+    }
     return (
-      <img
-        src={avatarUrl}
-        alt={name || 'Avatar'}
-        style={{ ...baseStyle, objectFit: 'cover' }}
-        onError={() => setImgError(true)}
-      />
+      <div
+        aria-label={name}
+        style={{
+          ...innerStyle,
+          background: GRADIENTS[gradientIndex],
+          color: '#fff',
+          fontSize: size * 0.38,
+          fontWeight: 800,
+          letterSpacing: '-0.01em',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+        }}
+      >
+        {initials}
+      </div>
     );
+  };
+
+  if (!isPremium) {
+    return renderContent();
   }
+
+  const crownSize = Math.max(14, Math.round(size * 0.36));
+  const crownFont = Math.max(8, Math.round(size * 0.22));
 
   return (
     <div
-      aria-label={name}
       style={{
-        ...baseStyle,
-        background: GRADIENTS[gradientIndex],
-        color: '#fff',
-        fontSize: size * 0.38,
-        fontWeight: 800,
-        letterSpacing: '-0.01em',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+        position: 'relative',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        borderRadius: '50%',
+        padding: 2,
+        background: 'linear-gradient(135deg, #F59E0B 0%, #FDE68A 50%, #D97706 100%)',
+        boxShadow: '0 0 10px rgba(245, 158, 11, 0.45)',
       }}
     >
-      {initials}
+      {renderContent()}
+      <span
+        style={{
+          position: 'absolute',
+          bottom: -2,
+          right: -2,
+          width: crownSize,
+          height: crownSize,
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: crownFont,
+          boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
+          border: '1.5px solid var(--surface, #151128)',
+          lineHeight: 1,
+          zIndex: 2,
+        }}
+        aria-label="VIP"
+      >
+        👑
+      </span>
     </div>
   );
 }

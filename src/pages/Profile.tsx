@@ -190,7 +190,7 @@ export default function Profile() {
         <div className="profile__hero">
           <div className="profile__avatar-wrap">
             <div className="profile__avatar-ring">
-              <Avatar name={user?.displayName || undefined} avatarUrl={user?.avatarUrl || undefined} size={76} />
+              <Avatar name={user?.displayName || undefined} avatarUrl={user?.avatarUrl || undefined} size={76} isPremium={isPremium} />
             </div>
             <button
               type="button"

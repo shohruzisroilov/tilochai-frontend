@@ -48,6 +48,8 @@ interface SessionRowProps {
     started_at?: string;
     ended_at?: string;
     kind?: string;
+    partner_is_premium?: boolean;
+    partnerIsPremium?: boolean;
   };
 }
 
@@ -68,7 +70,7 @@ export default function SessionRow({ session: s }: SessionRowProps) {
             <Bot size={18} className="text-white" />
           </div>
         ) : (
-          <Avatar name={partnerName} avatarUrl={avatarUrl} size={38} />
+          <Avatar name={partnerName} avatarUrl={avatarUrl} size={38} isPremium={Boolean(s.partner_is_premium || s.partnerIsPremium)} />
         )}
       </div>
       <div className="session-row__info">

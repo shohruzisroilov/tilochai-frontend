@@ -21,7 +21,7 @@ describe('Frontend i18n Translations', () => {
   it('should contain updated non-IELTS text keys', () => {
     const en = TRANSLATIONS.en;
     assert.equal(en['home.premiumSub'], 'Unlimited talking with partners');
-    assert.equal(en['profile.freeSub'], '10 minutes of talking every day');
+    assert.equal(en['profile.freeSub'], '15 minutes of talking every day');
     assert.equal(en['pm.proLine1'], 'Talking with no daily limit');
     assert.equal(en['pm.proLine2'], 'Fast partner matching');
   });
