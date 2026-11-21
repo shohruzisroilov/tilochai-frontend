@@ -1,4 +1,4 @@
-import { Play, Globe, ChevronRight } from 'lucide-react';
+import { Play, Clock, ChevronRight } from 'lucide-react';
 import React from 'react';
 import { useT } from '../i18n';
 
@@ -62,8 +62,8 @@ export default function SessionRow({ session: s }: SessionRowProps) {
       <div className="session-row__info">
         <span className="session-row__name">{partnerName}</span>
         <div className="session-row__meta">
-          <Globe size={11} className="text-[#38BDF8]" />
-          <span>English{dur ? ` • ${dur}` : ''}</span>
+          <Clock size={11} className="text-[#38BDF8]" />
+          <span>{dur || 'Voice practice'}</span>
         </div>
       </div>
       <div className="session-row__right">
