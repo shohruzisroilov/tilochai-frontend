@@ -2,6 +2,8 @@ import { useEffect, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import useAppStore from '../store/useAppStore';
 import { getSession } from '../api/endpoints';
+import { playMatchChime } from '../utils/audio';
+import { notifyHaptic } from '../utils/haptics';
 
 /**
  * Socket origin. In dev this resolves to the page origin so Vite's `/socket.io`
@@ -96,6 +98,10 @@ function attachListeners(sock: Socket) {
   sock.on('match_found', ({ session_id, livekit_url, livekit_token }) => {
     const store = useAppStore.getState();
     if (store.screen === 'chat') return;
+
+    // Play pleasant "ting!" chime and trigger success haptic
+    playMatchChime();
+    notifyHaptic('success');
 
     store.setMatchingStatus('matched');
     store.setPartnerConnected(false);

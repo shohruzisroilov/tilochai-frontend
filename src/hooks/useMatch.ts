@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import useAppStore from '../store/useAppStore';
 import { useSocket } from './useSocket';
 import { translate } from '../i18n';
+import { warmAudio } from '../utils/audio';
 
 const MATCH_TIMEOUT_MS = 180_000;
 
@@ -28,6 +29,8 @@ export function useMatch() {
 
   const startSearch = useCallback(async () => {
     if (useAppStore.getState().matchingStatus === 'searching') return;
+
+    warmAudio();
 
     try {
       if (!navigator.mediaDevices?.getUserMedia) {

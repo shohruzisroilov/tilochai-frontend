@@ -19,8 +19,34 @@ function fmt(s: number): string {
 
 function MediaController({ micOn, camOn }: { micOn: boolean; camOn: boolean }) {
   const room = useRoomContext();
-  useEffect(() => { room?.localParticipant?.setMicrophoneEnabled(micOn); }, [micOn, room]);
-  useEffect(() => { room?.localParticipant?.setCameraEnabled(camOn); }, [camOn, room]);
+  useEffect(() => {
+    if (room?.state === 'connected' || room?.localParticipant) {
+      room.localParticipant?.setMicrophoneEnabled(micOn).catch(() => {});
+    }
+  }, [micOn, room]);
+  useEffect(() => {
+    if (room?.state === 'connected' || room?.localParticipant) {
+      room.localParticipant?.setCameraEnabled(camOn).catch(() => {});
+    }
+  }, [camOn, room]);
+  return null;
+}
+
+function AudioUnlocker() {
+  const room = useRoomContext();
+  useEffect(() => {
+    if (!room) return;
+    const unlock = () => {
+      room.startAudio().catch(() => {});
+    };
+    unlock();
+    window.addEventListener('click', unlock, { once: true });
+    window.addEventListener('touchstart', unlock, { once: true });
+    return () => {
+      window.removeEventListener('click', unlock);
+      window.removeEventListener('touchstart', unlock);
+    };
+  }, [room]);
   return null;
 }
 
@@ -159,16 +185,36 @@ function friendlyError(msg: string | null, t: any): string {
   return t('call.err.generic');
 }
 
-function ConnectionWatcher() {
+function ConnectionWatcher({ onPartnerLeft }: { onPartnerLeft: () => void }) {
+  const room = useRoomContext();
   const participants = useRemoteParticipants();
   const setPartnerConnected = useAppStore((s) => s.setPartnerConnected);
+  const wasConnectedRef = useRef(false);
   const hasRemote = participants.length > 0;
 
   useEffect(() => {
     if (hasRemote) {
+      wasConnectedRef.current = true;
       setPartnerConnected(true);
+    } else if (wasConnectedRef.current) {
+      setPartnerConnected(false);
+      onPartnerLeft();
     }
-  }, [hasRemote, setPartnerConnected]);
+  }, [hasRemote, setPartnerConnected, onPartnerLeft]);
+
+  useEffect(() => {
+    if (!room) return;
+    const handleDisconnected = () => {
+      if (wasConnectedRef.current) {
+        setPartnerConnected(false);
+        onPartnerLeft();
+      }
+    };
+    room.on('participantDisconnected', handleDisconnected);
+    return () => {
+      room.off('participantDisconnected', handleDisconnected);
+    };
+  }, [room, onPartnerLeft, setPartnerConnected]);
 
   return null;
 }
@@ -282,6 +328,16 @@ export default function Chat() {
     navigate('session_end', { sessionId: session?.id, elapsed });
   }
 
+  const handlePartnerLeft = useCallback(() => {
+    if (ending) return;
+    setEnding(true);
+    notifyHaptic('warning');
+    if (session?.id) {
+      try { endSession(session.id); } catch {}
+    }
+    navigate('session_end', { sessionId: session?.id, elapsed, reason: 'partner_left' });
+  }, [ending, session?.id, elapsed, navigate]);
+
   const unread = showChat ? 0 : Math.max(0, messages.length - lastSeenCount);
   useEffect(() => {
     if (showChat) setLastSeenCount(messages.length);
@@ -319,10 +375,17 @@ export default function Chat() {
             connect: true,
             audio: true,
             video: camOn,
-            onConnected: () => { setLiveKitError(null); setIsReconnecting(false); },
+            onConnected: (r: any) => {
+              setLiveKitError(null);
+              setIsReconnecting(false);
+              r?.startAudio?.().catch?.(() => {});
+            },
             onDisconnected: () => setCallActive(false),
             onReconnecting: () => setIsReconnecting(true),
-            onReconnected: () => setIsReconnecting(false),
+            onReconnected: (r: any) => {
+              setIsReconnecting(false);
+              r?.startAudio?.().catch?.(() => {});
+            },
             onError: (err: Error) => {
               console.error('LiveKit error:', err);
               setLiveKitError(err?.message || 'Connection failed');
@@ -331,8 +394,9 @@ export default function Chat() {
           } as any)}
         >
           <RoomAudioRenderer />
+          <AudioUnlocker />
           <MediaController micOn={micOn} camOn={camOn} />
-          <ConnectionWatcher />
+          <ConnectionWatcher onPartnerLeft={handlePartnerLeft} />
           <SpeakingWatcher onChange={handleSpeaking} />
           {camOn && <VideoGrid session={session} />}
         </LiveKitRoom>
