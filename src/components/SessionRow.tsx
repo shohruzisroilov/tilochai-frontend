@@ -1,6 +1,7 @@
-import { Play, Clock, ChevronRight } from 'lucide-react';
+import { Clock, ChevronRight, Bot } from 'lucide-react';
 import React from 'react';
 import { useT } from '../i18n';
+import Avatar from './Avatar';
 
 function duration(startedAt?: string, endedAt?: string) {
   if (!startedAt || !endedAt) return null;
@@ -41,7 +42,9 @@ function timeAgo(dateStr: string | undefined, t: any) {
 interface SessionRowProps {
   session: {
     partner_name?: string;
+    partnerName?: string;
     partner_avatar_url?: string;
+    partnerAvatarUrl?: string;
     started_at?: string;
     ended_at?: string;
     kind?: string;
@@ -52,12 +55,21 @@ export default function SessionRow({ session: s }: SessionRowProps) {
   const t = useT();
   const dur = duration(s.started_at, s.ended_at);
   const isAi = s.kind === 'ai';
-  const partnerName = isAi ? (t('ai.partnerName') || 'Tiloch AI') : (s.partner_name || '•••');
+  const partnerName = isAi
+    ? (t('ai.partnerName') || 'Tiloch AI')
+    : (s.partner_name || s.partnerName || 'Speaking Partner');
+  const avatarUrl = s.partner_avatar_url || s.partnerAvatarUrl;
 
   return (
     <div className="session-row">
-      <div className="session-row__play-badge">
-        <Play size={14} fill="#FFFFFF" color="#FFFFFF" style={{ marginLeft: 2 }} />
+      <div className="session-row__avatar-wrap">
+        {isAi ? (
+          <div className="session-row__ai-badge">
+            <Bot size={18} className="text-white" />
+          </div>
+        ) : (
+          <Avatar name={partnerName} avatarUrl={avatarUrl} size={38} />
+        )}
       </div>
       <div className="session-row__info">
         <span className="session-row__name">{partnerName}</span>
@@ -83,12 +95,16 @@ export default function SessionRow({ session: s }: SessionRowProps) {
           cursor: default;
         }
         .session-row:active { background: var(--surface-2); transform: scale(0.99); }
-        .session-row__play-badge {
-          width: 36px; height: 36px; flex-shrink: 0;
+        .session-row__avatar-wrap {
+          width: 38px; height: 38px; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .session-row__ai-badge {
+          width: 38px; height: 38px; flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
           border-radius: 50%;
-          background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
-          box-shadow: 0 2px 10px rgba(124, 58, 237, 0.4);
+          background: linear-gradient(135deg, #7C3AED 0%, #00B2FE 100%);
+          box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
         }
         .session-row__info {
           flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;
