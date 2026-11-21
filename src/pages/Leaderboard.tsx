@@ -303,14 +303,14 @@ export default function Leaderboard() {
           font-size: 12px; font-weight: 800;
         }
         .lb-rank-badge--2 {
-          background: #1C153B;
-          color: #E2E8F0;
-          border: 1px solid rgba(148, 163, 184, 0.4);
+          background: var(--surface-2);
+          color: var(--text-primary);
+          border: 1px solid var(--border);
         }
         .lb-rank-badge--3 {
-          background: rgba(217, 119, 6, 0.2);
-          color: #F59E0B;
-          border: 1px solid rgba(217, 119, 6, 0.45);
+          background: rgba(217, 119, 6, 0.15);
+          color: #D97706;
+          border: 1px solid rgba(217, 119, 6, 0.35);
         }
 
         .lb-row__info { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
@@ -318,20 +318,21 @@ export default function Leaderboard() {
           display: flex; align-items: center; gap: 6px; min-width: 0;
         }
         .lb-row__nametext {
-          font-size: 14px; font-weight: 700; color: #FFFFFF;
+          font-size: 14px; font-weight: 700; color: var(--text-primary);
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
         }
         .lb-you {
           font-size: 10px; font-weight: 700;
           padding: 2px 7px; border-radius: 999px;
-          background: rgba(99, 102, 241, 0.35); color: #C7D2FE;
-          border: 1px solid rgba(99, 102, 241, 0.5);
+          background: var(--primary-subtle); color: var(--primary);
+          border: 1px solid var(--border-strong);
           flex-shrink: 0;
         }
         .lb-row__level {
           font-size: 10px; font-weight: 700;
-          color: #C4B5FD;
-          background: rgba(124, 58, 237, 0.25);
+          color: var(--primary);
+          background: var(--primary-subtle);
+          border: 1px solid var(--border-strong);
           padding: 1px 7px; border-radius: 6px;
           width: fit-content;
         }
@@ -342,13 +343,13 @@ export default function Leaderboard() {
         }
         .lb-row__value {
           font-size: 13px; font-weight: 800;
-          color: #FFFFFF; white-space: nowrap;
+          color: var(--text-primary); white-space: nowrap;
         }
 
         .lb-empty {
-          font-size: 13px; color: #94A3B8;
+          font-size: 13px; color: var(--text-secondary);
           text-align: center; padding: 36px 20px;
-          background: #120B26; border: 1px solid rgba(139, 92, 246, 0.18);
+          background: var(--surface); border: 1px solid var(--border);
           border-radius: 18px;
         }
         .lb-footer { padding-bottom: 8px; }
