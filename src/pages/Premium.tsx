@@ -58,7 +58,7 @@ export default function Premium() {
   function handleSendReceipt() {
     tapHaptic('medium');
     const msg = encodeURIComponent(
-      `Assalomu alaykum! Tiloch AI Premium uchun to'lov qildim.\nID: ${user?.telegramId || user?.id || ''}\nIsm: ${user?.displayName || ''}\nChekni yuboryapman:`
+      `Hello! I sent 26,000 so'm for Tiloch AI Premium.\nID: ${user?.telegramId || user?.id || ''}\nName: ${user?.displayName || ''}\nHere is my payment receipt:`
     );
     const url = `https://t.me/${ADMIN_USERNAME}?text=${msg}`;
     const wa = (window as any).Telegram?.WebApp;
@@ -78,7 +78,7 @@ export default function Premium() {
         <button className="prem-back" onClick={back} aria-label="Go Back">
           <ArrowLeft size={20} />
         </button>
-        <h1 className="prem-topbar-title">Tariflar & Premium</h1>
+        <h1 className="prem-topbar-title">Plans &amp; Premium</h1>
         <div style={{ width: 38 }} />
       </div>
 
@@ -92,15 +92,15 @@ export default function Premium() {
             ) : (
               <Sparkles size={14} className="prem-sparkle" />
             )}
-            <span>{isPremium ? 'Sizda Premium Faol!' : 'Oʻzingizga mos tarifni tanlang'}</span>
+            <span>{isPremium ? 'Premium is Active!' : 'Choose Your Plan'}</span>
           </div>
           <h2 className="prem-hero__title">
-            {isPremium ? 'Cheksiz VIP Imkoniyatlar Ochiq' : 'Cheklanmagan ingliz tili suhbati'}
+            {isPremium ? 'Unlimited Speaking Unlocked' : 'Speak English Without Limits'}
           </h2>
           <p className="prem-hero__sub">
             {isPremium
-              ? 'Sizda har kuni cheksiz gaplashish va prioritet matching faol. Ingliz tilini toʻxtovsiz mashq qiling!'
-              : 'Har kuni 15 minut bepul gaplashing yoki 26 000 soʻm evaziga cheksiz erkin suhbat quring.'}
+              ? 'You have unlimited daily talk time and VIP priority matching. Enjoy your practice!'
+              : 'Practice free for 15 minutes every day, or upgrade to talk as much as you want for 26,000 so\'m/month.'}
           </p>
         </div>
 
@@ -110,8 +110,8 @@ export default function Premium() {
           <div className="prem-tier-card prem-tier-card--free">
             <div className="prem-tier-header">
               <div>
-                <span className="prem-tier-tag">Oddiy</span>
-                <h3 className="prem-tier-name">Tekin tarif</h3>
+                <span className="prem-tier-tag">Free Plan</span>
+                <h3 className="prem-tier-name">Standard Free</h3>
               </div>
               <div className="prem-tier-price">
                 <span className="prem-tier-amount">0</span>
@@ -122,15 +122,15 @@ export default function Premium() {
             <ul className="prem-features-list">
               <li>
                 <CheckCircle2 size={16} className="prem-feat-icon text-emerald-400" />
-                <span><strong>Har kuni 15 minut</strong> bepul gaplashish</span>
+                <span><strong>15 free minutes</strong> every single day</span>
               </li>
               <li>
                 <CheckCircle2 size={16} className="prem-feat-icon text-emerald-400" />
-                <span>Istalgan vaqtda real insonlar bilan suhbat</span>
+                <span>Talk with real partners anytime</span>
               </li>
               <li>
                 <Users size={16} className="prem-feat-icon text-sky-400" />
-                <span>Har 1 ta doʻstingiz uchun <strong>+15 minut bonus</strong></span>
+                <span>Invite friends to get <strong>+15 bonus minutes</strong> each</span>
               </li>
             </ul>
 
@@ -143,7 +143,7 @@ export default function Premium() {
               }}
             >
               <Users size={16} />
-              <span>Doʻstlarni taklif qilish (+15m)</span>
+              <span>Invite Friends (+15m)</span>
             </button>
           </div>
 
@@ -151,38 +151,38 @@ export default function Premium() {
           <div className="prem-tier-card prem-tier-card--premium">
             <div className="prem-premium-ribbon">
               <Crown size={12} />
-              <span>Eng ommabop</span>
+              <span>Most Popular</span>
             </div>
 
             <div className="prem-tier-header">
               <div>
-                <span className="prem-tier-tag prem-tier-tag--gold">VIP Tarif</span>
+                <span className="prem-tier-tag prem-tier-tag--gold">VIP Plan</span>
                 <h3 className="prem-tier-name text-amber-300 flex items-center gap-1.5">
-                  <Crown size={18} className="text-amber-400" /> Premium
+                  <Crown size={18} className="text-amber-400" /> Premium VIP
                 </h3>
               </div>
               <div className="prem-tier-price">
                 <span className="prem-tier-amount text-amber-300">26 000</span>
-                <span className="prem-tier-period">soʻm / oy</span>
+                <span className="prem-tier-period">soʻm / month</span>
               </div>
             </div>
 
             <ul className="prem-features-list">
               <li>
                 <Zap size={16} className="prem-feat-icon text-amber-400" />
-                <span><strong>Cheklanmagan suhbat</strong> (kunlik limit yoʻq)</span>
+                <span><strong>Unlimited speaking time</strong> (no daily limit)</span>
               </li>
               <li>
                 <Zap size={16} className="prem-feat-icon text-amber-400" />
-                <span><strong>Prioritet matching</strong> — birinchi navbatda ulanish</span>
+                <span><strong>Priority matching</strong> — connect faster</span>
               </li>
               <li>
                 <Crown size={16} className="prem-feat-icon text-amber-400" />
-                <span>Profilingizda <strong>Oltin Crown</strong> nishoni</span>
+                <span><strong>Golden Crown VIP</strong> badge on your profile</span>
               </li>
               <li>
                 <CheckCircle2 size={16} className="prem-feat-icon text-amber-400" />
-                <span>Reklamasiz, toʻxtovsiz mashq qilish</span>
+                <span>Clean, uninterrupted speaking practice</span>
               </li>
             </ul>
 
@@ -201,7 +201,7 @@ export default function Premium() {
 
               <div className="prem-bank-card__bot">
                 <div>
-                  <span className="prem-bank-card__sublabel">Karta egasi</span>
+                  <span className="prem-bank-card__sublabel">Card Holder</span>
                   <p className="prem-bank-card__holder">{CARD_HOLDER}</p>
                 </div>
                 <button
@@ -213,7 +213,7 @@ export default function Premium() {
                   className={`prem-copy-btn ${copied ? 'copied' : ''}`}
                 >
                   {copied ? <Check size={14} /> : <Copy size={14} />}
-                  <span>{copied ? 'Nusxalandi!' : 'Nusxalash'}</span>
+                  <span>{copied ? 'Copied!' : 'Copy Card'}</span>
                 </button>
               </div>
             </div>
@@ -222,15 +222,15 @@ export default function Premium() {
             <div className="prem-steps">
               <div className="prem-step">
                 <span className="prem-step__num">1</span>
-                <p>Kartaga <strong>{AMOUNT_UZS}</strong> oʻtkazing</p>
+                <p>Transfer <strong>{AMOUNT_UZS}</strong> to the card above</p>
               </div>
               <div className="prem-step">
                 <span className="prem-step__num">2</span>
-                <p>Toʻlov chekini skrinshot qiling</p>
+                <p>Take a screenshot of your payment receipt</p>
               </div>
               <div className="prem-step">
                 <span className="prem-step__num">3</span>
-                <p>Chekni Telegram orqali <strong>@{ADMIN_USERNAME}</strong> ga yuboring</p>
+                <p>Send the receipt on Telegram to <strong>@{ADMIN_USERNAME}</strong></p>
               </div>
             </div>
 
@@ -240,10 +240,10 @@ export default function Premium() {
               onClick={handleSendReceipt}
             >
               <Send size={18} />
-              <span>Chekni adminga yuborish</span>
+              <span>Send Receipt to Admin</span>
             </button>
             <p className="prem-note">
-              Admin chekni koʻrishi bilan profilingizga Premium beriladi.
+              Your Premium will be activated right after the admin verifies your receipt.
             </p>
           </div>
         </div>

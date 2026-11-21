@@ -374,8 +374,8 @@ export default function Profile() {
               <Crown size={18} />
             </span>
             <div className="profile__row-text">
-              <span className="profile__row-title">Tariflar &amp; Premium</span>
-              <span className="profile__row-sub">{isPremium ? 'Cheklanmagan VIP faol' : 'Cheklanmagan suhbat (26 000 soʻm)'}</span>
+              <span className="profile__row-title">Plans &amp; Premium</span>
+              <span className="profile__row-sub">{isPremium ? 'Unlimited VIP Active' : 'Unlimited Speaking (26,000 soʻm)'}</span>
             </div>
             <Chevron />
           </button>
