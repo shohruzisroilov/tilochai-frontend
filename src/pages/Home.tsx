@@ -14,6 +14,8 @@ import {
   ArrowRight,
   Clock,
   Gift,
+  Crown,
+  Sparkles,
 } from 'lucide-react';
 
 import HomeHeader from '../components/HomeHeader';
@@ -96,19 +98,39 @@ export default function Home() {
 
           <div className="hero__inner">
             <div className="hero__top-row">
-              <span className="hero__tag">
-                <span className="hero__live-dot" />
-                <span>15m free daily • 1-on-1</span>
-              </span>
-              <button
-                type="button"
-                className="hero__online-pill"
-                onClick={() => { tapHaptic('light'); navigate('invite', { from: 'home' }); }}
-                aria-label="Available minutes"
-              >
-                <Clock size={11} className={availableMins <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
-                <span>{availableMins}m left today</span>
-              </button>
+              {isPremium ? (
+                <span className="hero__tag hero__tag--premium">
+                  <Crown size={12} className="text-amber-400" />
+                  <span>VIP Member • Unlimited</span>
+                </span>
+              ) : (
+                <span className="hero__tag">
+                  <span className="hero__live-dot" />
+                  <span>15m free daily • 1-on-1</span>
+                </span>
+              )}
+
+              {isPremium ? (
+                <button
+                  type="button"
+                  className="hero__online-pill hero__online-pill--premium"
+                  onClick={() => { tapHaptic('light'); navigate('premium', { from: 'home' }); }}
+                  aria-label="Unlimited VIP speaking"
+                >
+                  <Sparkles size={11} className="text-amber-400" />
+                  <span>Unlimited time</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="hero__online-pill"
+                  onClick={() => { tapHaptic('light'); navigate('invite', { from: 'home' }); }}
+                  aria-label="Available minutes"
+                >
+                  <Clock size={11} className={availableMins <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
+                  <span>{availableMins}m left today</span>
+                </button>
+              )}
             </div>
 
             <div className="hero__content-row">
@@ -341,6 +363,11 @@ export default function Home() {
           letter-spacing: 0.02em;
           backdrop-filter: blur(8px);
         }
+        .hero__tag--premium {
+          background: rgba(245, 158, 11, 0.22);
+          border-color: rgba(245, 158, 11, 0.5);
+          color: #FDE68A;
+        }
         .hero__live-dot {
           width: 7px; height: 7px; border-radius: 50%;
           background: #10B981;
@@ -360,6 +387,11 @@ export default function Home() {
           border: 1px solid rgba(16, 185, 129, 0.4);
           color: #6EE7B7;
           font-size: 10px; font-weight: 700;
+        }
+        .hero__online-pill--premium {
+          background: rgba(245, 158, 11, 0.22);
+          border-color: rgba(245, 158, 11, 0.5);
+          color: #FDE68A;
         }
 
         .hero__content-row {
