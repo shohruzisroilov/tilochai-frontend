@@ -133,10 +133,6 @@ export default function Premium() {
                 <Users size={16} className="prem-feat-icon text-sky-400" />
                 <span>Har 1 ta doʻstingiz uchun <strong>+15 minut bonus</strong></span>
               </li>
-              <li>
-                <Clock size={16} className="prem-feat-icon text-sky-400" />
-                <span>Bonus daqiqalar <strong>muddatsiz</strong> (10 ta doʻst = 150 min)</span>
-              </li>
             </ul>
 
             <button
