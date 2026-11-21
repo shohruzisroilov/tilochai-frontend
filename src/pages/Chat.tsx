@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { LiveKitRoom, RoomAudioRenderer, useRoomContext, useTracks, VideoTrack, useRemoteParticipants, useSpeakingParticipants } from '@livekit/components-react';
-import { Track } from 'livekit-client';
+import { AudioPresets, RoomEvent, Track } from 'livekit-client';
 import { endSession } from '../api/endpoints';
 import { useSocket } from '../hooks/useSocket';
 import useAppStore from '../store/useAppStore';
@@ -12,7 +12,7 @@ import SpeakingQuestions from '../components/SpeakingQuestions';
 import { useT } from '../i18n';
 import { notifyHaptic, tapHaptic } from '../utils/haptics';
 import { playCallEndSound } from '../utils/audio';
-import { AlertCircle, AlertTriangle, X, Lightbulb, ChevronRight, ArrowLeft, Clock } from 'lucide-react';
+import { AlertCircle, AlertTriangle, X, Lightbulb, ChevronRight, ArrowLeft, Clock, Volume2 } from 'lucide-react';
 
 function fmt(s: number): string {
   return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
@@ -20,35 +20,77 @@ function fmt(s: number): string {
 
 function MediaController({ micOn, camOn }: { micOn: boolean; camOn: boolean }) {
   const room = useRoomContext();
+  const initialMicRef = useRef(true);
+  const initialCamRef = useRef(true);
+
   useEffect(() => {
-    if (room?.state === 'connected' || room?.localParticipant) {
-      room.localParticipant?.setMicrophoneEnabled(micOn).catch(() => {});
+    // LiveKitRoom audio={true} already handles the initial mic enablement.
+    // Calling setMicrophoneEnabled immediately on mount causes duplicate acquisition and 2-4s audio delay.
+    if (initialMicRef.current) {
+      initialMicRef.current = false;
+      return;
+    }
+    if (room?.state === 'connected' && room.localParticipant) {
+      room.localParticipant.setMicrophoneEnabled(micOn).catch(() => {});
     }
   }, [micOn, room]);
+
   useEffect(() => {
-    if (room?.state === 'connected' || room?.localParticipant) {
-      room.localParticipant?.setCameraEnabled(camOn).catch(() => {});
+    if (initialCamRef.current) {
+      initialCamRef.current = false;
+      return;
+    }
+    if (room?.state === 'connected' && room.localParticipant) {
+      room.localParticipant.setCameraEnabled(camOn).catch(() => {});
     }
   }, [camOn, room]);
+
   return null;
 }
 
 function AudioUnlocker() {
   const room = useRoomContext();
+  const [canPlay, setCanPlay] = useState(room?.canPlaybackAudio ?? true);
+
   useEffect(() => {
     if (!room) return;
-    const unlock = () => {
-      room.startAudio().catch(() => {});
+    setCanPlay(room.canPlaybackAudio);
+
+    const onAudioStatus = () => {
+      setCanPlay(room.canPlaybackAudio);
     };
-    unlock();
-    window.addEventListener('click', unlock, { once: true });
-    window.addEventListener('touchstart', unlock, { once: true });
+
+    const tryUnlock = () => {
+      room.startAudio().then(() => setCanPlay(true)).catch(() => {});
+    };
+
+    // Attempt immediate unlock
+    tryUnlock();
+
+    room.on(RoomEvent.AudioPlaybackStatusChanged, onAudioStatus);
+    window.addEventListener('pointerdown', tryUnlock, { passive: true });
+    window.addEventListener('touchstart', tryUnlock, { passive: true });
+    window.addEventListener('click', tryUnlock, { passive: true });
+
     return () => {
-      window.removeEventListener('click', unlock);
-      window.removeEventListener('touchstart', unlock);
+      room.off(RoomEvent.AudioPlaybackStatusChanged, onAudioStatus);
+      window.removeEventListener('pointerdown', tryUnlock);
+      window.removeEventListener('touchstart', tryUnlock);
+      window.removeEventListener('click', tryUnlock);
     };
   }, [room]);
-  return null;
+
+  if (canPlay) return null;
+
+  return (
+    <button
+      onClick={() => room?.startAudio().then(() => setCanPlay(true)).catch(() => {})}
+      className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-4 py-2 rounded-full font-bold text-xs shadow-2xl animate-bounce flex items-center gap-1.5 border border-amber-300/40"
+    >
+      <Volume2 size={14} />
+      <span>Tap to enable audio</span>
+    </button>
+  );
 }
 
 // ── Drag hook for PiP window ───────────────────────────────────────────────
@@ -407,6 +449,20 @@ export default function Chat() {
             connect: true,
             audio: true,
             video: camOn,
+            options: {
+              adaptiveStream: false,
+              dynacast: false,
+              publishDefaults: {
+                dtx: false,
+                red: true,
+                audioPreset: AudioPresets.speech,
+              },
+              audioCaptureDefaults: {
+                autoGainControl: true,
+                echoCancellation: true,
+                noiseSuppression: true,
+              },
+            },
             onConnected: (r: any) => {
               setLiveKitError(null);
               setIsReconnecting(false);
