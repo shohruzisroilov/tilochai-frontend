@@ -187,24 +187,16 @@ export default function Premium() {
             </ul>
 
             {/* Bank Card Box */}
-            <div className="prem-bank-card">
+            <div className="prem-bank-card" onClick={handleCopyCard}>
               <div className="prem-bank-card__top">
                 <span className="prem-bank-card__chip">Uzcard / Humo</span>
                 <span className="prem-bank-card__badge">{AMOUNT_UZS}</span>
               </div>
 
-              <div className="prem-bank-card__mid">
-                <div className="prem-bank-card__num">
+              <div className="prem-bank-card__num-row">
+                <span className="prem-bank-card__num">
                   {CARD_NUMBER.replace(/(\d{4})/g, '$1 ').trim()}
-                </div>
-                <button
-                  type="button"
-                  onClick={handleCopyCard}
-                  className={`prem-copy-btn ${copied ? 'copied' : ''}`}
-                >
-                  {copied ? <Check size={14} /> : <Copy size={14} />}
-                  <span>{copied ? 'Nusxalandi!' : 'Nusxalash'}</span>
-                </button>
+                </span>
               </div>
 
               <div className="prem-bank-card__bot">
@@ -212,6 +204,17 @@ export default function Premium() {
                   <span className="prem-bank-card__sublabel">Karta egasi</span>
                   <p className="prem-bank-card__holder">{CARD_HOLDER}</p>
                 </div>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCopyCard();
+                  }}
+                  className={`prem-copy-btn ${copied ? 'copied' : ''}`}
+                >
+                  {copied ? <Check size={14} /> : <Copy size={14} />}
+                  <span>{copied ? 'Nusxalandi!' : 'Nusxalash'}</span>
+                </button>
               </div>
             </div>
 
@@ -390,11 +393,16 @@ export default function Premium() {
 
         /* Bank card visual */
         .prem-bank-card {
-          border-radius: 18px; padding: 16px 18px;
+          border-radius: 20px; padding: 18px 20px;
           background: linear-gradient(135deg, #181829 0%, #1c2638 50%, #1e1b4b 100%);
           border: 1px solid rgba(255, 255, 255, 0.16);
-          color: #FFF; display: flex; flex-direction: column; gap: 12px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+          color: #FFF; display: flex; flex-direction: column; gap: 14px;
+          box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+          cursor: pointer;
+          transition: transform 0.15s ease;
+        }
+        .prem-bank-card:active {
+          transform: scale(0.99);
         }
         .prem-bank-card__top {
           display: flex; align-items: center; justify-content: space-between;
@@ -404,35 +412,40 @@ export default function Premium() {
           color: #38BDF8; text-transform: uppercase;
         }
         .prem-bank-card__badge {
-          background: rgba(255, 255, 255, 0.14); padding: 3px 8px; border-radius: 8px;
-          font-size: 11px; font-weight: 700;
+          background: rgba(255, 255, 255, 0.14); padding: 3px 10px; border-radius: 8px;
+          font-size: 11px; font-weight: 700; color: #FFF;
         }
-        .prem-bank-card__mid {
-          display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: nowrap;
+        .prem-bank-card__num-row {
+          width: 100%; display: flex; align-items: center;
+          padding: 4px 0;
         }
         .prem-bank-card__num {
-          font-family: monospace; font-size: clamp(13px, 4.1vw, 16px); font-weight: 800;
-          letter-spacing: 0.8px; color: #FFF; white-space: nowrap; flex-shrink: 1; min-width: 0;
+          font-family: monospace; font-size: clamp(16px, 5.2vw, 20px); font-weight: 900;
+          letter-spacing: 2px; color: #FFF; white-space: nowrap !important;
+          word-break: keep-all; flex-shrink: 0;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
-        .prem-copy-btn {
-          display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-          background: #7C3AED; color: #FFF; border: none; flex-shrink: 0;
-          padding: 7px 12px; border-radius: 10px; font-size: 12px; font-weight: 700;
-          cursor: pointer; transition: all 0.15s; white-space: nowrap;
-        }
-        .prem-copy-btn.copied { background: #10B981; }
-        .prem-copy-btn:active { transform: scale(0.94); }
         .prem-bank-card__bot {
-          display: flex; align-items: flex-end; justify-content: space-between;
-          padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex; align-items: flex-end; justify-content: space-between; gap: 10px;
+          padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.12);
+          flex-wrap: wrap;
         }
         .prem-bank-card__sublabel {
           font-size: 10px; text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
-          letter-spacing: 0.5px;
+          letter-spacing: 0.5px; display: block;
         }
         .prem-bank-card__holder {
-          font-size: 13px; font-weight: 700; color: #FFF; margin: 1px 0 0;
+          font-size: 14px; font-weight: 700; color: #FFF; margin: 2px 0 0;
         }
+        .prem-copy-btn {
+          display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+          background: #7C3AED; color: #FFF; border: none; flex-shrink: 0;
+          padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 700;
+          cursor: pointer; transition: all 0.15s; white-space: nowrap;
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+        }
+        .prem-copy-btn.copied { background: #10B981; }
+        .prem-copy-btn:active { transform: scale(0.94); }
 
         /* Instruction steps */
         .prem-steps {
