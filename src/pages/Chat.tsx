@@ -338,7 +338,9 @@ export default function Chat() {
   }
 
   const isPremium = Boolean(user?.isPremium);
-  const availableMinutes = user?.availableMinutes ?? (Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0));
+  const availableMinutes = isPremium
+    ? Infinity
+    : Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
   const maxAllowedSeconds = isPremium ? Infinity : Math.max(60, availableMinutes * 60);
 
   const handleLimitReached = useCallback(() => {

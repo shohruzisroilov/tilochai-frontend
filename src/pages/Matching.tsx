@@ -82,7 +82,9 @@ export default function Matching() {
   }, [matchingStatus]);
 
   const isTimeout = matchingStatus === 'timeout';
-  const isLimitReached = matchingStatus === 'limit_reached' || (user?.availableMinutes !== undefined && user.availableMinutes <= 0);
+  const isPremium = Boolean(user?.isPremium);
+  const availableMins = isPremium ? Infinity : Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
+  const isLimitReached = matchingStatus === 'limit_reached' || (!isPremium && availableMins <= 0);
 
   if (isLimitReached) {
     return (

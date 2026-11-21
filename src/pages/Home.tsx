@@ -43,7 +43,11 @@ export default function Home() {
   const isFemale = user?.gender === 'female';
   const womenOnly = isFemale && partnerPref === 'female';
   const [limitModalOpen, setLimitModalOpen] = useState(false);
-  const availableMins = user?.availableMinutes ?? Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
+  const screen = useAppStore((s) => s.screen);
+  const isPremium = Boolean(user?.isPremium);
+  const availableMins = isPremium
+    ? Infinity
+    : Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
 
   useEffect(() => {
     getMe()
@@ -54,7 +58,7 @@ export default function Home() {
       })
       .catch(() => { })
       .finally(() => setHomeLoaded(true));
-  }, []);
+  }, [screen]);
 
   return (
     <div className="home">
@@ -130,7 +134,7 @@ export default function Home() {
               className="hero__main-btn"
               onClick={() => {
                 tapHaptic('heavy');
-                if (availableMins <= 0) {
+                if (!isPremium && availableMins <= 0) {
                   setLimitModalOpen(true);
                 } else {
                   navigate('matching');

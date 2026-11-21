@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from './Avatar';
 import { useT } from '../i18n';
-import { Flame, ChevronDown, Clock } from 'lucide-react';
+import { Flame, ChevronDown, Clock, Crown } from 'lucide-react';
 import { User } from '../types';
 import useAppStore from '../store/useAppStore';
 import { tapHaptic } from '../utils/haptics';
@@ -22,7 +22,10 @@ export default function HomeHeader({
 
   const level = user?.level || 1;
   const shown = Math.max(streak, doneToday ? 1 : 0);
-  const availableMinutes = user?.availableMinutes ?? Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
+  const isPremium = Boolean(user?.isPremium);
+  const availableMinutes = isPremium
+    ? Infinity
+    : Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0);
 
   return (
     <>
@@ -55,15 +58,27 @@ export default function HomeHeader({
         </button>
 
         <div className="hh__actions">
-          <button
-            type="button"
-            className={`hh__pill hh__pill--time ${availableMinutes <= 3 ? 'hh__pill--low' : ''}`}
-            onClick={() => { tapHaptic('light'); navigate('invite', { from: 'home' }); }}
-            aria-label="Available minutes today"
-          >
-            <Clock size={12} className={availableMinutes <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
-            <span className="hh__pill-text">{availableMinutes}m</span>
-          </button>
+          {isPremium ? (
+            <button
+              type="button"
+              className="hh__pill hh__pill--time border-amber-500/40 bg-amber-500/10"
+              onClick={() => { tapHaptic('light'); navigate('premium', { from: 'home' }); }}
+              aria-label="Premium VIP"
+            >
+              <Crown size={12} className="text-amber-400" />
+              <span className="hh__pill-text text-amber-300 font-bold">VIP</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={`hh__pill hh__pill--time ${availableMinutes <= 3 ? 'hh__pill--low' : ''}`}
+              onClick={() => { tapHaptic('light'); navigate('invite', { from: 'home' }); }}
+              aria-label="Available minutes today"
+            >
+              <Clock size={12} className={availableMinutes <= 3 ? 'text-amber-400' : 'text-[#00B2FE]'} />
+              <span className="hh__pill-text">{availableMinutes}m</span>
+            </button>
+          )}
 
           {shown > 0 && (
             <div className={`hh__pill hh__pill--streak ${doneToday ? 'hh__pill--streak-active' : ''}`}>

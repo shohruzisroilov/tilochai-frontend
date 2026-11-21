@@ -26,6 +26,8 @@ export interface User {
   dailyLimit?: number;
   bonusMinutes?: number;
   availableMinutes?: number;
+  referralCode?: string | null;
+  referralCount?: number;
   primeTimeHour?: number;
   streak_count?: number;
   streakCount?: number;

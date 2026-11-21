@@ -143,6 +143,23 @@ function attachListeners(sock: Socket) {
     useAppStore.getState().setMatchingStatus('limit_reached');
   });
 
+  sock.on('referral_bonus_credited', (data: any) => {
+    const store = useAppStore.getState();
+    const u = store.user;
+    if (u) {
+      const newBonus = data.bonusMinutes;
+      const used = u.dailyMinutes || 0;
+      const newAvail = u.isPremium ? Infinity : Math.max(0, 15 - used) + newBonus;
+      store.setUser({
+        ...u,
+        bonusMinutes: newBonus,
+        availableMinutes: newAvail,
+        referralCount: data.referralCount ?? ((u.referralCount || 0) + 1),
+      });
+      notifyHaptic('success');
+    }
+  });
+
   sock.off('connect');
   sock.off('disconnect');
   sock.on('connect', () => {

@@ -10,7 +10,7 @@ import { Button } from '../components/ui/button';
 
 export default function Invite() {
   const t = useT();
-  const { invite, setInvite, navigate, screenParams } = useAppStore();
+  const { invite, setInvite, navigate, screenParams, user, setUser } = useAppStore();
 
   useTelegramBackButton(() => navigate(screenParams?.from || 'profile'));
   const [error, setError] = useState('');
@@ -20,7 +20,19 @@ export default function Invite() {
 
   useEffect(() => {
     getInvite()
-      .then(setInvite)
+      .then((data) => {
+        setInvite(data);
+        if (user && data?.bonusMinutes != null) {
+          const used = user.dailyMinutes || 0;
+          const avail = user.isPremium ? Infinity : Math.max(0, 15 - used) + data.bonusMinutes;
+          setUser({
+            ...user,
+            bonusMinutes: data.bonusMinutes,
+            availableMinutes: avail,
+            referralCount: data.referralCount ?? user.referralCount,
+          });
+        }
+      })
       .catch(() => {
         if (!invite) setError(t('im.error'));
       });
