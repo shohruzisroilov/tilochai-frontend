@@ -455,23 +455,10 @@ export default function Chat() {
 
       <style>{`
         .call-screen {
-          --bg: #080C14;
-          --bg-secondary: rgba(255,255,255,0.07);
-          --surface-2: rgba(255,255,255,0.12);
-          --surface-3: rgba(255,255,255,0.20);
-          --text-primary: #ffffff;
-          --text-secondary: rgba(255,255,255,0.55);
-          --border: rgba(255,255,255,0.1);
-          --border-strong: rgba(255,255,255,0.2);
-          /* Re-declaring the token does not re-resolve a colour already computed
-             further up: <body> resolved var(--text-primary) against the light scheme
-             before this subtree existed, so anything in here without its own colour
-             inherited near-black onto a dark screen — the chat overlay's title, most
-             visibly. Setting it once here makes the subtree read from these tokens. */
-          color: var(--text-primary);
           position: relative;
           width: 100%; height: 100%;
-          background: #080C14;
+          background: var(--bg);
+          color: var(--text-primary);
           overflow: hidden;
           display: flex;
           flex-direction: column;
@@ -480,8 +467,8 @@ export default function Chat() {
         .call-bg-glow {
           position: absolute; inset: 0; z-index: 0;
           background:
-            radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,168,255,0.12) 0%, transparent 65%),
-            radial-gradient(ellipse 60% 40% at 80% 110%, rgba(139,92,246,0.08) 0%, transparent 60%);
+            radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,168,255,0.08) 0%, transparent 65%),
+            radial-gradient(ellipse 60% 40% at 80% 110%, rgba(139,92,246,0.06) 0%, transparent 60%);
           pointer-events: none;
         }
 
@@ -489,10 +476,10 @@ export default function Chat() {
           position: relative; z-index: 10;
           display: flex; align-items: center; gap: var(--space-3);
           padding: calc(var(--space-3) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-3);
-          border-bottom: 1px solid rgba(255,255,255,0.07);
+          border-bottom: 1px solid var(--border);
           animation: fadeIn 0.2s ease both;
           flex-shrink: 0;
-          background: rgba(8, 12, 20, 0.6);
+          background: var(--chrome-bg);
           backdrop-filter: blur(10px);
         }
         .call-presence {
@@ -535,20 +522,22 @@ export default function Chat() {
         }
         .call-tag {
           font-size: var(--text-xs); font-weight: var(--weight-bold);
-          color: rgba(255,255,255,0.85);
-          background: rgba(255,255,255,0.1);
+          color: var(--primary);
+          background: var(--primary-subtle);
+          border: 1px solid var(--border-strong);
           border-radius: 6px; padding: 2px 6px;
           letter-spacing: 0.3px;
           white-space: nowrap;
         }
         .call-tag--dim {
-          color: rgba(255,255,255,0.4);
-          background: rgba(255,255,255,0.05);
+          color: var(--text-tertiary);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
           font-weight: var(--weight-medium);
         }
         .call-status {
           font-size: var(--text-xs); font-weight: var(--weight-semi);
-          color: rgba(255,255,255,0.45);
+          color: var(--text-tertiary);
           display: inline-flex; align-items: center;
           white-space: nowrap;
           transition: color 0.18s ease;
@@ -563,11 +552,11 @@ export default function Chat() {
         .call-status--speaking { color: var(--success); }
         .call-header__timer {
           display: flex; align-items: center; gap: var(--space-1-5);
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.1);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
           border-radius: 99px; padding: var(--space-1) var(--space-3);
           font-size: var(--text-sm); font-weight: var(--weight-bold);
-          color: rgba(255,255,255,0.9);
+          color: var(--text-primary);
           font-variant-numeric: tabular-nums;
           white-space: nowrap;
           flex-shrink: 0;
@@ -733,24 +722,7 @@ export default function Chat() {
         }
 
       
-        /* The call screen is a video surface, so it stays dark whatever Telegram's
-           colour scheme says — but the labels inside it are written with the theme's
-           text tokens, and in the light scheme those resolved to near-black on
-           near-black. Pinning the dark palette for this subtree keeps every token in
-           here meaning what it meant when it was written, instead of patching each
-           rule one at a time. */
-        .light .call-screen {
-          color-scheme: dark;
-          --bg:             #080C14;
-          --bg-secondary:   #121824;
-          --surface-2:      #1A2232;
-          --surface-3:      #222C3E;
-          --border:         rgba(255, 255, 255, 0.08);
-          --border-strong:  rgba(255, 255, 255, 0.16);
-          --text-primary:   #F8FAFC;
-          --text-secondary: #94A3B8;
-          --text-tertiary:  #64748B;
-        }
+
       `}</style>
     </div>
   );

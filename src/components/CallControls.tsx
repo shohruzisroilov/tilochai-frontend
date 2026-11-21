@@ -174,46 +174,50 @@ export default function CallControls({
         .cc-item--end { margin-left: var(--space-1); }
         .cc-divider {
           width: 1px; height: 40px; flex-shrink: 0;
-          background: rgba(255,255,255,0.14);
+          background: var(--border);
           margin-bottom: var(--space-5);
         }
         .cc-btn {
           width: 58px; height: 58px;
           border-radius: 50%;
-          background: rgba(255,255,255,0.15);
+          background: var(--surface-2);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255,255,255,0.2);
-          color: #fff;
+          border: 1px solid var(--border);
+          color: var(--text-primary);
           display: flex; align-items: center; justify-content: center;
           transition: transform 0.1s, background 0.15s;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+          box-shadow: var(--shadow-sm);
           position: relative;
         }
         .cc-btn:active { transform: scale(0.87); }
         .cc-btn--off {
-          background: rgba(255,255,255,0.07);
-          border-color: rgba(255,255,255,0.07);
+          background: var(--surface-3);
+          border-color: var(--border);
+          color: var(--text-tertiary);
         }
-        .cc-btn--off svg { opacity: 0.4; }
+        .cc-btn--off svg { opacity: 0.45; }
         .cc-btn--speaking {
-          background: rgba(52,199,89,0.28);
-          border-color: rgba(52,199,89,0.6);
+          background: rgba(16, 185, 129, 0.2);
+          border-color: rgba(16, 185, 129, 0.6);
+          color: var(--success);
           animation: ccSpeakPulse 1.2s ease-out infinite;
         }
         @keyframes ccSpeakPulse {
-          0%   { box-shadow: 0 0 0 0 rgba(52,199,89,0.5); }
-          100% { box-shadow: 0 0 0 12px rgba(52,199,89,0); }
+          0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+          100% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
         }
         .cc-btn--active {
-          background: rgba(52,199,89,0.22);
-          border-color: rgba(52,199,89,0.45);
+          background: rgba(16, 185, 129, 0.18);
+          border-color: rgba(16, 185, 129, 0.45);
+          color: var(--success);
         }
         .cc-btn--end {
           width: 66px; height: 66px;
-          background: #e53e3e;
+          background: #EF4444;
           border-color: transparent;
-          box-shadow: 0 4px 20px rgba(229,62,62,0.55);
+          color: #FFFFFF;
+          box-shadow: 0 4px 20px rgba(239, 68, 68, 0.45);
         }
         .cc-btn--end:active { transform: scale(0.87); }
         .cc-btn--chat { position: relative; }
@@ -223,11 +227,11 @@ export default function CallControls({
           background: var(--danger); color: #fff;
           border-radius: 99px; font-size: var(--text-xs); font-weight: var(--weight-bold);
           display: flex; align-items: center; justify-content: center;
-          padding: 0 var(--space-1); border: 2px solid #000;
+          padding: 0 var(--space-1); border: 2px solid var(--surface);
         }
         .cc-label {
           font-size: var(--text-xs); font-weight: var(--weight-medium);
-          color: rgba(255,255,255,0.6);
+          color: var(--text-secondary);
           white-space: nowrap;
         }
       `}</style>
