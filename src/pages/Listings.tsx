@@ -1064,16 +1064,17 @@ export default function Listings(_props: ListingsProps) {
         .listings-tabs::-webkit-scrollbar { display: none; }
         .listings-tab {
           padding: 8px 18px; border-radius: var(--radius-full);
-          background: #150F2C; border: 1px solid rgba(139, 92, 246, 0.2);
-          color: #94A3B8; font-size: 12px; font-weight: 600;
+          background: var(--surface-2); border: 1px solid var(--border);
+          color: var(--text-secondary); font-size: 12px; font-weight: 600;
           white-space: nowrap; cursor: pointer; transition: all 0.2s var(--ease-out);
         }
         .listings-tab:hover {
-          color: #FFFFFF;
+          color: var(--text-primary);
+          background: var(--surface-3);
         }
         .listings-tab.active {
-          background: #6D28D9; color: #FFFFFF; border-color: #7C3AED;
-          font-weight: 700; box-shadow: 0 2px 12px rgba(109, 40, 217, 0.4);
+          background: var(--primary); color: #FFFFFF; border-color: var(--primary);
+          font-weight: 700; box-shadow: 0 2px 12px rgba(109, 40, 217, 0.35);
         }
 
         /* Search + filters */
@@ -1085,38 +1086,49 @@ export default function Listings(_props: ListingsProps) {
         .listings-filter-btn {
           position: relative; flex-shrink: 0;
           width: 38px; height: 38px; border-radius: 12px;
-          border: 1px solid rgba(139, 92, 246, 0.22); background: #150F2C;
-          color: #94A3B8;
+          border: 1px solid var(--border); background: var(--surface-2);
+          color: var(--text-secondary);
           display: flex; align-items: center; justify-content: center;
+          cursor: pointer; transition: all 0.2s var(--ease-out);
         }
-        .listings-filter-btn.open { color: #C4B5FD; border-color: #7C3AED; background: rgba(124, 58, 237, 0.25); }
+        .listings-filter-btn:hover { background: var(--surface-3); color: var(--text-primary); }
+        .listings-filter-btn.open { color: var(--primary); border-color: var(--primary); background: var(--primary-subtle); }
         .listings-filter-btn__dot {
           position: absolute; top: 6px; right: 6px;
-          width: 7px; height: 7px; border-radius: 50%; background: #38BDF8;
+          width: 7px; height: 7px; border-radius: 50%; background: #00B2FE;
         }
         .listings-clear-btn {
           flex-shrink: 0; padding: 6px 12px; border-radius: 10px;
-          border: 1px solid rgba(139, 92, 246, 0.22); background: #150F2C;
-          color: #94A3B8; font-size: 11px; font-weight: 700;
+          border: 1px solid var(--border); background: var(--surface-2);
+          color: var(--text-secondary); font-size: 11px; font-weight: 700;
+          cursor: pointer;
         }
         .listings-search__icon {
-          position: absolute; left: 12px; top: 12px; color: #64748B; pointer-events: none;
+          position: absolute; left: 12px; top: 12px; color: var(--text-secondary); pointer-events: none;
         }
         .listings-search__input {
           width: 100%; padding: 10px 12px 10px 36px; border-radius: 14px;
-          border: 1px solid rgba(139, 92, 246, 0.22); background-color: #150F2C;
-          color: #FFFFFF; font-size: 13px; outline: none;
+          border: 1px solid var(--border); background-color: var(--surface-2);
+          color: var(--text-primary); font-size: 13px; outline: none;
           transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
         }
+        .listings-search__input::placeholder {
+          color: var(--text-secondary);
+          opacity: 0.8;
+        }
         .listings-search__input:focus {
-          border-color: #7C3AED;
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
+          border-color: var(--primary);
+          box-shadow: 0 0 0 3px var(--primary-subtle);
         }
         .listings-selects { display: flex; gap: 8px; align-items: center; }
         .listings-select {
           flex: 1; min-width: 0; padding: 8px 30px 8px 10px; border-radius: 10px;
-          border: 1px solid rgba(139, 92, 246, 0.22); background-color: #150F2C;
-          color: #FFFFFF; font-size: 12px; font-weight: 600; outline: none;
+          border: 1px solid var(--border); background-color: var(--surface-2);
+          color: var(--text-primary); font-size: 12px; font-weight: 600; outline: none;
+        }
+        .listings-select option {
+          background-color: var(--surface);
+          color: var(--text-primary);
         }
 
         /* Scroll Area & Grid */
