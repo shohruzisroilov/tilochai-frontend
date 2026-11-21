@@ -10,56 +10,22 @@ import ConnectionBanner from './components/ConnectionBanner';
 import Toast from './components/Toast';
 import BottomNav from './components/BottomNav';
 import MicPermissionModal from './components/MicPermissionModal';
-import { lazyWithRetry } from './utils/lazyWithRetry';
 
-// Eager: the two screens that can be the first thing rendered after sign-in. Anything
-// lazy here would put a spinner in front of the very first paint.
 import Onboarding from './pages/Onboarding.tsx';
 import Home from './pages/Home.tsx';
+import Chat from './pages/Chat.tsx';
+import Leaderboard from './pages/Leaderboard.tsx';
+import Invite from './pages/Invite.tsx';
+import Reviews from './pages/Reviews.tsx';
+import Profile from './pages/Profile.tsx';
+import Settings from './pages/Settings.tsx';
+import Premium from './pages/Premium.tsx';
+import Statistics from './pages/Statistics.tsx';
+import Matching from './pages/Matching.tsx';
+import SessionEnd from './pages/SessionEnd.tsx';
+import Listings from './pages/Listings.tsx';
 
-/**
- * Everything else is split out with lazyWithRetry so network drops or post-deploy chunk
- * mismatches automatically recover rather than crashing the app.
- */
-const Chat = lazyWithRetry(() => import('./pages/Chat.tsx'));
-const Leaderboard = lazyWithRetry(() => import('./pages/Leaderboard.tsx'));
-const Invite = lazyWithRetry(() => import('./pages/Invite.tsx'));
-const Reviews = lazyWithRetry(() => import('./pages/Reviews.tsx'));
-const Profile = lazyWithRetry(() => import('./pages/Profile.tsx'));
-const Settings = lazyWithRetry(() => import('./pages/Settings.tsx'));
-const Premium = lazyWithRetry(() => import('./pages/Premium.tsx'));
-const Statistics = lazyWithRetry(() => import('./pages/Statistics.tsx'));
-const Matching = lazyWithRetry(() => import('./pages/Matching.tsx'));
-const SessionEnd = lazyWithRetry(() => import('./pages/SessionEnd.tsx'));
-const Listings = lazyWithRetry(() => import('./pages/Listings.tsx'));
 
-/**
- * Screens reachable in one tap from Home, fetched once the app is idle.
- */
-function usePrefetchTabs(ready: boolean) {
-  useEffect(() => {
-    if (!ready) return;
-
-    const warm = () => {
-      void import('./pages/Listings.tsx');
-      void import('./pages/Leaderboard.tsx');
-      void import('./pages/Profile.tsx');
-      void import('./pages/Matching.tsx');
-    };
-
-    const ric = (window as any).requestIdleCallback as
-      | ((cb: () => void, opts?: { timeout: number }) => number)
-      | undefined;
-
-    if (ric) {
-      const id = ric(warm, { timeout: 3000 });
-      return () => (window as any).cancelIdleCallback?.(id);
-    }
-
-    const id = window.setTimeout(warm, 2000);
-    return () => window.clearTimeout(id);
-  }, [ready]);
-}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -150,7 +116,6 @@ function TelegramApp() {
     useAppStore();
   useAuth();
   useSocket();
-  usePrefetchTabs(!isAuthLoading && !!user);
 
   if (isAuthLoading) return <LoadingScreen />;
 

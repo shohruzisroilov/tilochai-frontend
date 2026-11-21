@@ -38,10 +38,14 @@ export default function Invite() {
     tapHaptic('medium');
     const text = t('im.shareText');
     const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
-    const wa = (window as any).Telegram?.WebApp;
-    if (wa?.openTelegramLink) {
-      wa.openTelegramLink(shareUrl);
-    } else {
+    try {
+      const wa = (window as any).Telegram?.WebApp;
+      if (wa?.openTelegramLink) {
+        wa.openTelegramLink(shareUrl);
+      } else {
+        window.open(shareUrl, '_blank');
+      }
+    } catch {
       window.open(shareUrl, '_blank');
     }
   }
@@ -49,7 +53,9 @@ export default function Invite() {
   function handleCopy() {
     if (!link) return;
     try {
-      navigator.clipboard?.writeText(link);
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(link).catch(() => {});
+      }
     } catch (e) {}
     notifyHaptic('success');
     setCopied(true);
@@ -135,13 +141,13 @@ export default function Invite() {
                 {weeklyTop.length ? (
                   weeklyTop.map((u: any, i: number) => (
                     <div
-                      key={u.id}
+                      key={u?.id || i}
                       className="flex items-center gap-3 p-3 rounded-xl bg-[var(--surface-2)] border border-[var(--border)]"
                     >
                       <div className="w-6 flex items-center justify-center">{renderRankBadge(i)}</div>
-                      <span className="flex-1 text-xs font-semibold truncate text-[var(--text-primary)]">{u.name}</span>
+                      <span className="flex-1 text-xs font-semibold truncate text-[var(--text-primary)]">{u?.name || 'Anonymous'}</span>
                       <span className="text-xs font-bold text-[var(--primary)] font-mono">
-                        {u.count} {u.count === 1 ? t('im.contestFriend') : t('im.contestFriends')}
+                        {u?.count || 0} {u?.count === 1 ? t('im.contestFriend') : t('im.contestFriends')}
                       </span>
                     </div>
                   ))
@@ -156,7 +162,7 @@ export default function Invite() {
                 <span>{t('im.contestYou')}</span>
                 <strong className="text-[var(--text-primary)] font-bold">
                   {weeklyCount > 0
-                    ? `${weeklyCount} ${weeklyCount === 1 ? t('im.contestFriend') : t('im.contestFriends')} (${t('im.contestRank').replace('{rank}', String(weeklyRank))})`
+                    ? `${weeklyCount} ${weeklyCount === 1 ? t('im.contestFriend') : t('im.contestFriends')}${weeklyRank ? ` (${t('im.contestRank').replace('{rank}', String(weeklyRank))})` : ''}`
                     : t('im.contestNone')}
                 </strong>
               </div>
