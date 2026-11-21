@@ -150,7 +150,7 @@ export default function HomeHeader({
         }
         .hh__pill-text {
           font-size: 11px; font-weight: 700; line-height: 1;
-          color: #FFFFFF; font-variant-numeric: tabular-nums;
+          color: var(--text-primary); font-variant-numeric: tabular-nums;
         }
         .hh__flame-icon {
           color: #FF9F0A;

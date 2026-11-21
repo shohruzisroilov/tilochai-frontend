@@ -520,9 +520,9 @@ export default function Profile() {
 
         .profile__status-badge {
           padding: 5px 12px; border-radius: 9999px;
-          background: rgba(0, 178, 254, 0.08);
-          border: 1px solid rgba(0, 178, 254, 0.28);
-          color: #00B2FE;
+          background: rgba(0, 178, 254, 0.1);
+          border: 1px solid rgba(0, 178, 254, 0.35);
+          color: var(--text-primary);
           font-size: 12px; font-weight: 600;
           display: inline-flex; align-items: center; gap: 6px;
           cursor: pointer;
@@ -532,7 +532,7 @@ export default function Profile() {
         .profile__status-badge--premium {
           background: rgba(245, 158, 11, 0.12);
           border-color: rgba(245, 158, 11, 0.4);
-          color: #F59E0B;
+          color: #D97706;
           cursor: default;
         }
         .profile__clock-icon { color: #00B2FE; }
