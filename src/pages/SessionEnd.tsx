@@ -6,7 +6,7 @@ import { useT } from '../i18n';
 import { tapHaptic, selectionHaptic } from '../utils/haptics';
 import { playStarSound } from '../utils/audio';
 import ReportSheet from '../components/ReportSheet';
-import { Star, Check, Flag, PartyPopper, LogOut } from 'lucide-react';
+import { Star, Check, Flag, PartyPopper, LogOut, Clock } from 'lucide-react';
 
 function Stars({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const [hov, setHov] = useState(0);
@@ -97,13 +97,27 @@ export default function SessionEnd() {
       <div className="end-body scale-in">
 
         <span className="end-ico">
-          {reason === 'partner_left' ? <LogOut size={26} /> : <PartyPopper size={26} />}
+          {reason === 'daily_limit' ? (
+            <Clock size={28} className="text-amber-400" />
+          ) : reason === 'partner_left' ? (
+            <LogOut size={26} />
+          ) : (
+            <PartyPopper size={26} />
+          )}
         </span>
 
         <div className="end-head">
-          <h2>{reason === 'partner_left' ? t('se.partnerLeft') : t('se.complete')}</h2>
+          <h2>
+            {reason === 'daily_limit'
+              ? 'Daily 15m Limit Reached'
+              : reason === 'partner_left'
+              ? t('se.partnerLeft')
+              : t('se.complete')}
+          </h2>
           <p>
-            {reason === 'partner_left'
+            {reason === 'daily_limit'
+              ? 'Your free 15 minutes of speaking time for today has ended. Invite friends to get +10 bonus minutes or come back tomorrow!'
+              : reason === 'partner_left'
               ? t('se.partnerLeftDesc', { name: partnerName })
               : t('se.greatConv', { name: partnerName })}
           </p>
@@ -160,7 +174,13 @@ export default function SessionEnd() {
         )}
 
         <div className="end-actions fade-up" style={{ width: '100%', marginTop: 12 }}>
-          <button className="btn-primary" onClick={goMatch}>{t('se.findAnother')}</button>
+          {reason === 'daily_limit' ? (
+            <button className="btn-primary" onClick={() => navigate('invite', { from: 'session_end' })}>
+              Invite Friends (+10m Bonus)
+            </button>
+          ) : (
+            <button className="btn-primary" onClick={goMatch}>{t('se.findAnother')}</button>
+          )}
           <button className="btn-secondary" style={{ marginTop: 8 }} onClick={handleGoHome}>{t('se.goHome')}</button>
         </div>
 

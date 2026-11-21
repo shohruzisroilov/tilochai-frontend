@@ -11,7 +11,8 @@ import Avatar from '../components/Avatar';
 import SpeakingQuestions from '../components/SpeakingQuestions';
 import { useT } from '../i18n';
 import { notifyHaptic, tapHaptic } from '../utils/haptics';
-import { AlertCircle, AlertTriangle, X, Lightbulb, ChevronRight, ArrowLeft } from 'lucide-react';
+import { playCallEndSound } from '../utils/audio';
+import { AlertCircle, AlertTriangle, X, Lightbulb, ChevronRight, ArrowLeft, Clock } from 'lucide-react';
 
 function fmt(s: number): string {
   return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
@@ -282,7 +283,15 @@ export default function Chat() {
       backBtn.show();
       backBtn.onClick(onBack);
     }
-    timerRef.current = setInterval(() => setElapsed((prev) => prev + 1), 1000);
+    timerRef.current = setInterval(() => {
+      setElapsed((prev) => {
+        const next = prev + 1;
+        if (!isPremium && maxAllowedSeconds < Infinity && next >= maxAllowedSeconds) {
+          handleLimitReached();
+        }
+        return next;
+      });
+    }, 1000);
 
     const timeoutId = setTimeout(() => {
       if (!useAppStore.getState().partnerConnected) {
@@ -328,6 +337,25 @@ export default function Chat() {
     navigate('session_end', { sessionId: session?.id, elapsed });
   }
 
+  const isPremium = Boolean(user?.isPremium);
+  const availableMinutes = user?.availableMinutes ?? (Math.max(0, 15 - (user?.dailyMinutes || 0)) + (user?.bonusMinutes || 0));
+  const maxAllowedSeconds = isPremium ? Infinity : Math.max(60, availableMinutes * 60);
+
+  const handleLimitReached = useCallback(() => {
+    if (ending) return;
+    setEnding(true);
+    playCallEndSound();
+    notifyHaptic('warning');
+    if (session?.id) {
+      try { endSession(session.id); } catch {}
+    }
+    navigate('session_end', {
+      sessionId: session?.id,
+      elapsed: maxAllowedSeconds,
+      reason: 'daily_limit',
+    });
+  }, [ending, session?.id, maxAllowedSeconds, navigate]);
+
   const handlePartnerLeft = useCallback(() => {
     if (ending) return;
     setEnding(true);
@@ -337,6 +365,8 @@ export default function Chat() {
     }
     navigate('session_end', { sessionId: session?.id, elapsed, reason: 'partner_left' });
   }, [ending, session?.id, elapsed, navigate]);
+
+  const remainingSeconds = !isPremium && maxAllowedSeconds < Infinity ? Math.max(0, maxAllowedSeconds - elapsed) : Infinity;
 
   const unread = showChat ? 0 : Math.max(0, messages.length - lastSeenCount);
   useEffect(() => {
@@ -417,6 +447,14 @@ export default function Chat() {
         <div className="call-error-banner">
           <span><AlertTriangle size={14} /> {friendlyError(liveKitError, t)}</span>
           <button onClick={() => setLiveKitError(null)} aria-label="Close"><X size={15} /></button>
+        </div>
+      )}
+
+      {/* 15m limit countdown warning when <= 60s remain */}
+      {remainingSeconds <= 60 && remainingSeconds > 0 && (
+        <div className="call-limit-banner fade-down">
+          <Clock size={13} />
+          <span>{remainingSeconds}s remaining before 15m limit</span>
         </div>
       )}
 
@@ -693,6 +731,21 @@ export default function Chat() {
         .call-error-banner button {
           font-size: var(--text-md); color: rgba(255,255,255,0.7);
           flex-shrink: 0;
+        }
+
+        .call-limit-banner {
+          position: absolute; top: calc(68px + env(safe-area-inset-top, 0px)); left: 16px; right: 16px;
+          display: flex; align-items: center; justify-content: center; gap: 7px;
+          background: rgba(245, 158, 11, 0.94);
+          backdrop-filter: blur(10px);
+          border-radius: 14px; padding: 10px 16px;
+          font-size: 13px; font-weight: 700; color: #ffffff;
+          z-index: 28; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+          animation: bannerPulse 1.6s ease-in-out infinite;
+        }
+        @keyframes bannerPulse {
+          0%, 100% { opacity: 0.94; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.02); }
         }
 
         .video-grid {
