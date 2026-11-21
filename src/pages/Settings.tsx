@@ -5,10 +5,11 @@ import { updateMe, updateNotifications } from '../api/endpoints';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
 import { selectionHaptic, tapHaptic } from '../utils/haptics';
-import { ArrowLeft, ChevronRight, Gauge, User, Bell, Check, Loader2, Mic } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Gauge, User, Bell, Check, Loader2, Mic, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { notifyHaptic } from '../utils/haptics';
+import { isSoundEnabled, setSoundEnabled, playTapSound } from '../utils/audio';
 
 const LEVELS = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }, { value: 6 }];
 
@@ -36,6 +37,7 @@ export default function Settings() {
   const [section, setSection] = useState<'menu' | 'level' | 'gender' | 'notifications' | 'mic'>(initialSection);
   const [micStatus, setMicStatus] = useState<'idle' | 'testing' | 'ok' | 'fail'>('idle');
   const [micVolume, setMicVolume] = useState(0);
+  const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
 
   const level = user?.level || 1;
   const gender = user?.gender || null;
@@ -186,6 +188,44 @@ export default function Settings() {
                   <div className="text-xs text-[var(--text-secondary)] truncate">{notifSummary}</div>
                 </div>
                 <ChevronRight className="h-4 w-4 text-[#64748B]" />
+              </div>
+            </Card>
+
+            <Card
+              as="button"
+              type="button"
+              className="w-full text-left p-4 cursor-pointer hover:bg-[var(--surface-2)] transition-all active:scale-[0.99] border-[var(--border)] bg-[var(--surface)] shadow-md rounded-2xl"
+              onClick={() => {
+                selectionHaptic();
+                const next = !soundOn;
+                setSoundOn(next);
+                setSoundEnabled(next);
+                if (next) playTapSound();
+              }}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(245,158,11,0.22)] text-[#FBBF24] flex items-center justify-center shrink-0">
+                  {soundOn ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5 text-slate-400" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-bold text-[var(--text-primary)]">
+                    {t('settings.soundTitle')}
+                  </div>
+                  <div className="text-xs text-[var(--text-secondary)] truncate">
+                    {soundOn ? t('settings.soundEnabled') : t('settings.soundDisabled')}
+                  </div>
+                </div>
+                <div
+                  className={`w-11 h-6 rounded-full p-0.5 transition-colors duration-200 ease-in-out shrink-0 ${
+                    soundOn ? 'bg-[#00A8FF]' : 'bg-[var(--surface-3)]'
+                  }`}
+                >
+                  <div
+                    className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-transform duration-200 ease-in-out ${
+                      soundOn ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </div>
               </div>
             </Card>
 

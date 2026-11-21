@@ -1,6 +1,7 @@
 import React from 'react';
 import { useT } from '../i18n';
 import { tapHaptic } from '../utils/haptics';
+import { playMicToggleSound, playCallEndSound, playTapSound } from '../utils/audio';
 
 function MicIcon({ off }: { off: boolean }) {
   if (off) {
@@ -90,18 +91,22 @@ export default function CallControls({
 
   const handleMic = () => {
     tapHaptic();
+    playMicToggleSound(!micOn);
     onToggleMic();
   };
   const handleCam = () => {
     tapHaptic();
+    playTapSound();
     onToggleCam();
   };
   const handleEnd = () => {
     tapHaptic('medium');
+    playCallEndSound();
     onEnd();
   };
   const handleChat = () => {
     tapHaptic();
+    playTapSound();
     onOpenChat();
   };
 

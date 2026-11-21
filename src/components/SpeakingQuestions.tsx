@@ -4,6 +4,7 @@ import { useSocket } from '../hooks/useSocket';
 import { PART1, PART3, topicsForPart, findTopic } from '../constants/speakingTopics';
 import { useT } from '../i18n';
 import { selectionHaptic, tapHaptic } from '../utils/haptics';
+import { playNewQuestionSound, playStarSound, playTimerDoneSound, playTapSound } from '../utils/audio';
 import {
   Bell,
   Star,
@@ -128,6 +129,7 @@ export default function SpeakingQuestions({ onDetailChange }: SpeakingQuestionsP
         if (prev <= 1) {
           clearInterval(timerRef.current);
           setTimerRunning(false);
+          playTimerDoneSound();
           (window as any).Telegram?.WebApp?.HapticFeedback?.notificationOccurred('success');
           return 0;
         }
@@ -169,6 +171,7 @@ export default function SpeakingQuestions({ onDetailChange }: SpeakingQuestionsP
 
   const openPart = (part: number) => {
     selectionHaptic();
+    playTapSound();
     setBrowsePart(part);
     setQuery('');
     setView('topics');
@@ -193,6 +196,7 @@ export default function SpeakingQuestions({ onDetailChange }: SpeakingQuestionsP
 
   const toggleSave = (item: SavedQuestion) => {
     selectionHaptic();
+    playStarSound(3);
     toggleSavedQuestion(item);
   };
 
@@ -216,6 +220,7 @@ export default function SpeakingQuestions({ onDetailChange }: SpeakingQuestionsP
   const pickNewQuestion = (e: React.MouseEvent) => {
     e.stopPropagation();
     tapHaptic('light');
+    playNewQuestionSound();
     const pool = Math.random() > 0.4 ? PART1 : PART3;
     const randTopic = pool[Math.floor(Math.random() * pool.length)];
     const qList = randTopic.questions || [];

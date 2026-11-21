@@ -2,6 +2,7 @@ import React from 'react';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
 import { selectionHaptic } from '../utils/haptics';
+import { playTapSound } from '../utils/audio';
 import { Home, Users, Trophy, User } from 'lucide-react';
 
 interface Tab {
@@ -53,6 +54,7 @@ export default function BottomNav({ active }: BottomNavProps) {
               onClick={() => {
                 if (!isActive) {
                   selectionHaptic();
+                  playTapSound();
                   navigate(tab.key);
                 }
               }}

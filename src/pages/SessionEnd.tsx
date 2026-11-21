@@ -4,6 +4,7 @@ import { useTelegramBackButton } from '../hooks/useTelegramBackButton';
 import useAppStore from '../store/useAppStore';
 import { useT } from '../i18n';
 import { tapHaptic, selectionHaptic } from '../utils/haptics';
+import { playStarSound } from '../utils/audio';
 import ReportSheet from '../components/ReportSheet';
 import { Star, Check, Flag, PartyPopper, LogOut } from 'lucide-react';
 
@@ -16,7 +17,7 @@ function Stars({ value, onChange }: { value: number; onChange: (v: number) => vo
         <button
           key={s}
           className={`star ${active >= s ? 'on' : ''}`}
-          onClick={() => { selectionHaptic(); onChange(s); }}
+          onClick={() => { selectionHaptic(); playStarSound(s); onChange(s); }}
           onMouseEnter={() => setHov(s)}
           onMouseLeave={() => setHov(0)}
           role="radio"

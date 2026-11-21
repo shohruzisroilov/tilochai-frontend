@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import useAppStore from '../store/useAppStore';
 import { getSession } from '../api/endpoints';
-import { playMatchChime } from '../utils/audio';
+import { playMatchChime, playMessageSound } from '../utils/audio';
 import { notifyHaptic } from '../utils/haptics';
 
 /**
@@ -58,6 +58,9 @@ function attachListeners(sock: Socket) {
 
   sock.on('message', (msg) => {
     useAppStore.getState().addMessage(msg);
+    if (!msg.is_own) {
+      playMessageSound();
+    }
   });
 
   sock.on('speaking_topic_changed', ({ topic_id, part, question_index }) => {

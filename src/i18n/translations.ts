@@ -197,6 +197,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'settings.notifReminders': 'Reminders',
     'settings.notifRemindersSub': 'Weekly summary and reminders to come back',
     'settings.notifAllOn': 'On',
+    'settings.soundTitle': 'Sound Effects',
+    'settings.soundEnabled': 'On (audio cues & chimes)',
+    'settings.soundDisabled': 'Off (silent mode)',
 
     // home
     'home.heroTag': 'Live voice · 1-on-1',
